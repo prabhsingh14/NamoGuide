@@ -25,7 +25,7 @@ const Navbar = () => {
                     {/* routes */}
                     <div className="flex gap-x-6">
                         <Link to='/#tours-section' className="text-gray-700 hover:text-[#FF6F00] font-medium">Discover Tours</Link>
-                        <Link to="/contactus" className="text-gray-700 hover:text-[#FF6F00] font-medium">Contact Us</Link>
+                        <Link to="/contact" className="text-gray-700 hover:text-[#FF6F00] font-medium">Contact Us</Link>
                         <Link to="/blogs" className="text-gray-700 hover:text-[#FF6F00] font-medium">Blogs</Link>
                         <Link to="/wishlist" className="text-gray-700 hover:text-[#FF6F00] font-medium">Wishlist</Link>
                         {/* need to set, if user clicks on wishlist, he must be logged in otherwise give alert and take to login page */}

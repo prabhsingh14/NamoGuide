@@ -7,6 +7,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import StatePage from "./pages/StatePage";
 import TourDetailsPage from "./pages/TourDetailsPage";
+import Contact from "./pages/Contact";
 import "@fontsource/poppins";
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/state/:stateName" element={<StatePage />} />
         <Route path="/tours/:tourId" element={<TourDetailsPage />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </div>
   );
