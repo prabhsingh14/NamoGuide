@@ -7,20 +7,20 @@ import { CiHeart } from 'react-icons/ci';
 import { Link } from 'react-router-dom';
 
 const TourDetailsPage = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-    const handlePay = () => {
-        const token = localStorage.getItem("authToken"); // Check if token exists
+    // const handlePay = () => {
+    //     const token = localStorage.getItem("authToken"); // Check if token exists
         
-        if (!token) {
-            alert("Please log in to proceed with payment.");
-            navigate("/login"); // Redirect to login page
-            return;
-        }
+    //     if (!token) {
+    //         alert("Please log in to proceed with payment.");
+    //         navigate("/login"); // Redirect to login page
+    //         return;
+    //     }
 
-        // Proceed to payment
-        navigate("/payment");
-    };
+    //     // Proceed to payment
+    //     navigate("/payment");
+    // };
 
     const { tourId } = useParams();
     console.log(tourId);
@@ -158,7 +158,7 @@ const TourDetailsPage = () => {
                             <button
                                 type="submit"
                                 className="bg-[#FF6F00] text-white p-2 rounded-lg w-full hover:bg-blue-600"
-                                onClick={handlePay}
+                                // onClick={handlePay}
                             >
                                 Book Now
                             </button>

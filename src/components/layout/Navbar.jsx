@@ -1,13 +1,13 @@
 import React from 'react';
 import { AiOutlineMenu, AiOutlineShoppingCart } from "react-icons/ai";
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 // import ProfileDropDown from './ProfileDropDown';
 
 const Navbar = () => {
     const { token } = useSelector((state) => state.auth);
     const { user } = useSelector((state) => state.profile);
-    const { totalItems } = useSelector((state) => state.wishlist);
+    const { totalItems } = useSelector((state) => state.wishlist); //backend se api call karke total items nikalna hai
 
     return (
         <div className='bg-white shadow-[0px_24px_20px_-10px_rgba(255,111,0,0.15)] w-full'>
@@ -28,21 +28,12 @@ const Navbar = () => {
                         <Link to="/contactus" className="text-gray-700 hover:text-[#FF6F00] font-medium">Contact Us</Link>
                         <Link to="/blogs" className="text-gray-700 hover:text-[#FF6F00] font-medium">Blogs</Link>
                         <Link to="/wishlist" className="text-gray-700 hover:text-[#FF6F00] font-medium">Wishlist</Link>
+                        {/* need to set, if user clicks on wishlist, he must be logged in otherwise give alert and take to login page */}
                     </div>
                 </nav>
 
                 {/* buttons */}
                 <div className="md:flex items-center gap-x-4 hidden">
-                    {user && (
-                        <Link to="/dashboard/wishlist" className="relative">
-                            <AiOutlineShoppingCart className="text-2xl text-black" />
-                            {totalItems > 0 && (
-                                <span className="absolute -bottom-2 -right-2 grid h-5 w-5 place-items-center overflow-hidden rounded-full text-black text-center text-xs font-bold bg-[#FF6F00]">
-                                    {totalItems}
-                                </span>
-                            )}
-                        </Link>
-                    )}
                     {token === null && (
                         <>
                             <Link to="/login">
@@ -72,9 +63,6 @@ const Navbar = () => {
                         </Link>
                     )}
                 </div>
-                <button className='mr-4 md:hidden'>
-                    <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
-                </button>
             </div>
         </div>
     );
