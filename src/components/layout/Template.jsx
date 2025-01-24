@@ -7,11 +7,11 @@ import { useSelector } from "react-redux";
 import LoginForm from "../auth/LoginForm";
 import SignupForm from "../auth/SignupForm";
 
-function Template({ formType }) {
+function Template({ formType, setIsLoggedIn }) {
     const { loading } = useSelector((state) => state.auth);
 
     const renderForm = () => {
-        return formType === "login" ? <LoginForm /> : <SignupForm />;
+        return formType === "login" ? <LoginForm setIsLoggedIn={setIsLoggedIn} /> : <SignupForm setIsLoggedIn={setIsLoggedIn} />;
     };
 
     return (

@@ -8,6 +8,9 @@ import Login from "./pages/Login";
 import StatePage from "./pages/StatePage";
 import TourDetailsPage from "./pages/TourDetailsPage";
 import Contact from "./pages/Contact";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Dashboard from "./pages/Dashboard";
 import "@fontsource/poppins";
 
 function App() {
@@ -32,6 +35,9 @@ function App() {
         <Route path="/state/:stateName" element={<StatePage />} />
         <Route path="/tours/:tourId" element={<TourDetailsPage />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </div>
   );

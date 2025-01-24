@@ -5,7 +5,7 @@ import { AiOutlineUser, AiOutlineMail, AiOutlineLock } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-function SignupForm() {
+function SignupForm({setIsLoggedIn}) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -33,17 +33,17 @@ function SignupForm() {
     // Handle form submission
     const handleOnSubmit = (e) => {
         e.preventDefault();
-
         if (password !== confirmPassword) {
             toast.error("Passwords do not match");
             return;
         }
 
+        setIsLoggedIn(true);
+        toast.success("Account created successfully!");
+        
         const signupData = { ...formData };
-
         // Simulating dispatch actions for signup
         dispatch({ type: "SET_SIGNUP_DATA", payload: signupData });
-        toast.success("Account created successfully!");
 
         // Navigate to OTP verification or login
         navigate("/otp-verification");

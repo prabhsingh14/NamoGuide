@@ -2,12 +2,17 @@ import React from 'react';
 import { AiOutlineMenu, AiOutlineShoppingCart } from "react-icons/ai";
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 // import ProfileDropDown from './ProfileDropDown';
 
-const Navbar = () => {
-    const { token } = useSelector((state) => state.auth);
-    const { user } = useSelector((state) => state.profile);
-    const { totalItems } = useSelector((state) => state.wishlist); //backend se api call karke total items nikalna hai
+const Navbar = (props) => {
+    // const { token } = useSelector((state) => state.auth);
+    // const { user } = useSelector((state) => state.profile);
+    // const { totalItems } = useSelector((state) => state.wishlist); backend se api call karke total items nikalna hai
+
+    // for now, we are using props
+    let isLoggedIn = props.isLoggedIn;
+    let setIsLoggedIn = props.setIsLoggedIn;
 
     return (
         <div className='bg-white shadow-[0px_24px_20px_-10px_rgba(255,111,0,0.15)] w-full'>
@@ -34,7 +39,7 @@ const Navbar = () => {
 
                 {/* buttons */}
                 <div className="md:flex items-center gap-x-4 hidden">
-                    {token === null && (
+                    {!isLoggedIn && (
                         <>
                             <Link to="/login">
                                 <button className="border border-[#FF6F00] text-[#FF6F00] px-4 py-2 rounded-md font-medium hover:bg-orange-100">
@@ -48,7 +53,7 @@ const Navbar = () => {
                             </Link>
                         </>
                     )}
-                    {token !== null && (
+                    {isLoggedIn && (
                         <Link>
                             <Link to="/dashboard">
                                 <button className="bg-[#FF6F00] text-white px-4 py-2 rounded-md font-medium hover:bg-orange-600">
@@ -56,7 +61,11 @@ const Navbar = () => {
                                 </button>
                             </Link>
                             <Link to="/">
-                                <button className="border border-[#FF6F00] text-[#FF6F00] px-4 py-2 rounded-md font-medium hover:bg-orange-100">
+                                <button className="border border-[#FF6F00] text-[#FF6F00] px-4 py-2 rounded-md font-medium hover:bg-orange-100"
+                                onClick={() => {
+                                    setIsLoggedIn(false);
+                                    toast.error("Logged out!");
+                                }}>
                                     Logout
                                 </button>
                             </Link>

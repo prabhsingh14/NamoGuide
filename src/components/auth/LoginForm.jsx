@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-function LoginForm() {
+function LoginForm({setIsLoggedIn}) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -29,18 +29,18 @@ function LoginForm() {
     // Handle form submission
     const handleOnSubmit = (e) => {
         e.preventDefault();
-
-        const loginData = { ...formData };
-
-        dispatch({ type: "SET_LOGIN_DATA", payload: loginData });
+        setIsLoggedIn(true);
         toast.success("Account logged in successfully!");
+        
+        const loginData = { ...formData };
+        dispatch({ type: "SET_LOGIN_DATA", payload: loginData });
 
         navigate("/dashboard");
 
         // Reset form
         setFormData({
-        email: "",
-        password: "",
+            email: "",
+            password: "",
         });
     };
 

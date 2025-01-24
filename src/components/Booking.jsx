@@ -69,6 +69,7 @@ const Booking = ({ handleSearch }) => {
                 onChange={(date) => setSelectedDate(date)}
                 placeholderText="When?"
                 minDate={new Date()}
+                maxDate={new Date(new Date().setDate(new Date().getDate() + 7))}
                 className="p-2 border border-gray-300 rounded-md focus:outline-none ml-2"
             />
 

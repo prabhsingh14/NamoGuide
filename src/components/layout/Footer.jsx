@@ -33,9 +33,15 @@ const Footer = () => {
                     <div>
                         <h2 className="font-bold text-lg mb-2">Support</h2>
                         <ul className="text-gray-600">
-                            <li className="mb-1 cursor-pointer hover:underline">Contact</li>
-                            <li className="mb-1 cursor-pointer hover:underline">Privacy Policy</li>
-                            <li className="mb-1 cursor-pointer hover:underline">Terms and Conditions</li>
+                            <Link to={'/contact'}>
+                                <li className="mb-1 cursor-pointer hover:underline">Contact Us</li>
+                            </Link>
+                            <Link to={'/privacy-policy'}>
+                                <li className="mb-1 cursor-pointer hover:underline">Privacy Policy</li>
+                            </Link>
+                            <Link to={'/terms-and-conditions'}>
+                                <li className="mb-1 cursor-pointer hover:underline">Terms and Conditions</li>
+                            </Link>
                         </ul>
                     </div>
 
