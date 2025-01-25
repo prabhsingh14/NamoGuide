@@ -49,7 +49,9 @@ const Footer = () => {
                     <div>
                         <h2 className="font-bold text-lg mb-2">Company</h2>
                         <ul className="text-gray-600">
-                            <li className="mb-1 cursor-pointer hover:underline">About Us</li>
+                            <Link to={'/about-us'}>
+                                <li className="mb-1 cursor-pointer hover:underline">About Us</li>
+                            </Link>
                             <li className="mb-1 cursor-pointer hover:underline">Blogs</li>
                         </ul>
                     </div>

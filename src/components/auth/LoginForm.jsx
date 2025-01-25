@@ -83,9 +83,11 @@ function LoginForm({setIsLoggedIn}) {
                     </Link>
                 </div>
                 
-                <button type="submit" className="bg-[#FF6F00] text-white rounded-md py-2 mt-4 hover:bg-blue-600">
-                    Login 
-                </button>
+                <Link to={"/dashboard"}>
+                    <button type="submit" className="bg-[#FF6F00] text-white rounded-md py-2 mt-4 hover:bg-blue-600 w-full">
+                        Login 
+                    </button>
+                </Link>
             </form>
         </div>
     );

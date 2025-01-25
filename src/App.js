@@ -11,6 +11,10 @@ import Contact from "./pages/Contact";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Dashboard from "./pages/Dashboard";
+import VerifyEmail from "./pages/Verify-Email"
+import ForgotPassword from "./pages/Forgot-Password";
+import UpdatePassword from "./pages/Update-Password";
+import About from "./pages/About";
 import "@fontsource/poppins";
 
 function App() {
@@ -38,6 +42,10 @@ function App() {
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/update-password" element={<UpdatePassword />} />
+        <Route path="/about-us" element={<About />} />
       </Routes>
     </div>
   );

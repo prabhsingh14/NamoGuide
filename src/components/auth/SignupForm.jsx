@@ -4,6 +4,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { AiOutlineUser, AiOutlineMail, AiOutlineLock } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function SignupForm({setIsLoggedIn}) {
     const navigate = useNavigate();
@@ -46,7 +47,7 @@ function SignupForm({setIsLoggedIn}) {
         dispatch({ type: "SET_SIGNUP_DATA", payload: signupData });
 
         // Navigate to OTP verification or login
-        navigate("/otp-verification");
+        navigate("/verify-email");
 
         // Reset form
         setFormData({
@@ -137,12 +138,14 @@ function SignupForm({setIsLoggedIn}) {
                     </span>
                     </label>
                 </div>
-                <button
-                    type="submit"
-                    className="bg-[#FF6F00] text-white rounded-md py-2 mt-4 hover:bg-blue-600"
-                >
-                    Create Account
-                </button>
+                <Link to="/verify-email">
+                    <button
+                        type="submit"
+                        className="bg-[#FF6F00] text-white rounded-md py-2 mt-4 hover:bg-blue-600 w-full"
+                    >
+                        Create Account
+                    </button>
+                </Link>
             </form>
         </div>
     );
