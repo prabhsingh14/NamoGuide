@@ -22,11 +22,12 @@ const TourSchema = new mongoose.Schema(
             min: [0, "Price cannot be negative"],
         },
         availableDates: [
-        {
-            type: Date,
-            required: true,
-        },
+            {
+                type: Date,
+                required: true,
+            },
         ],
+        availableSlots: { type: Number, default: 50 },
         agencyId: {
             type: String, // Shared unique identifier for the Agency (e.g., UUID or ObjectId)
             required: [true, "Agency ID is required"],
@@ -43,6 +44,13 @@ const TourSchema = new mongoose.Schema(
                 default: 0,
             },
         },
+        touristsBooked: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                required: true,
+                ref: "User",
+            },
+        ],
         createdAt: {
             type: Date,
             default: Date.now,
