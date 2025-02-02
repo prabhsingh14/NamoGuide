@@ -29,11 +29,18 @@ const Navbar = (props) => {
                 <nav className='hidden md:block'>
                     {/* routes */}
                     <div className="flex gap-x-6">
-                        <Link to='/#tours-section' className="text-gray-700 hover:text-[#FF6F00] font-medium">Discover Tours</Link>
+                        <Link to='/#tours-section' className="text-gray-700 hover:text-[#FF6F00] font-medium">Trending Tours</Link>
+                        <Link to='/hire-guide' className="text-gray-700 hover:text-[#FF6F00] font-medium">Hire Guide</Link>
                         <Link to="/contact" className="text-gray-700 hover:text-[#FF6F00] font-medium">Contact Us</Link>
                         <Link to="/blogs" className="text-gray-700 hover:text-[#FF6F00] font-medium">Blogs</Link>
-                        <Link to="/wishlist" className="text-gray-700 hover:text-[#FF6F00] font-medium">Wishlist</Link>
-                        {/* need to set, if user clicks on wishlist, he must be logged in otherwise give alert and take to login page */}
+                        <Link 
+                            to={isLoggedIn ? "/wishlist" : "/login"}
+                            onClick={() => {
+                                if (!isLoggedIn) toast.error("Login to access Wishlist!");
+                            }} 
+                            className="text-gray-700 hover:text-[#FF6F00] font-medium">
+                            Wishlist
+                        </Link>
                     </div>
                 </nav>
 
@@ -54,22 +61,20 @@ const Navbar = (props) => {
                         </>
                     )}
                     {isLoggedIn && (
-                        <Link>
+                        <div className="flex gap-x-4">
                             <Link to="/dashboard">
                                 <button className="bg-[#FF6F00] text-white px-4 py-2 rounded-md font-medium hover:bg-orange-600">
                                     Dashboard
                                 </button>
                             </Link>
-                            <Link to="/">
-                                <button className="border border-[#FF6F00] text-[#FF6F00] px-4 py-2 rounded-md font-medium hover:bg-orange-100"
+                            <button className="border border-[#FF6F00] text-[#FF6F00] px-4 py-2 rounded-md font-medium hover:bg-orange-100"
                                 onClick={() => {
                                     setIsLoggedIn(false);
                                     toast.error("Logged out!");
                                 }}>
-                                    Logout
-                                </button>
-                            </Link>
-                        </Link>
+                                Logout
+                            </button>
+                        </div>
                     )}
                 </div>
             </div>

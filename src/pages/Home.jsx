@@ -12,25 +12,25 @@ const Home = () => {
     const navigate = useNavigate();
 
     const handleSearch = (destination, selectedDate) => {
+        const encodedDestination = encodeURIComponent(destination); // Handle spaces in city names
         if(selectedButton === "tour") {
-            navigate(`/explore-tours?destination=${destination}&date=${selectedDate}`);
+            navigate(`/explore-tours?destination=${encodedDestination}&date=${selectedDate}`);
         } else if(selectedButton === "guide"){
-            navigate(`/hire-guide?destination=${destination}&date=${selectedDate}`);
+            navigate(`/hire-guide?destination=${encodedDestination}&date=${selectedDate}`);
         }
-    };
+    };    
 
     return (
         <div>
             <div className='flex flex-row mt-40'>
                 {/* part-1 */}
                 <h1 className='text-[40px] leading-[60px] ml-10 font-bold'>
-                    <span className='text-[#1976D2]'>India Awaits </span>
+                    <span className='text-[#1976D2]'>Arrive, Relax, Explore </span>
                     <span className='text-[#0000001A]'>•</span>
-                    <span className='text-[#FF6F00]'> Your Gateway 
-                        <br />
-                        to Unforgettable Travel 
-                        <br />
-                        Experiences.
+                    <br/>
+                    <span className='text-[#FF6F00]'> Punjab’s Warm Welcome 
+                    <br/>
+                    Awaits You!
                     </span>
                 </h1>
 
@@ -41,14 +41,14 @@ const Home = () => {
                         className={`font-bold rounded-[16px] p-[16px] ml-44 
                         ${selectedButton === "tour" ? "bg-[#FF6F00] text-white" : "border-[#FF6F00] border-[2px] text-black"}`}
                         onClick={() => setSelectedButton("tour")}>
-                            Book Tours
+                            Get customized Trip
                         </button>
 
                         <button
                         className={`font-bold rounded-[16px] p-[14px] ml-[16px] 
                         ${selectedButton === "guide" ? "bg-[#FF6F00] text-white" : "border-[#FF6F00] border-[2px] text-black"}`}
                         onClick={() => setSelectedButton("guide")}>
-                            Hire a Guide
+                            Find a Verified Guide
                         </button>
                     </div>
                     <br />

@@ -2,7 +2,6 @@ import React from 'react';
 import { FaAward } from 'react-icons/fa';
 import tourPackages from '../../data/tourPackagesData';
 import { Link } from 'react-router-dom';
-import { FaArrowRight } from "react-icons/fa";
 
 // Card Component
 const TourCard = ({ title, description, imgSrc, reviews, duration, price, navigation }) => {
@@ -38,19 +37,12 @@ const TourPackages = () => {
     return (
         <div className='flex flex-col items-center mt-[100px]' id='tours-section'>
             <FaAward className='text-[#FF6F00] text-[60px]' />
-            <h1 className='text-[#1976D2] font-bold text-[40px] mt-2'>Discover top tours</h1>
+            <h1 className='text-[#1976D2] font-bold text-[40px] mt-2'>Trending Tours</h1>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 w-11/12'>
                 {tourPackages.map((tourPackage, index) => (
                     <TourCard key={index} {...tourPackage} />
                 ))}
             </div>
-            <Link to="" 
-            className="mt-[50px] border-[#FF6F00] border-2 text-black py-2 px-4 rounded-lg hover:bg-[#FF6F00] hover:text-white transition-all">
-                <div className='flex flex-row items-center gap-2'>
-                    <p>Explore more Tours</p>
-                    <FaArrowRight />
-                </div>
-            </Link>
         </div>
     );
 };
