@@ -4,11 +4,11 @@ import tourPackages from '../../data/tourPackagesData';
 import { Link } from 'react-router-dom';
 
 // Card Component
-const TourCard = ({ title, description, imgSrc, reviews, duration, price, navigation }) => {
+const TourCard = ({ id, title, description, imgSrc, reviews, duration, price }) => {
     return (
         <div className='flex flex-col justify-between h-full bg-white p-4 shadow-md rounded-lg'>
             <img src={imgSrc} alt={title} className='w-full h-48 object-cover rounded-md' />
-            <h2 className='font-bold text-xl mt-2'>{title}</h2>
+            <h2 className='font-bold text-xl mt-4'>{title}</h2>
             <p className='mt-2 flex-grow'>{description}</p>
             {/* Reviews */}
             <div className='mt-2 text-sm text-gray-600'>
@@ -23,9 +23,9 @@ const TourCard = ({ title, description, imgSrc, reviews, duration, price, naviga
                 <span>{price}</span>
             </div>
             {/* Book Now Button */}
-            <Link to={navigation}>
+            <Link to={`/tours/${id}`}>
                 <button className='mt-4 bg-[#FF6F00] text-white p-2 rounded-full w-full hover:bg-[#1976D2]'>
-                    Book Now
+                    Know More
                 </button>
             </Link>
         </div>
@@ -33,11 +33,11 @@ const TourCard = ({ title, description, imgSrc, reviews, duration, price, naviga
 };
 
 // Main TourPackages Component
-const TourPackages = () => {
+const PredefinedTours = () => {
     return (
         <div className='flex flex-col items-center mt-[100px]' id='tours-section'>
             <FaAward className='text-[#FF6F00] text-[60px]' />
-            <h1 className='text-[#1976D2] font-bold text-[40px] mt-2'>Trending Tours</h1>
+            <h1 className='text-[#1976D2] font-bold text-[40px] mt-2'>Pre-defined Tours</h1>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 w-11/12'>
                 {tourPackages.map((tourPackage, index) => (
                     <TourCard key={index} {...tourPackage} />
@@ -47,4 +47,4 @@ const TourPackages = () => {
     );
 };
 
-export default TourPackages;
+export default PredefinedTours;

@@ -1,12 +1,10 @@
 import "./App.css";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, BrowserRouter } from "react-router-dom";
 import { useEffect } from "react";
 import Navbar from "./components/layout/Navbar";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import StatePage from "./pages/StatePage";
-import TourDetailsPage from "./pages/TourDetailsPage";
 import Contact from "./pages/Contact";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -15,6 +13,8 @@ import VerifyEmail from "./pages/Verify-Email"
 import ForgotPassword from "./pages/Forgot-Password";
 import UpdatePassword from "./pages/Update-Password";
 import About from "./pages/About";
+import TourDetails from "./pages/TourDetails";
+import TourDetailsPage from "./pages/TourDetailsPage";
 import "@fontsource/poppins";
 
 function App() {
@@ -36,8 +36,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/state/:stateName" element={<StatePage />} />
-        <Route path="/tours/:tourId" element={<TourDetailsPage />} />
+        <Route path="/tours/:id" element = {<TourDetails />} />
+        <Route path="/tours/:cityId/:tourId" element = {<TourDetailsPage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />

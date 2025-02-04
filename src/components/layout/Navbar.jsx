@@ -29,8 +29,7 @@ const Navbar = (props) => {
                 <nav className='hidden md:block'>
                     {/* routes */}
                     <div className="flex gap-x-6">
-                        <Link to='/#tours-section' className="text-gray-700 hover:text-[#FF6F00] font-medium">Trending Tours</Link>
-                        <Link to='/hire-guide' className="text-gray-700 hover:text-[#FF6F00] font-medium">Hire Guide</Link>
+                        <Link to='/#tours-section' className="text-gray-700 hover:text-[#FF6F00] font-medium">Pre-defined Tours</Link>
                         <Link to="/contact" className="text-gray-700 hover:text-[#FF6F00] font-medium">Contact Us</Link>
                         <Link to="/blogs" className="text-gray-700 hover:text-[#FF6F00] font-medium">Blogs</Link>
                         <Link 

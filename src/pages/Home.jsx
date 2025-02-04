@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
 import Booking from "../components/Booking";
 import Explore from "../components/tours/Explore";
-import TourPackages from '../components/tours/TourPackages';
+import TourPackages from '../components/tours/PredefinedTours';
 import ChooseUs from '../components/ChooseUs';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/layout/Footer';
@@ -41,7 +41,7 @@ const Home = () => {
                         className={`font-bold rounded-[16px] p-[16px] ml-44 
                         ${selectedButton === "tour" ? "bg-[#FF6F00] text-white" : "border-[#FF6F00] border-[2px] text-black"}`}
                         onClick={() => setSelectedButton("tour")}>
-                            Get customized Trip
+                            Get customized Tour
                         </button>
 
                         <button

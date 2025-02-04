@@ -86,7 +86,7 @@ const Explore = () => {
             <Link 
             className="text-center mt-2 bg-[#FF6F00] text-white font-bold rounded-lg py-2 w-[240px] mx-auto" 
             to="/custom-trip">
-                Plan My Perfect Punjab Trip
+                Plan My Perfect Punjab Tour
             </Link>
         </div>
     );
