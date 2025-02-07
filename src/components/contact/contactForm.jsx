@@ -8,7 +8,7 @@ const ContactForm = () => {
                 Got a vision? Let&apos;s revolutionize travel together!
             </h1>
             <p className="text-black text-lg leading-8">
-                Share your ideas or feedback to help us make Tour-Ease the ultimate platform for connecting tourists and guides.
+                Share your ideas or feedback to help us make Tour-Ease the ultimate platform for creating a seamless experience for tourists.
             </p>
             <div className="mt-7">
                 <ContactUsForm />

@@ -9,31 +9,31 @@ const Explore = () => {
 
     const images = [
         { 
-            src: "/assets/AMRITSAR-TOUR.png", 
+            src: "/assets/harmandar-sahib.png", 
             place: "Amritsar",
             description: 
             "Amritsar, the spiritual heart of Punjab, is home to Sri Harmandar Sahib, a symbol of peace and devotion. Explore the historic Jallianwala Bagh, relive history at the Partition Museum, and witness the electrifying Wagah Border ceremony. Don’t miss tasting authentic Punjabi cuisine at local dhabas and the bustling markets of Hall Bazaar. Discover the architectural beauty of Khalsa College and the serene Ram Bagh Gardens. Take a spiritual journey to Durgiana Temple, often referred to as the Silver Temple. Experience the vibrant local culture at Gobindgarh Fort with live performances. Dive into the flavors of Amritsari kulchas and lassi at iconic food joints. Wrap up your visit with a peaceful evening stroll around the illuminated Harmandar Sahib."
         },        
         { 
-            src: "/assets/patiala.png", 
+            src: "/assets/moti-bagh-gurudwara-patiala.jpg", 
             place: "Patiala",
             description: 
             "Patiala, known for its royal heritage, boasts the grand Qila Mubarak and the beautiful Sheesh Mahal, adorned with intricate mirror work and frescoes. Stroll through the lush Baradari Gardens, perfect for leisurely walks amidst vibrant flora. Admire the architectural marvel of Moti Bagh Palace, now housing a prestigious sports institute and a museum. Immerse yourself in the city’s vibrant culture with traditional folk music and bhangra performances. Experience the charm of Punjabi fashion with Patiala salwars and handcrafted juttis. Savor local delicacies like Patiala lassi, rich tandoori dishes, and authentic Punjabi sweets at bustling markets like Adalat Bazaar."
         },
         { 
-            src: "/assets/ludhiana.png", 
+            src: "/assets/mandir.avif", 
             place: "Ludhiana",
             description: 
             "Ludhiana, Punjab’s industrial hub, blends modernity with rich heritage, offering a dynamic urban experience. Visit the historic Lodhi Fort, a testament to Mughal architecture, and find tranquility at the expansive Nehru Rose Garden with over 1,600 varieties of roses. Explore the captivating Punjab Agricultural University Museum to witness rural Punjab’s legacy. Enjoy boating at Rakh Bagh Park and unwind amidst lush greenery. Discover the rural charm of Phillaur Fort and the spiritual serenity of Gurudwara Dukh Niwaran Sahib. Dive into Ludhiana’s food scene with spicy chaats, stuffed parathas, and creamy kulfis, while shopping for premium woolen garments and hosiery products."
         },
         { 
-            src: "/assets/jalandhar.png", 
+            src: "/assets/jalandhar.webp", 
             place: "Jalandhar",
             description: 
             "Jalandhar offers a vibrant mix of spirituality, history, and entertainment. Visit Devi Talab Mandir, one of the oldest temples, with a sacred tank believed to have spiritual significance. Seek peace at Gurudwara Talhan Sahib, renowned for its serene ambiance. Enjoy thrilling rides at Wonderland Theme Park, perfect for family fun, and delve into history at the Shaheed-e-Azam Museum, dedicated to freedom fighters like Bhagat Singh. Experience traditional crafts at local markets, famous for sports goods and Punjabi footwear (juttis). Savor delicious street food like chole bhature, jalebis, and kulchas while exploring Model Town’s bustling streets."
         },
         { 
-            src: "/assets/chandigarh.png", 
+            src: "/assets/rock-garden.jpeg", 
             place: "Chandigarh",
             description: 
             "Chandigarh, the city beautiful, charms with its modern architecture, natural beauty, and vibrant urban life. Explore the artistic Rock Garden, an extraordinary space crafted from industrial and household waste. Relax at Sukhna Lake with peaceful boat rides and scenic views of the Shivalik Hills. Wander through the fragrant Rose Garden, Asia’s largest, featuring over 1,600 rose species. Discover rich history and art at the Government Museum & Art Gallery. Indulge in street food delights at Sector 17 Plaza, bustling with shops and cafes. Take a stroll along the clean, tree-lined boulevards, and experience Chandigarh’s lively nightlife at cafes, clubs, and rooftop lounges."
@@ -62,14 +62,14 @@ const Explore = () => {
             </div>
 
             {/* Content Section */}
-            <div className="mt-4 flex flex-row">
+            <div className="mt-6 flex flex-row">
                 {/* Slider Component */}
                 <div className="w-1/2 relative">
                     <Slider {...settings}>
                         {images.map((image, index) => (
                             <div key={index}>
                                 <img src={image.src} alt={image.place} 
-                                    className="w-full h-auto rounded-lg translate-y-[-25px]" 
+                                    className="w-[700px] h-[500px] rounded-lg" 
                                 />
                             </div>
                         ))}
@@ -84,7 +84,7 @@ const Explore = () => {
             </div>
 
             <Link 
-            className="text-center mt-2 bg-[#FF6F00] text-white font-bold rounded-lg py-2 w-[240px] mx-auto" 
+            className="text-center mt-8 bg-[#FF6F00] text-white font-bold rounded-lg py-2 w-[240px] mx-auto" 
             to="/custom-trip">
                 Plan My Perfect Punjab Tour
             </Link>

@@ -3,7 +3,7 @@ const cityData = [
         id: 1,
         cityName: "Amritsar",
         tagline: "The Golden City of Spirituality and Timeless Flavor!",
-        mainImage: "../../assets/harmandar-sahib-tour-card.png",
+        mainImage: "../../assets/amritsar-main.webp",
         
         tours: [
             {
@@ -48,7 +48,7 @@ const cityData = [
             },
             {
                 id: 103,
-                tourImage: "../../assets/amritsar-market.webp",
+                tourImage: "../../assets/amritsar-market.jpg",
                 tourTitle: "Amritsar City and Market Tour",
                 tourDescription: "Explore the bustling markets of Amritsar, known for its vibrant culture and local crafts. Visit the famous Katra Jaimal Singh market, offering traditional Punjabi garments and accessories. Enjoy the local delicacies along the way.",
                 tourPrice: "₹1,800",
@@ -72,7 +72,7 @@ const cityData = [
         id: 2,
         cityName: "Patiala",
         tagline: "Royal Heritage of the Punjab Kingdom",
-        mainImage: "../../assets/patiala-main.webp",
+        mainImage: "../../assets/moti-bagh-palace.webp",
 
         tours: [
             {
@@ -96,25 +96,45 @@ const cityData = [
                 }
             },
             {
-                id: 202,
-                tourImage: "../../assets/patiala-local-market.webp",
-                tourTitle: "Patiala Cultural Walk",
-                tourDescription: "Immerse yourself in the cultural vibrance of Patiala with local markets and cuisine. Explore historical sites like the Sheesh Mahal and the Moti Bagh Palace. Taste the royal Patiala food and learn about its rich cultural heritage.",
-                tourPrice: "₹2,000",
-                tourReviews: "4.6 (800 reviews)",
-                tourDuration: "1 day",
-                guideAvailability: "Available",
-                allowedItems: ["Camera", "Comfortable Shoes"],
-                notAllowedItems: ["Pets", "Food"],
-                activities: ["Cultural Learning", "Sightseeing", "Food Tasting"],
-                partnerAgency: {
-                    name: "Patiala Heritage Tours",
-                    address: "Qila Mubarak Complex, Patiala, Punjab, India",
-                    email: "info@patialaheritage.com",
-                    phone: "+91 87654 32100",
-                    description: "Experience the regal history of Patiala with expert heritage tours."
+                "id": 202,
+                "tourImage": "../../assets/moti-bagh-gurudwara-patiala.jpg",
+                "tourTitle": "Moti Bagh Gurudwara Tour",
+                "tourDescription": "Experience spiritual serenity at Moti Bagh Gurudwara in Patiala. Explore its historical significance, admire the architectural beauty, and learn about Sikh heritage. Enjoy nearby cultural attractions and relish authentic Patiala cuisine.",
+                "tourPrice": "₹2,000",
+                "tourReviews": "4.6 (800 reviews)",
+                "tourDuration": "1 day",
+                "guideAvailability": "Available",
+                "allowedItems": ["Camera", "Comfortable Shoes to be kept in 'Jora Ghar'", "Head Covering"],
+                "notAllowedItems": ["Pets", "Non-Vegetarian Food", "Photography inside Gurudwara"],
+                "activities": ["Spiritual Experience", "Historical Learning", "Local Exploration"],
+                "partnerAgency": {
+                    "name": "Patiala Heritage Tours",
+                    "address": "Qila Mubarak Complex, Patiala, Punjab, India",
+                    "email": "info@patialaheritage.com",
+                    "phone": "+91 87654 32100",
+                    "description": "Experience the spiritual and regal history of Patiala with expert heritage tours."
                 }
-            },
+            },            
+            {
+                "id": 202,
+                "tourImage": "../../assets/dukhniwaran-sahib-gurudwara.webp",
+                "tourTitle": "Dukhniwaran Sahib Gurudwara Tour",
+                "tourDescription": "Experience spiritual peace at Dukhniwaran Sahib Gurudwara in Patiala. Learn about its historical significance, witness the divine ambiance, and participate in soulful kirtan. Explore nearby cultural attractions and savor authentic Patiala cuisine.",
+                "tourPrice": "₹2,000",
+                "tourReviews": "4.6 (800 reviews)",
+                "tourDuration": "1 day",
+                "guideAvailability": "Available",
+                "allowedItems": ["Camera", "Comfortable Shoes to be kept in 'Jora Ghar'", "Head Covering"],
+                "notAllowedItems": ["Pets", "Non-Vegetarian Food", "Photography inside Gurudwara"],
+                "activities": ["Spiritual Experience", "Historical Learning", "Local Exploration"],
+                "partnerAgency": {
+                    "name": "Patiala Heritage Tours",
+                    "address": "Qila Mubarak Complex, Patiala, Punjab, India",
+                    "email": "info@patialaheritage.com",
+                    "phone": "+91 87654 32100",
+                    "description": "Experience the spiritual and regal history of Patiala with expert heritage tours."
+                }
+            },            
             {
                 id: 203,
                 tourImage: "../../assets/patiala-royal-gardens.png",
@@ -141,12 +161,12 @@ const cityData = [
         id: 3,
         cityName: "Jalandhar",
         tagline: "Vibrant City with a Blend of Culture",
-        mainImage: "../../assets/jalandhar-main.jpg",
+        mainImage: "../../assets/devi-talab-mandir.webp",
 
         tours: [
             {
                 id: 301,
-                tourImage: "../../assets/jalandhar-main.jpg",
+                tourImage: "../../assets/devi-talab-mandir.webp",
                 tourTitle: "Devi Talab Mandir Visit",
                 tourDescription: "Visit the ancient Devi Talab Mandir, one of the holiest Hindu temples in Punjab. Discover its rich history, beautiful architecture, and sacred ponds. Experience the spiritual atmosphere and learn about the religious practices.",
                 tourPrice: "₹2,800",
@@ -166,7 +186,7 @@ const cityData = [
             },
             {
                 id: 302,
-                tourImage: "../../assets/jalandhar-sports-market.jpg",
+                tourImage: "../../assets/sports.webp",
                 tourTitle: "Sports Industry Heritage Tour",
                 tourDescription: "Explore Jalandhar’s renowned sports goods industry with a behind-the-scenes factory tour. Learn about the city's legacy in producing high-quality sports equipment. Meet the craftsmen and experience the process of manufacturing sporting goods.",
                 tourPrice: "₹3,200",
@@ -186,7 +206,7 @@ const cityData = [
             },
             {
                 id: 303,
-                tourImage: "../../assets/jalandhar-card.webp",
+                tourImage: "../../assets/jalandhar.jpg",
                 tourTitle: "Jalandhar Cultural Heritage Tour",
                 tourDescription: "Discover the rich culture of Jalandhar, from its folk music to its traditional crafts. Visit the local art galleries, witness live performances of traditional Punjabi music, and explore the vibrant local markets.",
                 tourPrice: "₹2,500",
@@ -215,7 +235,7 @@ const cityData = [
         tours: [
             {
                 id: 401,
-                tourImage: "../../assets/keshgarh-sahib.webp",
+                tourImage: "../../assets/anandpur-sahib-card1.jpg",
                 tourTitle: "Takht Sri Kesgarh Sahib Tour",
                 tourDescription: "Experience the spiritual aura of Takht Sri Kesgarh Sahib, one of the five Takhts of Sikhism. Explore its rich history, sacred monuments, and the holy Gurdwara. Learn about the birth of Khalsa and its significance in Sikhism.",
                 tourPrice: "₹3,000",

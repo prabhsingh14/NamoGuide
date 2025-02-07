@@ -15,6 +15,7 @@ import UpdatePassword from "./pages/Update-Password";
 import About from "./pages/About";
 import TourDetails from "./pages/TourDetails";
 import TourDetailsPage from "./pages/TourDetailsPage";
+import GuidePage from "./pages/GuidePage";
 import "@fontsource/poppins";
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/tours/:id" element = {<TourDetails />} />
         <Route path="/tours/:cityId/:tourId" element = {<TourDetailsPage />} />
+        <Route path="/hire-guide" element = {<GuidePage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
