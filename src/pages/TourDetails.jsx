@@ -40,12 +40,12 @@ const TourDetails = () => {
                         {city.tours.map(tour => (
                             <div key={tour.id} className='bg-white p-6 shadow-md rounded-lg flex'>
                                 {/* Image on the left */}
-                                <img src={tour.tourImage} alt={tour.tourTitle} className='w-[350px] h-[200px] object-cover rounded-md mr-6' />
+                                <img src={tour.tourImage} alt={tour.tourTitle} className='w-[500px] h-[200px] object-cover rounded-md mr-6' />
 
                                 {/* Content on the right */}
                                 <div className='flex flex-col justify-between'>
                                     <h3 className='font-bold text-xl'>{tour.tourTitle}</h3>
-                                    <p className='text-sm text-gray-600'>{tour.tourDescription}</p>
+                                    <p className='text-sm text-gray-600 mt-2'>{tour.tourDescription}</p>
 
                                     <div className='flex gap-4'>
                                         <div className='flex items-center mt-2'>
