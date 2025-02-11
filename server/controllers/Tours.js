@@ -69,10 +69,23 @@ exports.searchTours = async (req, res) => {
 };
 
 exports.bookTour = async (req, res) => {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
     try {
         const { tourId, userId, paymentDetails } = req.body;
-        const tour = await Tour.findById(tourId);
-        
+
+        // Validate user existence
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ 
+                success: false, 
+                message: "User not found" 
+            });
+        }
+
+        // Validate tour existence
+        const tour = await Tour.findById(tourId).session(session);
         if (!tour) {
             return res.status(404).json({ 
                 success: false, 
@@ -80,6 +93,7 @@ exports.bookTour = async (req, res) => {
             });
         }
 
+        // Check available slots
         if (tour.availableSlots <= 0) {
             return res.status(400).json({ 
                 success: false, 
@@ -87,27 +101,46 @@ exports.bookTour = async (req, res) => {
             });
         }
 
+        // Check if user already booked this tour
+        const existingBooking = await Booking.findOne({ userId, tourId }).session(session);
+        if (existingBooking) {
+            return res.status(400).json({
+                success: false,
+                message: "You have already booked this tour",
+            });
+        }
+
+        // Create new booking
         const booking = new Booking({
             userId,
             tourId,
             paymentDetails,
-            status: "Pending", // Initially pending, can be updated later
+            status: "Pending", // Initially pending
         });
 
-        await booking.save();
+        await booking.save({ session });
 
+        // Deduct slot count
         tour.availableSlots -= 1;
-        await tour.save();
+        await tour.save({ session });
+
+        await session.commitTransaction();
+        session.endSession();
 
         res.status(201).json({ 
             success: true, 
             message: "Tour booked successfully", 
             data: booking 
         });
+
     } catch (error) {
+        await session.abortTransaction();
+        session.endSession();
+
         res.status(500).json({ 
             success: false, 
-            message: "Failed to book tour", error 
+            message: "Failed to book tour", 
+            error: error.message 
         });
     }
 };

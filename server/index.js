@@ -49,3 +49,5 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
 	console.log(`App is listening at ${PORT}`);
 });
+
+// chat system, blogs, notify feature pending

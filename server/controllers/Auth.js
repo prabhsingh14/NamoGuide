@@ -1,12 +1,38 @@
 const bcrypt = require("bcrypt")
 const User = require("../models/User")
 const OTP = require("../models/OTP")
-const jwt = require("jsonwebtoken")
 const otpGenerator = require("otp-generator")
 const mailSender = require("../utils/mailSender")
 const { passwordUpdated } = require("../mail/passwordUpdate")
 const Profile = require("../models/Profile")
 require("dotenv").config()
+
+const generateAccessAndRefreshTokens = async(userId) => {
+    try{
+        const user = await User.findById(userId)
+        if(!user){
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            })
+        }
+
+        const accessToken = user.generateAccessToken()
+        const refreshToken = user.generateRefreshToken()
+
+        user.refreshToken = refreshToken
+        await user.save({ validateBeforeSave: false })
+
+        return {accessToken, refreshToken}
+    } catch(error){
+        console.error("Error occurred while generating access and refresh tokens:", error)
+        return res.status(500).json({
+            success: false,
+            message: "Error occurred while generating access and refresh tokens",
+            error: error.message
+        })
+    }
+}
 
 exports.signup = async (req, res) => {
     try {
@@ -113,37 +139,31 @@ exports.login = async (req, res) => {
                 message: `User is not Registered with Us Please signup to Continue`,
             })
         }
-
-        // Generate JWT token and Compare Password
-        if (await bcrypt.compare(password, user.password)) {
-        const token = jwt.sign(
-            { email: user.email, id: user._id },
-            process.env.JWT_SECRET,
-            {
-                expiresIn: "24h",
-            }
-        )
-
-        // Save token to user document in database
-        user.token = token
-        user.password = undefined
-
-        const options = {
-            expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-            httpOnly: true,
-        }
-        res.cookie("token", token, options).status(200).json({
-            success: true,
-            token,
-            user,
-            message: `User Login Success`,
-        })
-        } else {
+        
+        const isPasswordValid = await user.isPasswordCorrect(password)
+        if(!isPasswordValid){
             return res.status(401).json({
                 success: false,
                 message: `Password is incorrect`,
             })
         }
+
+        const {accessToken, refreshToken} = await generateAccessAndRefreshTokens(user._id)
+        const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
+
+        const options = {
+            expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+            httpOnly: true,
+            secure: true
+        }
+
+        return res.status(200).cookie("accessToken", accessToken, options).cookie("refreshToken", refreshToken, options).json({
+            success: true,
+            user: loggedInUser,
+            accessToken,
+            refreshToken,
+            message: `User logged in successfully`,
+        })
     } catch (error) {
         console.error(error)
         return res.status(500).json({
@@ -242,6 +262,33 @@ exports.changePassword = async (req, res) => {
             success: false,
             message: "Error occurred while updating password",
             error: error.message,
+        })
+    }
+}
+
+exports.logout = async (req, res) => {
+    try{
+        await User.findByIdAndUpdate(req.user._id, {
+            $set: {
+                refreshToken: undefined
+            },
+        },{ new: true })
+    
+        const options = {
+            httpOnly: true,
+            secure: true
+        }
+    
+        return res.status(200).clearCookie("accessToken", options).clearCookie("refreshToken", options).json({
+            success: true,
+            message: "User logged out successfully"
+        })
+    } catch(error){
+        console.error("Error occurred while logging out:", error)
+        return res.status(500).json({
+            success: false,
+            message: "Error occurred while logging out",
+            error: error.message
         })
     }
 }

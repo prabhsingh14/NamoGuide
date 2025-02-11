@@ -6,6 +6,7 @@ const {
     signup,
     sendotp,
     changePassword,
+    logout,
 } = require("../controllers/Auth")
 
 const {
@@ -21,5 +22,6 @@ router.post("/verify-email", sendotp)
 router.post("/update-password", auth, changePassword)
 router.post("/forgot-password-token", resetPasswordToken)
 router.post("/forgot-password", resetPassword)
+router.post("/logout", logout)
 
 module.exports = router

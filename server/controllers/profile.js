@@ -1,3 +1,4 @@
+const Booking = require("../models/Booking")
 const Profile = require("../models/Profile")
 const Tours = require("../models/Tours")
 const User = require("../models/User")
@@ -143,3 +144,53 @@ exports.getPastBookings = async (req, res) => {
         });
     }
 };
+
+exports.cancelBooking = async (req, res) => {
+    // refund ka scene baad m dekhte
+    try{
+        const { bookingId } = req.params
+        const touristId = req.user.id
+
+        const booking = await Booking.findById(bookingId)
+        if(!booking){
+            return res.status(404).json({
+                success: false,
+                message: "Booking not found"
+            })
+        }
+
+        if(booking.touristId.toString() !== touristId){
+            return res.status(403).json({
+                success: false,
+                message: "You are not authorized to cancel this booking"
+            })
+        }
+
+        if(booking.status === "Cancelled"){
+            return res.status(400).json({
+                success: false,
+                message: "Booking has already been cancelled"
+            })
+        }
+
+        booking.status = "Cancelled";
+        await booking.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Booking cancelled successfully"
+        })
+    } catch(error){
+        console.error("Error cancelling booking:", error)
+        return res.status(500).json({
+            success: false,
+            message: "An error occurred while cancelling booking",
+            error: error.message
+        })
+    }
+}
+
+// update booking, AI recommend system, wishlist pending
+exports.updateBooking = async (req, res) => {
+
+}
