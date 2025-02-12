@@ -145,8 +145,8 @@ exports.getPastBookings = async (req, res) => {
     }
 };
 
+// refund system pending, remove the user from Tours model
 exports.cancelBooking = async (req, res) => {
-    // refund ka scene baad m dekhte
     try{
         const { bookingId } = req.params
         const touristId = req.user.id
@@ -192,5 +192,5 @@ exports.cancelBooking = async (req, res) => {
 
 // update booking, AI recommend system, wishlist pending
 exports.updateBooking = async (req, res) => {
-
+    //also handle pricing and payment
 }

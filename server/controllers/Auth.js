@@ -5,6 +5,7 @@ const otpGenerator = require("otp-generator")
 const mailSender = require("../utils/mailSender")
 const { passwordUpdated } = require("../mail/passwordUpdate")
 const Profile = require("../models/Profile")
+const jwt = require("jsonwebtoken")
 require("dotenv").config()
 
 const generateAccessAndRefreshTokens = async(userId) => {
@@ -293,4 +294,57 @@ exports.logout = async (req, res) => {
     }
 }
 
-// refresh access token pending
+exports.refreshAccessToken = async (req, res) => {
+    const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
+    if(!incomingRefreshToken){
+        return res.status(401).json({ 
+            success: false, 
+            message: "Refresh token not found" 
+        })
+    }
+
+    try {
+        const decodedToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET)
+        if(!decodedToken){
+            return res.status(401).json({
+                success: false,
+                message: "Invalid refresh token"
+            })
+        }
+    
+        const user = await User.findById(decodedToken?._id)
+        if(!user){
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            })
+        }
+    
+        if(user.refreshToken !== incomingRefreshToken){
+            return res.status(401).json({
+                success: false,
+                message: "Invalid refresh token"
+            })
+        }
+    
+        const options = {
+            httpOnly: true,
+            secure: true
+        }
+    
+        const {accessToken, newRefreshToken} = await generateAccessAndRefreshTokens(user._id)
+    
+        return res.status(200).cookie("accessToken", accessToken, options).cookie("refreshToken", newRefreshToken, options).json({
+            success: true,
+            accessToken,
+            refreshToken: newRefreshToken
+        })
+    } catch (error) {
+        console.error("Error occurred while refreshing access token:", error)
+        return res.status(500).json({
+            success: false,
+            message: "Error occurred while refreshing access token",
+            error: error.message
+        })
+    }
+}
