@@ -4,9 +4,7 @@ const crypto = require("crypto")
 const User = require("../models/User")
 const mailSender = require("../utils/mailSender")
 const mongoose = require("mongoose")
-const { tourBookedEmail } = require("../mail/tourBookedEmail")
 const { paymentSuccessEmail } = require("../mail/paymentSuccessEmail")
-const Booking = require("../models/Booking")
 
 exports.capturePayment = async (req, res) => {
     const { tours } = req.body
@@ -160,95 +158,5 @@ exports.sendPaymentSuccessEmail = async (req, res) => {
             success: false, 
             message: "Could not send email" 
         })
-    }
-}
-
-exports.bookTourists = async (tours, userId, date, numberOfPeople, res) => {
-    if (!tours || !userId || !date || !numberOfPeople) {
-        return res.status(400).json({ 
-            success: false, 
-            message: "Please provide all details" 
-        })
-    }
-
-    const session = await mongoose.startSession();
-    session.startTransaction(); // Start a new transaction, so that we can rollback if any error occurs
-
-    try {
-        for (const tourId of tours) {
-            const bookedTour = await Tours.findOneAndUpdate(
-                { _id: tourId },
-                { $push: { touristsBooked: userId } },
-                { new: true }
-            )
-    
-            if (!bookedTour) {
-                await session.abortTransaction();
-                session.endSession();
-    
-                return res.status(500).json({ 
-                    success: false, 
-                    error: "Tour not found" 
-                })
-            }
-            
-            const bookedTourist = await User.findByIdAndUpdate(
-                userId,
-                {
-                    $push: {
-                        tours: tourId,
-                    },
-                },
-                { new: true, session }
-            );
-    
-            if(!bookedTourist) {
-                await session.abortTransaction();
-                session.endSession();
-    
-                return res.status(500).json({ 
-                    success: false, 
-                    error: "User not found" 
-                })
-            }
-            
-            const newBooking = new Booking({
-                userId,
-                tourId,
-                date,
-                numberOfPeople,
-                paymentDetails: {},
-                status: "Confirmed",
-            });
-
-            await newBooking.save({ session });
-
-            await mailSender(
-                bookedTourist.email,
-                `Successfully Enrolled into ${bookedTour.tourName}`,
-                tourBookedEmail(
-                    bookedTour.tourName,
-                    `${bookedTourist.firstName} ${bookedTourist.lastName}`
-                )
-            )
-        }
-
-        await session.commitTransaction();
-        session.endSession();
-
-        return res.status(200).json({
-            success: true,
-            message: "Booking confirmed!",
-        })
-    } catch (error) {
-        await session.abortTransaction();
-        session.endSession();
-        console.error("Transaction error", error);
-
-        return res.status(500).json({
-            success: false,
-            message: "Something went wrong...",
-            error: error.message,
-        });
     }
 }
