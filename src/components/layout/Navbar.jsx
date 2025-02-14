@@ -21,7 +21,7 @@ const Navbar = (props) => {
                 {/* logo */}
                 <Link to={'/'} className='flex flex-col' style={{ fontFamily: '"Segoe Script", cursive' }}>
                     <p className='text-[#1976D2] text-[32px] leading-[51.39px] font-bold'>
-                        Tour<span className='text-[#FF6F00]'>Ease</span>
+                        Smooth<span className='text-[#FF6F00]'>Trips</span>
                     </p>
                     <p className='text-[12px] leading-[19.27px]'>Not just a tour, but a memory!</p>
                 </Link>
@@ -29,17 +29,10 @@ const Navbar = (props) => {
                 <nav className='hidden md:block'>
                     {/* routes */}
                     <div className="flex gap-x-6">
-                        <Link to='/#tours-section' className="text-gray-700 hover:text-[#FF6F00] font-medium">Pre-defined Tours</Link>
-                        <Link to="/contact" className="text-gray-700 hover:text-[#FF6F00] font-medium">Contact Us</Link>
+                        <Link to='/stories' className="text-gray-700 hover:text-[#FF6F00] font-medium">Stories</Link>
                         <Link to="/blogs" className="text-gray-700 hover:text-[#FF6F00] font-medium">Blogs</Link>
-                        <Link 
-                            to={isLoggedIn ? "/wishlist" : "/login"}
-                            onClick={() => {
-                                if (!isLoggedIn) toast.error("Login to access Wishlist!");
-                            }} 
-                            className="text-gray-700 hover:text-[#FF6F00] font-medium">
-                            Wishlist
-                        </Link>
+                        <Link to='/platform-review' className="text-gray-700 hover:text-[#FF6F00] font-medium">Review Our Platform</Link>
+                        <Link to="/contact" className="text-gray-700 hover:text-[#FF6F00] font-medium">Contact Us</Link>
                     </div>
                 </nav>
 

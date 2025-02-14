@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { FaSearch } from "react-icons/fa";
 
 const Booking = ({ handleSearch }) => { 
     const [selectedDate, setSelectedDate] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const [selectedDestinations, setSelectedDestinations] = useState([]); // Store multiple destinations
-    const destinations = ["Amritsar", "Chandigarh", "Patiala", "Ludhiana", "Jalandhar"];
+    const destinations = ["Agra", "Amritsar", "Anandpur Sahib", "Rishikesh", "Patiala", "Vrindavan"];
     const dropdownRef = useRef(null);
 
     // Handle click outside to close dropdown
@@ -80,10 +79,10 @@ const Booking = ({ handleSearch }) => {
 
                 {/* Search Button */}
                 <button 
-                    className="ml-2 p-2 border-[#FF6F00] border-[2px] text-black rounded-md"
+                    className="ml-2 p-2 bg-[#FF6F00] text-white rounded-xl"
                     onClick={handleClickSearch}
                 >
-                    <FaSearch size={20} />
+                    Get Guide
                 </button>
             </div>
         </>

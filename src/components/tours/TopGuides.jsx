@@ -1,14 +1,15 @@
 import React from 'react';
 import { FaAward } from 'react-icons/fa';
-import tourPackages from '../../data/tourPackagesData';
+import topGuidesData from '../../data/topGuidesData';
 import { Link } from 'react-router-dom';
 
 // Card Component
-const TourCard = ({ id, title, description, imgSrc, reviews, duration, price }) => {
+const GuideCard = ({ id, name, place, description, imgSrc, reviews, duration, price }) => {
     return (
         <div className='flex flex-col justify-between h-full bg-white p-4 shadow-md rounded-lg'>
-            <img src={imgSrc} alt={title} className='w-full h-48 object-cover rounded-md' />
-            <h2 className='font-bold text-xl mt-4'>{title}</h2>
+            <img src={imgSrc} alt={name} className='w-full h-48 object-cover object-top rounded-md' />
+            <h2 className='font-bold text-xl mt-4'>{name}</h2>
+            <p className='mt-2'>Available for <span className='font-bold'>{place}</span></p>
             <p className='mt-2 flex-grow'>{description}</p>
             {/* Reviews */}
             <div className='mt-2 text-sm text-gray-600'>
@@ -25,7 +26,7 @@ const TourCard = ({ id, title, description, imgSrc, reviews, duration, price }) 
             {/* Book Now Button */}
             <Link to={`/tours/${id}`}>
                 <button className='mt-4 bg-[#FF6F00] text-white p-2 rounded-full w-full hover:bg-[#1976D2]'>
-                    Know More
+                    Book Now
                 </button>
             </Link>
         </div>
@@ -33,18 +34,18 @@ const TourCard = ({ id, title, description, imgSrc, reviews, duration, price }) 
 };
 
 // Main TourPackages Component
-const PredefinedTours = () => {
+const TopGuides = () => {
     return (
         <div className='flex flex-col items-center mt-[100px]' id='tours-section'>
             <FaAward className='text-[#FF6F00] text-[60px]' />
-            <h1 className='text-[#1976D2] font-bold text-[40px] mt-2'>Pre-defined Tours</h1>
+            <h1 className='text-[#1976D2] font-bold text-[40px] mt-2'>Meet the Top Guides</h1>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 w-11/12'>
-                {tourPackages.map((tourPackage, index) => (
-                    <TourCard key={index} {...tourPackage} />
+                {topGuidesData.map((topGuides, index) => (
+                    <GuideCard key={index} {...topGuides} />
                 ))}
             </div>
         </div>
     );
 };
 
-export default PredefinedTours;
+export default TopGuides;

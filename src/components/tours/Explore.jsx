@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -9,31 +8,31 @@ const Explore = () => {
 
     const images = [
         { 
-            src: "/assets/harmandar-sahib.png", 
+            src: "/assets/amritsar.webp", 
             place: "Amritsar",
             description: 
             "Amritsar, the spiritual heart of Punjab, is home to Sri Harmandar Sahib, a symbol of peace and devotion. Explore the historic Jallianwala Bagh, relive history at the Partition Museum, and witness the electrifying Wagah Border ceremony. Don’t miss tasting authentic Punjabi cuisine at local dhabas and the bustling markets of Hall Bazaar. Discover the architectural beauty of Khalsa College and the serene Ram Bagh Gardens. Take a spiritual journey to Durgiana Temple, often referred to as the Silver Temple. Experience the vibrant local culture at Gobindgarh Fort with live performances. Dive into the flavors of Amritsari kulchas and lassi at iconic food joints. Wrap up your visit with a peaceful evening stroll around the illuminated Harmandar Sahib."
         },        
         { 
-            src: "/assets/moti-bagh-gurudwara-patiala.jpg", 
-            place: "Patiala",
+            src: "/assets/taj-mahal.webp", 
+            place: "Agra",
             description: 
-            "Patiala, known for its royal heritage, boasts the grand Qila Mubarak and the beautiful Sheesh Mahal, adorned with intricate mirror work and frescoes. Stroll through the lush Baradari Gardens, perfect for leisurely walks amidst vibrant flora. Admire the architectural marvel of Moti Bagh Palace, now housing a prestigious sports institute and a museum. Immerse yourself in the city’s vibrant culture with traditional folk music and bhangra performances. Experience the charm of Punjabi fashion with Patiala salwars and handcrafted juttis. Savor local delicacies like Patiala lassi, rich tandoori dishes, and authentic Punjabi sweets at bustling markets like Adalat Bazaar."
+            "Agra, home to the iconic Taj Mahal, is a city rich in Mughal history and architectural marvels. Visit the majestic Agra Fort, a UNESCO World Heritage site offering stunning views of the Yamuna River. Explore Fatehpur Sikri, the abandoned Mughal capital with grand palaces and the renowned Buland Darwaza. Witness the beauty of Mehtab Bagh, a serene garden offering a mesmerizing sunset view of the Taj Mahal. Walk through Kinari Bazaar for exquisite marble handicrafts and traditional Mughlai cuisine, including the famous Agra petha and succulent kebabs. A boat ride on the Yamuna at dawn completes the magical experience of Agra."
         },
         { 
-            src: "/assets/mandir.avif", 
-            place: "Ludhiana",
+            src: "/assets/vrindavan.webp", 
+            place: "Vrindavan, Mathura",
             description: 
-            "Ludhiana, Punjab’s industrial hub, blends modernity with rich heritage, offering a dynamic urban experience. Visit the historic Lodhi Fort, a testament to Mughal architecture, and find tranquility at the expansive Nehru Rose Garden with over 1,600 varieties of roses. Explore the captivating Punjab Agricultural University Museum to witness rural Punjab’s legacy. Enjoy boating at Rakh Bagh Park and unwind amidst lush greenery. Discover the rural charm of Phillaur Fort and the spiritual serenity of Gurudwara Dukh Niwaran Sahib. Dive into Ludhiana’s food scene with spicy chaats, stuffed parathas, and creamy kulfis, while shopping for premium woolen garments and hosiery products."
+            "Vrindavan, the sacred town associated with Lord Krishna, is a spiritual haven filled with divine energy. Visit the iconic Banke Bihari Temple, where Krishna’s enchanting idol captivates devotees. Explore the ISKCON Temple, a serene space dedicated to Krishna consciousness. Experience the vibrant culture at Prem Mandir, an architectural marvel illuminated beautifully at night. Walk along the ghats of the Yamuna River, taking in the peaceful atmosphere. Participate in the mesmerizing evening aarti at Keshi Ghat. Indulge in local sweets like peda and rabri while exploring bustling markets selling Krishna-themed souvenirs."
         },
         { 
-            src: "/assets/jalandhar.webp", 
-            place: "Jalandhar",
+            src: "/assets/india-gate.webp", 
+            place: "New Delhi",
             description: 
-            "Jalandhar offers a vibrant mix of spirituality, history, and entertainment. Visit Devi Talab Mandir, one of the oldest temples, with a sacred tank believed to have spiritual significance. Seek peace at Gurudwara Talhan Sahib, renowned for its serene ambiance. Enjoy thrilling rides at Wonderland Theme Park, perfect for family fun, and delve into history at the Shaheed-e-Azam Museum, dedicated to freedom fighters like Bhagat Singh. Experience traditional crafts at local markets, famous for sports goods and Punjabi footwear (juttis). Savor delicious street food like chole bhature, jalebis, and kulchas while exploring Model Town’s bustling streets."
+            "New Delhi, India's bustling capital, blends history, culture, and modernity. Marvel at the grand India Gate, a war memorial symbolizing national pride. Explore the majestic Red Fort, a UNESCO-listed Mughal fortress, and admire the intricate carvings of Humayun’s Tomb. Pay homage at Raj Ghat, the memorial of Mahatma Gandhi. Wander through the vibrant streets of Chandni Chowk, savoring Delhi’s famous street food like chole bhature and parathas. Experience spirituality at Akshardham Temple and the Lotus Temple’s tranquil ambiance. Shop at Connaught Place or Dilli Haat for handicrafts, and end your day at Hauz Khas Village, known for its cafes and nightlife."
         },
         { 
-            src: "/assets/rock-garden.jpeg", 
+            src: "/assets/chandigarh.webp", 
             place: "Chandigarh",
             description: 
             "Chandigarh, the city beautiful, charms with its modern architecture, natural beauty, and vibrant urban life. Explore the artistic Rock Garden, an extraordinary space crafted from industrial and household waste. Relax at Sukhna Lake with peaceful boat rides and scenic views of the Shivalik Hills. Wander through the fragrant Rose Garden, Asia’s largest, featuring over 1,600 rose species. Discover rich history and art at the Government Museum & Art Gallery. Indulge in street food delights at Sector 17 Plaza, bustling with shops and cafes. Take a stroll along the clean, tree-lined boulevards, and experience Chandigarh’s lively nightlife at cafes, clubs, and rooftop lounges."
@@ -57,7 +56,7 @@ const Explore = () => {
         <div className="flex flex-col bg-white rounded-lg p-6 shadow-md mt-[80px] w-full mx-auto max-w-7xl overflow-hidden">
             {/* Title */}
             <div className="flex flex-col text-center font-bold text-[25px] gap-2">
-                <span className="text-[#1976D2]">Explore Punjab’s Heart Through the Eyes of Locals</span>
+                <span className="text-[#1976D2]">Explore India's Heart Through the Eyes of Locals</span>
                 <span className="text-[#FF6F00]">Where Every Moment Becomes a Story</span>
             </div>
 
@@ -68,9 +67,11 @@ const Explore = () => {
                     <Slider {...settings}>
                         {images.map((image, index) => (
                             <div key={index}>
-                                <img src={image.src} alt={image.place} 
-                                    className="w-[700px] h-[500px] rounded-lg" 
-                                />
+                            <img 
+                                src={image.src} 
+                                alt={image.place} 
+                                className="w-full h-[400px] md:h-[500px] object-cover rounded-lg"
+                            />
                             </div>
                         ))}
                     </Slider>
@@ -82,12 +83,6 @@ const Explore = () => {
                     <p>{images[currentSlide].description}</p>
                 </div>
             </div>
-
-            <Link 
-            className="text-center mt-8 bg-[#FF6F00] text-white font-bold rounded-lg py-2 w-[240px] mx-auto" 
-            to="/custom-trip">
-                Plan My Perfect Punjab Tour
-            </Link>
         </div>
     );
 };
