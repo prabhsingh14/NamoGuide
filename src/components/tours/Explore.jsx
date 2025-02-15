@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Slider from "react-slick";
+import { motion } from "framer-motion";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -40,48 +41,60 @@ const Explore = () => {
     ];    
 
     const settings = {
-        dots: false, // Hide dots navigation
-        infinite: true, // Infinite loop
-        speed: 500, // Animation speed
-        slidesToShow: 1, // Show one slide at a time
-        slidesToScroll: 1, // Scroll one slide at a time
-        autoplay: true, // Automatic slide change
-        autoplaySpeed: 3000, // Delay between slides (in ms)
-        prevArrow: null, // Hide previous button
-        nextArrow: null, // Hide next button
-        afterChange: (index) => setCurrentSlide(index), // Update current slide index
-    }
+        dots: false,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        prevArrow: null, 
+        nextArrow: null, 
+        afterChange: (index) => setCurrentSlide(index),
+    };
 
     return (
-        <div className="flex flex-col bg-white rounded-lg p-6 shadow-md mt-[80px] w-full mx-auto max-w-7xl overflow-hidden">
+        <div className="flex flex-col bg-white rounded-2xl p-8 shadow-lg mt-[80px] w-full mx-auto max-w-7xl overflow-hidden">
             {/* Title */}
-            <div className="flex flex-col text-center font-bold text-[25px] gap-2">
-                <span className="text-[#1976D2]">Explore India's Heart Through the Eyes of Locals</span>
-                <span className="text-[#FF6F00]">Where Every Moment Becomes a Story</span>
+            <div className="flex flex-col text-center font-bold text-3xl gap-3">
+                <span className="text-[#1D4ED8]">Explore India's Heart Through the Eyes of Locals</span>
+                <span className="text-[#F97316]">Where Every Moment Becomes a Story</span>
             </div>
 
-            {/* Content Section */}
-            <div className="mt-6 flex flex-row">
+            <div className="mt-8 flex flex-col md:flex-row gap-6 items-center">
                 {/* Slider Component */}
-                <div className="w-1/2 relative">
+                <div className="relative w-full md:w-1/2 rounded-xl overflow-hidden">
                     <Slider {...settings}>
                         {images.map((image, index) => (
-                            <div key={index}>
-                            <img 
-                                src={image.src} 
-                                alt={image.place} 
-                                className="w-full h-[400px] md:h-[500px] object-cover rounded-lg"
-                            />
-                            </div>
+                            <motion.div 
+                                key={index} 
+                                initial={{ opacity: 0.6 }} 
+                                animate={{ opacity: 1 }} 
+                                transition={{ duration: 0.8 }}
+                                className="relative group"
+                            >
+                                <img 
+                                    src={image.src} 
+                                    alt={image.place} 
+                                    className="w-full h-[400px] md:h-[500px] object-cover rounded-xl shadow-lg"
+                                />
+                                <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-50 transition duration-300"></div>
+                            </motion.div>
                         ))}
                     </Slider>
                 </div>
 
                 {/* Description Component */}
-                <div className="w-1/2 flex flex-col justify-start items-start p-4 gap-2">
-                    <h2 className="font-bold text-xl">{images[currentSlide].place}</h2>
-                    <p>{images[currentSlide].description}</p>
-                </div>
+                <motion.div 
+                    key={currentSlide}
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="w-full md:w-1/2 flex flex-col justify-start items-start p-6 gap-4 bg-gray-100 rounded-xl shadow-md"
+                >
+                    <h2 className="font-bold text-2xl text-gray-800">{images[currentSlide].place}</h2>
+                    <p className="text-gray-600 text-md">{images[currentSlide].description}</p>
+                </motion.div>
             </div>
         </div>
     );

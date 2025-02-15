@@ -20,13 +20,13 @@ const GuideCard = ({ id, name, place, description, imgSrc, reviews, duration, pr
                 <span>Duration: {duration} days and {duration-1} nights</span>
             </div>
             {/* Price */}
-            <div className='mt-2 font-semibold text-lg text-[#1976D2]'>
+            <div className='mt-2 font-semibold text-lg text-[#1D4ED8]'>
                 <span>{price}</span>
             </div>
             {/* Book Now Button */}
-            <Link to={`/tours/${id}`}>
-                <button className='mt-4 bg-[#FF6F00] text-white p-2 rounded-full w-full hover:bg-[#1976D2]'>
-                    Book Now
+            <Link to={`/guides/${id}`}>
+                <button className='mt-4 bg-[#F97316] text-white p-2 rounded-full w-full hover:bg-[#1D4ED8]'>
+                    Know More
                 </button>
             </Link>
         </div>
@@ -37,8 +37,8 @@ const GuideCard = ({ id, name, place, description, imgSrc, reviews, duration, pr
 const TopGuides = () => {
     return (
         <div className='flex flex-col items-center mt-[100px]' id='tours-section'>
-            <FaAward className='text-[#FF6F00] text-[60px]' />
-            <h1 className='text-[#1976D2] font-bold text-[40px] mt-2'>Meet the Top Guides</h1>
+            <FaAward className='text-[#F97316] text-[60px]' />
+            <h1 className='text-[#1D4ED8] font-bold text-[40px] mt-2'>Meet the Top Guides</h1>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 w-11/12'>
                 {topGuidesData.map((topGuides, index) => (
                     <GuideCard key={index} {...topGuides} />

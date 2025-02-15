@@ -79,12 +79,12 @@ function LoginForm({setIsLoggedIn}) {
                     </label>
 
                     <Link to="/forgot-password">
-                        <p className="text-[#FF6F00] text-sm">Forgot Password?</p>
+                        <p className="text-[#F97316] text-sm">Forgot Password?</p>
                     </Link>
                 </div>
                 
                 <Link to={"/dashboard"}>
-                    <button type="submit" className="bg-[#FF6F00] text-white rounded-md py-2 mt-4 hover:bg-blue-600 w-full">
+                    <button type="submit" className="bg-[#F97316] text-white rounded-md py-2 mt-4 hover:bg-[#1D4ED8] w-full">
                         Login 
                     </button>
                 </Link>

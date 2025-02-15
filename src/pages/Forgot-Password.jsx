@@ -10,7 +10,7 @@ function ForgotPassword() {
     const { loading } = useSelector((state) => state.auth)
 
     return (
-        <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center bg-[#FF6F0026]">
+        <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center bg-[#F7F5F2]">
             {loading ? (
                 <div className="flex flex-col items-center">
                     <div className="spinner"></div>
@@ -30,7 +30,7 @@ function ForgotPassword() {
                         {!emailSent && (
                             <label className="w-full">
                                 <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-gray-700">
-                                    Email Address <sup className="text-red-500">*</sup>
+                                    Email Address <sup className="text-[#F97316]">*</sup>
                                 </p>
                                 <input
                                     required
@@ -39,19 +39,19 @@ function ForgotPassword() {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="Enter email address"
-                                    className="w-full border border-gray-300 bg-gray-50 rounded-lg py-2 px-3 text-gray-900 focus:border-blue-500 focus:outline-none"
+                                    className="w-full border border-gray-300 bg-gray-50 rounded-lg py-2 px-3 text-gray-900 focus:border-[#1D4ED8] focus:outline-none"
                                 />
                             </label>
                         )}
                         <button
                             type="submit"
-                            className="mt-6 w-full rounded-lg bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 font-medium transition-all duration-200"
+                            className="mt-6 w-full rounded-lg bg-[#1D4ED8] text-white py-3 px-4 font-medium transition-all duration-200"
                         >
                             {!emailSent ? "Submit" : "Resend Email"}
                         </button>
                     </form>
                     <div className="mt-6 flex items-center justify-between text-sm">
-                        <Link to="/login" className="text-blue-600 hover:text-blue-700 flex items-center gap-x-2">
+                        <Link to="/login" className="text-[#1D4ED8] flex items-center gap-x-2">
                             <BiArrowBack /> Back To Login
                         </Link>
                     </div>

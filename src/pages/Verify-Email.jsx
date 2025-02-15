@@ -69,7 +69,7 @@ const VerifyEmail = () => {
                             style={{
                                 boxShadow: "inset 0px -1px 0px rgba(0, 0, 0, 0.1)",
                             }}
-                            className="w-[48px] lg:w-[60px] border border-gray-300 bg-gray-50 rounded-lg text-gray-900 aspect-square text-center focus:border-blue-500 focus:outline-none"
+                            className="w-[48px] lg:w-[60px] border border-gray-300 bg-gray-50 rounded-lg text-gray-900 aspect-square text-center focus:border-[#1D4ED8] focus:outline-none"
                             />
                         )}
                         containerStyle={{
@@ -80,18 +80,18 @@ const VerifyEmail = () => {
                         />
                         <button
                         type="submit"
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium transition-all duration-200"
+                        className="w-full bg-[#1D4ED8] text-white py-3 px-4 rounded-lg font-medium transition-all duration-200"
                         >
                             Verify Email
                         </button>
                         {/* on submit takes to dashboard */}
                     </form>
                     <div className="mt-6 flex items-center justify-between text-sm">
-                        <Link to="/signup" className="text-blue-600 hover:text-blue-700 flex items-center gap-x-2">
+                        <Link to="/signup" className="text-[#1D4ED8] flex items-center gap-x-2">
                         <BiArrowBack /> Back To Signup
                         </Link>
                         <button
-                        className="flex items-center text-blue-600 hover:text-blue-700 gap-x-2"
+                        className="flex items-center text-[#1D4ED8] gap-x-2"
                         // onClick={() => dispatch(sendOtp(signupData.email))}
                         >
                         <RxCountdownTimer /> Resend Code

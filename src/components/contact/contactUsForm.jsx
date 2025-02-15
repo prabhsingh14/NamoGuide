@@ -151,7 +151,7 @@ const ContactUsForm = () => {
 
             <button
                 type="submit"
-                className={`rounded-md bg-[#FF6F00] px-6 py-3 text-center text-[13px] font-bold text-black shadow-[2px_2px_0px_0px_rgba(255,255,255,0.18)] 
+                className={`rounded-md bg-[#F97316] px-6 py-3 text-center text-[13px] font-bold text-white shadow-[0px_24px_20px_-10px_rgba(50,50,50,0.10)]
                 transition-all duration-200 hover:scale-95 hover:shadow-none sm:text-[16px]`}
             >
                 Send Message

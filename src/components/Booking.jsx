@@ -79,7 +79,7 @@ const Booking = ({ handleSearch }) => {
 
                 {/* Search Button */}
                 <button 
-                    className="ml-2 p-2 bg-[#FF6F00] text-white rounded-xl"
+                    className="ml-2 p-2 bg-[#F97316] text-white rounded-xl"
                     onClick={handleClickSearch}
                 >
                     Get Guide

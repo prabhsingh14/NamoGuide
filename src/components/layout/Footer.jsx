@@ -10,8 +10,8 @@ const Footer = () => {
                 {/* Left Section */}
                 <div className="flex flex-col">
                     <Link to={'/'} className='flex flex-col' style={{ fontFamily: '"Segoe Script", cursive' }}>
-                        <p className='text-[#1976D2] text-[32px] leading-[51.39px] font-bold'>
-                            Smooth<span className='text-[#FF6F00]'>Trips</span>
+                        <p className='text-[#1D4ED8] text-[32px] leading-[51.39px] font-bold'>
+                            Smooth<span className='text-[#F97316]'>Trips</span>
                         </p>
                         <p className='text-[12px] leading-[19.27px]'>Not just a tour, but a memory!</p>
                     </Link>
@@ -26,6 +26,7 @@ const Footer = () => {
                         <ul className="text-gray-600">
                             <li className="mb-1 cursor-pointer hover:underline">As a Guide</li>
                             <li className="mb-1 cursor-pointer hover:underline">As a Tour Agency</li>
+                            <li className="mb-1 cursor-pointer hover:underline">As a Content Creator</li>
                         </ul>
                     </div>
 
@@ -59,7 +60,7 @@ const Footer = () => {
                     {/* Social Media */}
                     <div>
                         <h2 className="font-bold text-lg mb-2">Social Media</h2>
-                        <div className="flex flex-row space-x-4 text-[#FF6F00]">
+                        <div className="flex flex-row space-x-4 text-[#F97316]">
                             <FaFacebook size={20} className="cursor-pointer hover:text-gray-700" />
                             <FaInstagram size={20} className="cursor-pointer hover:text-gray-700" />
                             <FaLinkedin size={20} className="cursor-pointer hover:text-gray-700" />

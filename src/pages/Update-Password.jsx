@@ -34,7 +34,7 @@ function UpdatePassword() {
     // };
 
     return (
-        <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center bg-[#FF6F0026]">
+        <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center bg-[#F7F5F2]">
         {loading ? (
             <div className="spinner"></div>
         ) : (
@@ -48,7 +48,7 @@ function UpdatePassword() {
                 <form className="mt-6">
                     <label className="relative block">
                     <p className="mb-2 text-sm font-medium text-gray-700">
-                        New Password <sup className="text-red-500">*</sup>
+                        New Password <sup className="text-[#F97316]">*</sup>
                     </p>
                     <input
                         required
@@ -57,7 +57,7 @@ function UpdatePassword() {
                         value={password}
                         onChange={handleOnChange}
                         placeholder="Enter Password"
-                        className="w-full rounded-md border border-gray-300 p-3 pr-10 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                        className="w-full rounded-md border border-gray-300 p-3 pr-10 text-gray-900 focus:border-[#1D4ED8] focus:ring-[#1D4ED8]"
                     />
                     <span
                         onClick={() => setShowPassword((prev) => !prev)}
@@ -73,7 +73,7 @@ function UpdatePassword() {
 
                     <label className="relative block mt-4">
                     <p className="mb-2 text-sm font-medium text-gray-700">
-                        Confirm New Password <sup className="text-red-500">*</sup>
+                        Confirm New Password <sup className="text-[#F97316]">*</sup>
                     </p>
                     <input
                         required
@@ -82,7 +82,7 @@ function UpdatePassword() {
                         value={confirmPassword}
                         onChange={handleOnChange}
                         placeholder="Confirm Password"
-                        className="w-full rounded-md border border-gray-300 p-3 pr-10 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                        className="w-full rounded-md border border-gray-300 p-3 pr-10 text-gray-900 focus:border-[#1D4ED8] focus:ring-[#1D4ED8]"
                     />
                     <span
                         onClick={() => setShowConfirmPassword((prev) => !prev)}
@@ -98,14 +98,14 @@ function UpdatePassword() {
 
                     <button
                     type="submit"
-                    className="mt-6 w-full rounded-md bg-blue-600 py-3 px-4 text-center text-white font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="mt-6 w-full rounded-md bg-[#1D4ED8] py-3 px-4 text-center text-white font-medium hover:bg-[#1D4ED8] focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]"
                     >
                     Reset Password
                     </button>
                 </form>
                 <div className="mt-6 flex items-center justify-between">
                     <Link to="/dashboard">
-                    <p className="flex items-center gap-x-2 text-blue-600 hover:text-blue-700">
+                    <p className="flex items-center gap-x-2 text-[#1D4ED8]">
                         <BiArrowBack /> Back To Dashboard
                     </p>
                     </Link>

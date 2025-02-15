@@ -13,8 +13,6 @@ import VerifyEmail from "./pages/Verify-Email"
 import ForgotPassword from "./pages/Forgot-Password";
 import UpdatePassword from "./pages/Update-Password";
 import About from "./pages/About";
-import TourDetails from "./pages/TourDetails";
-import TourDetailsPage from "./pages/TourDetailsPage";
 import GuidePage from "./pages/GuidePage";
 import "@fontsource/poppins";
 
@@ -31,14 +29,12 @@ function App() {
   }, [location]);
 
   return (
-    <div className="w-screen min-h-screen bg-[#FF6F0026] flex flex-col">
+    <div className="w-screen min-h-screen bg-[#F7F5F2] flex flex-col">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/tours/:id" element = {<TourDetails />} />
-        <Route path="/tours/:cityId/:tourId" element = {<TourDetailsPage />} />
         <Route path="/hire-guide" element = {<GuidePage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />

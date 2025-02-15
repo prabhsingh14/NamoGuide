@@ -20,15 +20,15 @@ const Home = () => {
             <div className='flex flex-row mt-40'>
                 {/* Heading */}
                 <h1 className='text-[40px] leading-[60px] ml-10 font-bold'>
-                    <span className='text-[#1976D2]'>Arrive, Relax, Explore </span>
+                    <span className='text-[#1D4ED8]'>Arrive, Relax, Explore </span>
                     <span className='text-[#0000001A]'>•</span>
                     <br/>
-                    <span className='text-[#FF6F00]'> India's Warm Welcome <br/> Awaits You!</span>
+                    <span className='text-[#F97316]'> India's Warm Welcome <br/> Awaits You!</span>
                 </h1>
 
                 {/* Search Form */}
                 <div className="flex flex-col ml-44 gap-4">
-                    <span className="text-[#FF6F00] font-bold text-2xl">Find a Verified Guide</span>
+                    <span className="text-[#F97316] font-bold text-2xl">Find a Verified Guide</span>
                     <Booking handleSearch={handleSearch} />
                 </div>
             </div>

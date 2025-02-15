@@ -32,8 +32,8 @@ function Template({ formType, setIsLoggedIn }) {
                 <div className="flex flex-col items-center space-y-6">
                     {/* Company Name and Tagline */}
                     <div className="text-center">
-                        <h1 className="text-3xl font-bold text-[#1976D2]" style={{ fontFamily: '"Segoe Script", cursive' }}>
-                            Tour-<span className="text-[#FF6F00]">Ease</span>
+                        <h1 className="text-3xl font-bold text-[#1D4ED8]" style={{ fontFamily: '"Segoe Script", cursive' }}>
+                            Smooth<span className="text-[#F97316]">Trips</span>
                         </h1>
                         <p className="text-gray-500">Not just a trip, but a memory!</p>
                     </div>

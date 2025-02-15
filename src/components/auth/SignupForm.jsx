@@ -141,7 +141,7 @@ function SignupForm({setIsLoggedIn}) {
                 <Link to="/verify-email">
                     <button
                         type="submit"
-                        className="bg-[#FF6F00] text-white rounded-md py-2 mt-4 hover:bg-blue-600 w-full"
+                        className="bg-[#F97316] text-white rounded-md py-2 mt-4 hover:bg-[#1D4ED8] w-full"
                     >
                         Create Account
                     </button>

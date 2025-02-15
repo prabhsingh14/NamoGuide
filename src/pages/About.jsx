@@ -12,9 +12,9 @@ const About = () => {
             <section>
                 <div className="relative mx-auto flex w-11/12 max-w-max flex-col items-center gap-10 text-center text-black">
                     <header className="text-4xl font-semibold lg:w-[70%] mx-auto py-20">
-                        Revolutionizing Tourism in Punjab: Creating Seamless Travel Experiences
+                        Revolutionizing Tourism in India: Creating Seamless Travel Experiences
                         <p className="mx-auto mt-3 text-center text-base font-medium text-black lg:w-[95%]">
-                            TourEase is on a mission to transform the tourism experience in Punjab by connecting tourists with verified, authentic guides, 
+                            SmoothTrips is on a mission to transform the tourism experience in India by connecting tourists with verified, authentic guides, 
                             ensuring safety, convenience, and a seamless travel experience through cutting-edge technology and personalized services.
                         </p>
                     </header>
@@ -36,11 +36,11 @@ const About = () => {
                                 Our Founding Story
                             </h1>
                             <p className="text-base font-medium text-richblack-300 lg:w-[95%]">
-                                TourEase was born out of a passion to bridge the gap between tourists and local guides, ensuring authentic, trustworthy, and enriching travel experiences in Punjab. 
-                                Our founders, who deeply understand the essence of Punjab's culture and hospitality, envisioned a platform to connect tourists with verified local guides, bringing forth a world of cultural exchange and discovery.
+                                SmoothTrips was born out of a passion to bridge the gap between tourists and local guides, ensuring authentic, trustworthy, and enriching travel experiences in India. 
+                                Our founders, who deeply understand the essence of India's culture and hospitality, envisioned a platform to connect tourists with verified local guides, bringing forth a world of cultural exchange and discovery.
                             </p>
                             <p className="text-base font-medium text-richblack-300 lg:w-[95%]">
-                                We strive to create a platform where tourists feel safe and confident exploring the beauty and history of Punjab, while guides can showcase their expertise, culture, and unique stories.
+                                We strive to create a platform where tourists feel safe and confident exploring the beauty and history of India, while guides can showcase their expertise, culture, and unique stories.
                             </p>
                         </div>
                         <div className="lg:w-[40%] mt-10">
@@ -59,8 +59,8 @@ const About = () => {
                                 Our Vision
                             </h1>
                             <p className="text-base font-medium text-black lg:w-[95%]">
-                                To become the go-to platform for Punjab tourism by fostering authentic connections between tourists and local guides, 
-                                promoting cultural exchange, and offering a seamless and safe travel experience in Punjab’s rich historical and spiritual landscape.
+                                To become the go-to platform for India tourism by fostering authentic connections between tourists and local guides, 
+                                promoting cultural exchange, and offering a seamless and safe travel experience in India's rich historical and spiritual landscape.
                             </p>
                         </div>
                         <div className="flex flex-col gap-10 lg:w-[40%]">
@@ -68,7 +68,7 @@ const About = () => {
                                 Our Mission
                             </h1>
                             <p className="text-base font-medium text-black lg:w-[95%]">
-                                Our mission is to connect tourists with verified, local guides in Punjab who are passionate about showcasing their culture and heritage. 
+                                Our mission is to connect tourists with verified, local guides in India who are passionate about showcasing their culture and heritage. 
                                 We prioritize safety, seamless bookings, AI-based personalized recommendations, and an enriching experience for every tourist while empowering guides to earn and share their expertise.
                             </p>
                         </div>
