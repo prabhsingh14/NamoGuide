@@ -1,5 +1,5 @@
-import RatingAndReview from "../models/RatingandReview";
-import Guide from "../models/Guide";
+import RatingAndReview from "../models/RatingandReview.js";
+import Guide from "../models/Guide.js";
 import mongoose from "mongoose";
 
 exports.createRating = async (req, res) => {

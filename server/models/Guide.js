@@ -40,10 +40,6 @@ const GuideSchema = new mongoose.Schema({
         enum: ["Male", "Female", "Other"],
         required: true,
     },
-    isVerified: { 
-        type: Boolean, 
-        default: false 
-    },  // Updated after verification
     address: {
         type: String,
         required: true,
@@ -63,6 +59,11 @@ const GuideSchema = new mongoose.Schema({
             ref: "Tourist",
         },
     ],
+    additionalDetails: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "GuideProfile",
+        default: null,
+    },
 }, { timestamps: true });
 
 GuideSchema.index({ email: 1 });

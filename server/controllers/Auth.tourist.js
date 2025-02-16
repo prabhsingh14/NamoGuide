@@ -1,12 +1,12 @@
 // Desc: Controller for handling tourist authentication, guide auth will be handled separately as they require verification
 
 import bcrypt from "bcrypt"
-import { Tourist } from "../models/Tourist"
-import { OTP } from "../models/OTP"
+import { Tourist } from "../models/Tourist.js"
+import { OTP } from "../models/OTP.js"
 import { otpGenerator } from "otp-generator"
-import { mailSender } from "../utils/mailSender"
-import { passwordUpdated } from "../mail/passwordUpdate"
-import { TouristProfile } from "../models/TouristProfile"
+import { mailSender } from "../utils/mailSender.js"
+import { passwordUpdated } from "../mail/passwordUpdate.js"
+import { TouristProfile } from "../models/TouristProfile.js"
 import jwt from "jsonwebtoken"
 require("dotenv").config()
 

@@ -7,7 +7,6 @@ const GuideVerificationSchema = new mongoose.Schema({
         required: true, 
         unique: true 
     },
-    documentType: { type: String, required: true },  // Example: "Aadhar", "Passport"
     documentURL: { type: String, required: true },  // Cloudinary/other storage URL
     status: { 
         type: String, 

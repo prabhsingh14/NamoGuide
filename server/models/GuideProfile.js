@@ -22,7 +22,11 @@ const GuideProfileSchema = new mongoose.Schema({
         index: true,
     },  
     profilePicture: { type: String },  // URL to profile image
-    ratings: { type: Number, default: 0 },  // Aggregate rating
+    reviewsTaken: [
+        {
+            reviewId: { type: mongoose.Schema.Types.ObjectId, ref: "RatingAndReview" },
+        },
+    ],
 }, {
     timestamps: true
 });
