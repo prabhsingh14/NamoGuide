@@ -1,4 +1,4 @@
-// Desc: Controller for handling tourist authentication, guide authentication will be handled separately as they require verification
+// Desc: Controller for handling tourist authentication, guide auth will be handled separately as they require verification
 
 import bcrypt from "bcrypt"
 import { Tourist } from "../models/Tourist"

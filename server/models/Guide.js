@@ -17,6 +17,12 @@ const GuideSchema = new mongoose.Schema({
         type: String, 
         required: true 
     },
+    ratingAndReviews: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "RatingAndReview",
+        },
+    ],
     dateOfBirth: {
         type: Date,
         required: true,
@@ -51,6 +57,12 @@ const GuideSchema = new mongoose.Schema({
         enum: ["Pending", "Approved", "Rejected"],
         default: "Pending",
     },
+    touristsServed: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Tourist",
+        },
+    ],
 }, { timestamps: true });
 
 GuideSchema.index({ email: 1 });

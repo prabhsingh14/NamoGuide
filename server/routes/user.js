@@ -8,7 +8,7 @@ const {
     changePassword,
     logout,
     refreshAccessToken
-} = require("../controllers/Auth")
+} = require("../controllers/Auth.tourist")
 
 const {
     resetPasswordToken,

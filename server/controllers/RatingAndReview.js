@@ -1,114 +1,132 @@
-const RatingAndReview = require("../models/RatingAndReview");
-const Tours = require("../models/Tours");
-const mongoose = require("mongoose");
+import RatingAndReview from "../models/RatingandReview";
+import Guide from "../models/Guide";
+import mongoose from "mongoose";
 
 exports.createRating = async (req, res) => {
     try {
-        const userId = req.user.id;
-        const { rating, review, tourId } = req.body;
-        const tourDetails = await Tours.findOne({ _id: tourId });
+        const touristId = req.user._id
+        const { rating, review, guideId } = req.body
 
-        if (!tourDetails) {
+        const guideDetails = await Guide.findById({
+            _id: guideId,
+            touristsServed: { $elemMatch: { $eq: touristId } },
+        })
+
+        if (!guideDetails) {
             return res.status(404).json({
                 success: false,
-                message: "Tour not found",
-            });
+                message: "You can't give a review to a guide that you haven't booked",
+            })
         }
 
+        // Check if the user has already reviewed the guide
         const alreadyReviewed = await RatingAndReview.findOne({
-            user: userId,
-            tour: tourId,
-        });
+            tourist: touristId,
+            guide: guideId,
+        })
 
         if (alreadyReviewed) {
             return res.status(403).json({
                 success: false,
-                message: "Tour already reviewed by user",
-            });
+                message: "Guide already reviewed",
+            })
         }
 
+        // Create a new rating and review
         const ratingReview = await RatingAndReview.create({
             rating,
             review,
-            tour: tourId,
-            user: userId,
-        });
+            tourist: touristId,
+            guide: guideId,
+        })
 
-        const updatedRatingCount = tourDetails.ratings.count + 1;
-        const updatedAverageRating =
-        (tourDetails.ratings.average * tourDetails.ratings.count + rating) /
-        updatedRatingCount;
-
-        tourDetails.ratings.count = updatedRatingCount;
-        tourDetails.ratings.average = updatedAverageRating;
-
-        await tourDetails.save();
+        // Add the rating and review to the guide
+        await Guide.findByIdAndUpdate(guideId, {
+            $push: {
+                ratingAndReviews: ratingReview,
+            },
+        })
+        await guideDetails.save();
 
         return res.status(201).json({
             success: true,
             message: "Rating and review created successfully",
             ratingReview,
-        });
+        })
     } catch (error) {
-        console.error(error);
+        console.error(error)
         return res.status(500).json({
             success: false,
             message: "Internal server error",
             error: error.message,
-        });
+        })
     }
-};
+}
 
+// Get the average rating for a guide
 exports.getAverageRating = async (req, res) => {
     try {
-        const { tourId } = req.body;
-        const tourDetails = await Tours.findOne({ _id: tourId });
+        const guideId = req.body.guideId
 
-        if (!tourDetails) {
-            return res.status(404).json({
-                success: false,
-                message: "Tour not found",
-            });
+        // Calculate the average rating using the MongoDB aggregation pipeline
+        const result = await RatingAndReview.aggregate([
+            {
+                $match: {
+                    guide: new mongoose.Types.ObjectId(guideId), // Convert guideId to ObjectId
+                },
+            },
+            {
+                $group: {
+                    _id: null,
+                    averageRating: { $avg: "$rating" },
+                },
+            },
+        ])
+
+        if (result.length > 0) {
+            return res.status(200).json({
+                success: true,
+                averageRating: result[0].averageRating,
+            })
         }
 
-        return res.status(200).json({
-            success: true,
-            averageRating: tourDetails.ratings.average,
-        });
+        // If no ratings are found, return 0 as the default rating
+        return res.status(200).json({ success: true, averageRating: 0 })
     } catch (error) {
-        console.error(error);
+        console.error(error)
         return res.status(500).json({
             success: false,
-            message: "Failed to retrieve the average rating for the tour",
+            message: "Failed to retrieve the rating for the guide",
             error: error.message,
-        });
+        })
     }
-};
+}
 
+// Get all rating and reviews
 exports.getAllRatingReview = async (req, res) => {
     try {
         const allReviews = await RatingAndReview.find({})
         .sort({ rating: "desc" })
         .populate({
-            path: "user",
-            select: "firstName lastName email image",
+            path: "tourist",
+            select: "firstName lastName email",
         })
         .populate({
-            path: "tour",
-            select: "title location",
+            path: "guide",
+            select: "fullName email",
         })
-        .exec();
+        .exec()
 
         res.status(200).json({
             success: true,
             data: allReviews,
-        });
+        })
     } catch (error) {
-        console.error(error);
+        console.error(error)
         return res.status(500).json({
             success: false,
-            message: "Failed to retrieve the rating and review for the tours",
+            message: "Failed to retrieve the rating and review for the guide",
             error: error.message,
-        });
+        })
     }
-};
+}

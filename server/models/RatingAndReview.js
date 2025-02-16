@@ -13,12 +13,6 @@ const ratingAndReviewSchema = new mongoose.Schema(
             ref: "Guide",
             index: true,
         },
-        bookingId: { 
-            type: mongoose.Schema.Types.ObjectId, 
-            required: true, 
-            ref: "Booking", // Reference to the booking
-            index: true 
-        },
         rating: {
             type: Number,
             required: true,
@@ -31,11 +25,11 @@ const ratingAndReviewSchema = new mongoose.Schema(
             trim: true,
         },
     },
-    { timestamps: true } // ✅ Adds `createdAt` and `updatedAt`
+    { timestamps: true } 
 );
 
-// ✅ Prevent duplicate reviews for the same booking (tourist-guide pair can have multiple bookings)
-ratingAndReviewSchema.index({ tourist: 1, guide: 1, bookingId: 1 }, { unique: true });
+// ✅ Prevent duplicate reviews for the same guide
+ratingAndReviewSchema.index({ tourist: 1, guide: 1 }, { unique: true });
 
 const RatingAndReview = mongoose.model("RatingAndReview", ratingAndReviewSchema);
 export default RatingAndReview;
