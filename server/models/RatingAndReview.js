@@ -1,25 +1,41 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-const ratingAndReviewSchema = new mongoose.Schema({
-	user: {
-		type: mongoose.Schema.Types.ObjectId,
-		required: true,
-		ref: "User",
-	},
-	rating: {
-		type: Number,
-		required: true,
-	},
-	review: {
-		type: String,
-		required: true,
-	},
-	tours: {
-		type: mongoose.Schema.Types.ObjectId,
-		required: true,
-		ref: "Tours",
-		index: true,
-	},
-});
+const ratingAndReviewSchema = new mongoose.Schema(
+    {
+        tourist: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: "Tourist",
+        },
+        guide: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: "Guide",
+            index: true,
+        },
+        bookingId: { 
+            type: mongoose.Schema.Types.ObjectId, 
+            required: true, 
+            ref: "Booking", // Reference to the booking
+            index: true 
+        },
+        rating: {
+            type: Number,
+            required: true,
+            min: 1,
+            max: 5,  // Restrict rating range
+        },
+        review: {
+            type: String,
+            required: false, // Allow ratings without reviews
+            trim: true,
+        },
+    },
+    { timestamps: true } // ✅ Adds `createdAt` and `updatedAt`
+);
 
-module.exports = mongoose.model("RatingAndReview", ratingAndReviewSchema);
+// ✅ Prevent duplicate reviews for the same booking (tourist-guide pair can have multiple bookings)
+ratingAndReviewSchema.index({ tourist: 1, guide: 1, bookingId: 1 }, { unique: true });
+
+const RatingAndReview = mongoose.model("RatingAndReview", ratingAndReviewSchema);
+export default RatingAndReview;
