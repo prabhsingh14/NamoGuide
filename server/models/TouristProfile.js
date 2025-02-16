@@ -13,6 +13,10 @@ const touristProfileSchema = new mongoose.Schema(
             unique: true, // One profile per tourist
 			index: true,
         },
+        gender: {
+            type: String,
+            enum: ["Male", "Female", "Other"],
+        },
         image: {
             type: String, // Profile picture (uploaded later)
             default: null,

@@ -1,16 +1,18 @@
-const bcrypt = require("bcrypt")
-const User = require("../models/User")
-const OTP = require("../models/OTP")
-const otpGenerator = require("otp-generator")
-const mailSender = require("../utils/mailSender")
-const { passwordUpdated } = require("../mail/passwordUpdate")
-const Profile = require("../models/Profile")
-const jwt = require("jsonwebtoken")
+// Desc: Controller for handling tourist authentication, guide authentication will be handled separately as they require verification
+
+import bcrypt from "bcrypt"
+import { Tourist } from "../models/Tourist"
+import { OTP } from "../models/OTP"
+import { otpGenerator } from "otp-generator"
+import { mailSender } from "../utils/mailSender"
+import { passwordUpdated } from "../mail/passwordUpdate"
+import { TouristProfile } from "../models/TouristProfile"
+import jwt from "jsonwebtoken"
 require("dotenv").config()
 
 const generateAccessAndRefreshTokens = async(userId) => {
     try{
-        const user = await User.findById(userId)
+        const user = await Tourist.findById(userId)
         if(!user){
             return res.status(404).json({
                 success: false,
@@ -68,7 +70,7 @@ exports.signup = async (req, res) => {
             })
         }
 
-        const existingUser = await User.findOne({ email })
+        const existingUser = await Tourist.findOne({ email })
         if (existingUser) {
             return res.status(400).json({
                 success: false,
@@ -80,34 +82,47 @@ exports.signup = async (req, res) => {
         if (response.length === 0) {
             return res.status(400).json({
                 success: false,
-                message: "The OTP is not valid",
+                message: "OTP not found. Please request a new OTP.",
             })
-        } else if (otp !== response[0].otp) {
+        }
+
+        const latestOTP = response[0];
+        if(String(otp) !== String(latestOTP.otp)){
             return res.status(400).json({
                 success: false,
-                message: "The OTP is not valid",
+                message: "Invalid OTP. Please try again.",
+            })
+        }
+
+        if(latestOTP.expiresAt < Date.now()){
+            return res.status(400).json({
+                success: false,
+                message: "OTP Expired. Please request a new OTP.",
             })
         }
 
         const hashedPassword = await bcrypt.hash(password, 10)
 
-        // Create the Additional Profile For User
-        const profileDetails = await Profile.create({
+        // Create the Additional Profile For Tourist
+        const profileDetails = await TouristProfile.create({
             gender: null,
-            dateOfBirth: null,
-            about: null,
             contactNumber: null,
+            image: "",
+            guidesBooked: [],
+            reviewsGiven: [],
         })
 
-        const user = await User.create({
+        const user = await Tourist.create({
             firstName,
             lastName,
             email,
             contactNumber,
             password: hashedPassword,
             additionalDetails: profileDetails._id,
-            image: "",
         })
+
+        profileDetails.tourist = user._id;
+        await profileDetails.save();
 
         return res.status(200).json({
             success: true,
@@ -133,7 +148,7 @@ exports.login = async (req, res) => {
             })
         }
 
-        const user = await User.findOne({ email }).populate("additionalDetails")
+        const user = await Tourist.findOne({ email }).populate("additionalDetails")
         if (!user) {
             return res.status(401).json({
                 success: false,
@@ -150,7 +165,7 @@ exports.login = async (req, res) => {
         }
 
         const {accessToken, refreshToken} = await generateAccessAndRefreshTokens(user._id)
-        const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
+        const loggedInUser = await Tourist.findById(user._id).select("-password -refreshToken")
 
         const options = {
             expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
@@ -177,7 +192,7 @@ exports.login = async (req, res) => {
 exports.sendotp = async (req, res) => {
     try {
         const { email } = req.body
-        const checkUserPresent = await User.findOne({ email })
+        const checkUserPresent = await Tourist.findOne({ email })
         if (checkUserPresent) {
             return res.status(401).json({
                 success: false,
@@ -212,7 +227,7 @@ exports.sendotp = async (req, res) => {
 
 exports.changePassword = async (req, res) => {
     try {
-        const userDetails = await User.findById(req.user.id)
+        const userDetails = await Tourist.findById(req.user._id)
         const { oldPassword, newPassword } = req.body
         const isPasswordMatch = await bcrypt.compare(
             oldPassword,
@@ -227,7 +242,7 @@ exports.changePassword = async (req, res) => {
         }
 
         const encryptedPassword = await bcrypt.hash(newPassword, 10)
-        const updatedUserDetails = await User.findByIdAndUpdate(
+        const updatedUserDetails = await Tourist.findByIdAndUpdate(
             req.user.id,
             { password: encryptedPassword },
             { new: true }
@@ -269,7 +284,7 @@ exports.changePassword = async (req, res) => {
 
 exports.logout = async (req, res) => {
     try{
-        await User.findByIdAndUpdate(req.user._id, {
+        await Tourist.findByIdAndUpdate(req.user._id, {
             $set: {
                 refreshToken: undefined
             },
@@ -312,7 +327,7 @@ exports.refreshAccessToken = async (req, res) => {
             })
         }
     
-        const user = await User.findById(decodedToken?._id)
+        const user = await Tourist.findById(decodedToken?._id)
         if(!user){
             return res.status(404).json({
                 success: false,
