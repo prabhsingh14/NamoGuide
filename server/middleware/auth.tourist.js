@@ -1,6 +1,6 @@
-const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
-const User = require("../models/User");
+import { Tourist } from "../models/Tourist";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 dotenv.config();
 
 exports.auth = async (req, res, next) => {
@@ -22,8 +22,7 @@ exports.auth = async (req, res, next) => {
 			// Verify the token
 			const decode = jwt.verify(token, process.env.JWT_SECRET);
 
-			// Validate user existence in DB (to guard against tampered tokens)
-			const user = await User.findById(decode.id);
+			const user = await Tourist.findById(decode.id);
 			if (!user) {
 				return res.status(404).json({
 					success: false,
