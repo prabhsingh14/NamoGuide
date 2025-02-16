@@ -33,6 +33,8 @@ app.use(
 
 cloudinaryConnect();
 
+// integration with 0Auth pending	
+
 app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/tours", toursRoutes); //frontend updation pending

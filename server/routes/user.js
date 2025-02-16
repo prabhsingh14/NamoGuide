@@ -29,3 +29,5 @@ router.post("/logout", auth, logout)
 router.post("/refresh-token", auth, refreshAccessToken)
 
 module.exports = router
+
+//routes for login using google and facebook for tourists pending
