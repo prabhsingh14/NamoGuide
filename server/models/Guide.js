@@ -53,12 +53,6 @@ const GuideSchema = new mongoose.Schema({
         enum: ["Pending", "Approved", "Rejected"],
         default: "Pending",
     },
-    touristsServed: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Tourist",
-        },
-    ],
     additionalDetails: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "GuideProfile",

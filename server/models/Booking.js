@@ -46,6 +46,11 @@ const bookingSchema = new mongoose.Schema(
             trim: true,
             default: "", 
         },
+        paymentId: { 
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: "Payment", 
+            required: true 
+        },
     },
     { timestamps: true }
 );

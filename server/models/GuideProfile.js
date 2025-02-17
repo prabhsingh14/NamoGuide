@@ -21,6 +21,12 @@ const GuideProfileSchema = new mongoose.Schema({
             type: [String], 
         }
     ],
+    touristsServed: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Tourist",
+        },
+    ],
     avilability: [
         { 
             type: [Date] 

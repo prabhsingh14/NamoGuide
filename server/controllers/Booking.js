@@ -1,5 +1,6 @@
 import { Booking } from "../models/Booking.js";
 import { GuideProfile } from "../models/GuideProfile.js";
+import { instance } from "../config/razorpay.js";
 
 // Helper function to check time conflicts
 const isTimeConflict = (start1, end1, start2, end2) => {
@@ -63,6 +64,26 @@ export const createBooking = async (req, res) => {
         await newBooking.save();
         res.status(200).json({ success: true, message: "Booking created successfully", booking: newBooking });
 
+        const paymentOptions = {
+            amount: amount * 100,
+            currency: "INR",
+            receipt: newBooking._id.toString(),
+        };
+
+        try {
+            const paymentResponse = await instance.orders.create(paymentOptions);
+            newBooking.paymentId = paymentResponse.id;
+            await newBooking.save();
+
+            res.status(200).json({
+                success: true,
+                message: "Booking created successfully",
+                booking: newBooking, paymentResponse,
+            });
+        } catch (error) {
+            console.error("Error creating payment:", error);
+            res.status(500).json({ message: "Server Error", error: error.message });
+        }
     } catch (error) {
         console.error("Error creating booking:", error);
         res.status(500).json({ message: "Server Error", error: error.message });
@@ -91,3 +112,7 @@ export const getGuideBookings = async (req, res) => {
         res.status(500).json({ message: "Server error", error: error.message });
     }
 };
+
+// cancel booking by tourist
+// cancel booking by guide
+// refund amount to tourist
