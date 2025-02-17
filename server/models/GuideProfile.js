@@ -16,11 +16,11 @@ const GuideProfileSchema = new mongoose.Schema({
             type: String 
         }
     ],
-    location: { //location where guide is available
-        type: String, 
-        required: true,
-        index: true,
-    },  
+    location: [
+        { 
+            type: String, 
+        }
+    ],  
     profilePicture: { type: String },  // URL to profile image
     reviewsTaken: [
         {
