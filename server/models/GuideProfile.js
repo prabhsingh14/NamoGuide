@@ -13,14 +13,19 @@ const GuideProfileSchema = new mongoose.Schema({
     },
     languages: [
         { 
-            type: String 
+            type: [String] 
         }
     ],
     location: [
         { 
-            type: String, 
+            type: [String], 
         }
-    ],  
+    ],
+    avilability: [
+        { 
+            type: [Date] 
+        }
+    ],
     profilePicture: { type: String },  // URL to profile image
     reviewsTaken: [
         {
