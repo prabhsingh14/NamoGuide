@@ -1,236 +1,93 @@
-// work pending
+import { Booking } from "../models/Booking.js";
+import { GuideProfile } from "../models/GuideProfile.js";
 
-
-import mongoose from "mongoose";
-import Booking from "../models/Booking.js";
-import Tours from "../models/Tours.js";
-import User from "../models/User.js";
-import { mailSender } from "../utils/mailSender.js";
-import { tourBookedEmail } from "../mail/tourBookedEmail.js";
-
-exports.bookTourists = async (tours, userId, date, adults, children, res) => {
-    if (!tours || !userId || !date || !numberOfPeople) {
-        return res.status(400).json({ 
-            success: false, 
-            message: "Please provide all details" 
-        })
-    }
-
-    const session = await mongoose.startSession();
-    session.startTransaction(); // Start a new transaction, so that we can rollback if any error occurs
-
-    try {
-        for (const tourId of tours) {
-            const bookedTour = await Tours.findOneAndUpdate(
-                { _id: tourId },
-                { $push: { touristsBooked: userId } },
-                { new: true }
-            )
-    
-            if (!bookedTour) {
-                await session.abortTransaction();
-                session.endSession();
-    
-                return res.status(500).json({ 
-                    success: false, 
-                    error: "Tour not found" 
-                })
-            }
-            
-            const bookedTourist = await User.findByIdAndUpdate(
-                userId,
-                {
-                    $push: {
-                        tours: tourId,
-                    },
-                },
-                { new: true, session }
-            );
-    
-            if(!bookedTourist) {
-                await session.abortTransaction();
-                session.endSession();
-    
-                return res.status(500).json({ 
-                    success: false, 
-                    error: "User not found" 
-                })
-            }
-            
-            const amountPaidForAdults = bookedTour.price * adults;
-            const amountPaidForChildren = (bookedTour.price / 2) * children;
-            const amountPaid = amountPaidForAdults + amountPaidForChildren;
-
-            const newBooking = new Booking({
-                userId,
-                tourId,
-                date,
-                numberOfPeople,
-                amount: amountPaid,
-                status: "Confirmed",
-                createdAt: new Date(),
-            });
-
-            await newBooking.save({ session });
-
-            await mailSender(
-                bookedTourist.email,
-                `Successfully Enrolled into ${bookedTour.tourName}`,
-                tourBookedEmail(
-                    bookedTour.tourName,
-                    `${bookedTourist.firstName} ${bookedTourist.lastName}`
-                )
-            )
-        }
-
-        await session.commitTransaction();
-        session.endSession();
-
-        return res.status(200).json({
-            success: true,
-            message: "Booking confirmed!",
-        })
-    } catch (error) {
-        await session.abortTransaction();
-        session.endSession();
-        console.error("Transaction error", error);
-
-        return res.status(500).json({
-            success: false,
-            message: "Something went wrong...",
-            error: error.message,
-        });
-    }
-}
-
-exports.getPastBookings = async (req, res) => {
-    try {
-        const userId = req.user.id;
-        const userDetails = await User.findOne({ _id: userId })
-            .populate({
-                path: "tours",
-                select: "title description location price availableDates ratings touristsBooked",
-            })
-            .exec();
-
-        if (!userDetails) {
-            return res.status(404).json({
-                success: false,
-                message: `User with id ${userId} not found.`,
-            });
-        }
-
-        const pastTours = userDetails.tours.filter((tour) => {
-            // Filter tours where the latest available date is in the past
-            const latestDate = Math.max(...tour.availableDates.map(date => new Date(date)));
-            return new Date(latestDate) < new Date();
-        });
-
-        // Format the data to include necessary details
-        const formattedTours = pastTours.map((tour) => ({
-            title: tour.title,
-            description: tour.description,
-            location: tour.location,
-            price: tour.price,
-            ratings: tour.ratings,
-            totalTourists: tour.touristsBooked.length,
-            lastAvailableDate: Math.max(...tour.availableDates.map(date => new Date(date))),
-        }));
-
-        return res.status(200).json({
-            success: true,
-            data: formattedTours,
-        });
-    } catch (error) {
-        console.error("Error fetching past bookings:", error);
-        return res.status(500).json({
-            success: false,
-            message: "An error occurred while fetching past bookings.",
-        });
-    }
+// Helper function to check time conflicts
+const isTimeConflict = (start1, end1, start2, end2) => {
+    return (start1 < end2 && start2 < end1); // Overlapping time check
 };
 
-// refund system pending
-exports.cancelBooking = async (req, res) => {
-    const session = await mongoose.startSession();
-    session.startTransaction();
-    
+// Create Booking with Time Validation
+export const createBooking = async (req, res) => {
     try {
-        const { bookingId } = req.params;
-        const touristId = req.user.id;
+        const { guideId, touristId, date, destination, numberOfPeople, amount, startTime, endTime } = req.body;
 
-        // Find the booking
-        const booking = await Booking.findById(bookingId).session(session);
-        if (!booking) {
-            await session.abortTransaction();
-            return res.status(404).json({
-                success: false,
-                message: "Booking not found",
-            });
+        if (!guideId || !touristId || !date || !destination || !startTime || !endTime) {
+            return res.status(400).json({ success: false, message: "All fields are required" });
         }
 
-        if (booking.userId.toString() !== touristId) {
-            await session.abortTransaction();
-            return res.status(403).json({
-                success: false,
-                message: "You are not authorized to cancel this booking",
-            });
+        const selectedDate = new Date(date);
+
+        // Fetch guide details
+        const guide = await GuideProfile.findById(guideId);
+        if (!guide) {
+            return res.status(404).json({ success: false, message: "Guide not found" });
         }
 
-        if (booking.status === "Cancelled") {
-            await session.abortTransaction();
-            return res.status(400).json({
-                success: false,
-                message: "Booking has already been cancelled",
-            });
+        // Convert guide's working hours to Date objects
+        const guideStartTime = new Date(`${selectedDate.toISOString().split("T")[0]}T${guide.startTime}:00`);
+        const guideEndTime = new Date(`${selectedDate.toISOString().split("T")[0]}T${guide.endTime}:00`);
+
+        const newBookingStartTime = new Date(`${selectedDate.toISOString().split("T")[0]}T${startTime}:00`);
+        const newBookingEndTime = new Date(`${selectedDate.toISOString().split("T")[0]}T${endTime}:00`);
+
+        // Ensure new booking is within guide's working hours
+        if (newBookingStartTime < guideStartTime || newBookingEndTime > guideEndTime) {
+            return res.status(400).json({ success: false, message: "Booking time is outside guide's working hours" });
         }
 
-        // Find the associated tour
-        const tour = await Tours.findById(booking.tourId).session(session);
-        if (!tour) {
-            await session.abortTransaction();
-            return res.status(404).json({
-                success: false,
-                message: "Associated tour not found",
-            });
+        // Fetch all bookings for this guide on the selected date
+        const existingBookings = await Booking.find({ guideId, date: selectedDate });
+
+        // Check for time conflicts
+        for (let booking of existingBookings) {
+            const existingStartTime = new Date(`${selectedDate.toISOString().split("T")[0]}T${booking.startTime}:00`);
+            const existingEndTime = new Date(`${selectedDate.toISOString().split("T")[0]}T${booking.endTime}:00`);
+
+            if (isTimeConflict(existingStartTime, existingEndTime, newBookingStartTime, newBookingEndTime)) {
+                return res.status(400).json({ success: false, message: "Guide is not available at this time" });
+            }
         }
 
-        // Update booking status to "Cancelled"
-        booking.status = "Cancelled";
-        await booking.save({ session });
-
-        // Remove tourist from `touristsBooked` array
-        tour.touristsBooked = tour.touristsBooked.filter(
-            (id) => id.toString() !== touristId
-        );
-
-        // Increase available slots
-        tour.availableSlots += booking.numberOfPeople.adults + booking.numberOfPeople.children;
-        await tour.save({ session });
-
-        // Commit transaction
-        await session.commitTransaction();
-        session.endSession();
-
-        return res.status(200).json({
-            success: true,
-            message: "Booking cancelled successfully",
+        // If no conflicts, create the booking
+        const newBooking = new Booking({
+            touristId,
+            guideId,
+            date: selectedDate,
+            numberOfPeople,
+            amount,
+            startTime,
+            endTime,
+            status: "Pending",
         });
+
+        await newBooking.save();
+        res.status(200).json({ success: true, message: "Booking created successfully", booking: newBooking });
+
     } catch (error) {
-        await session.abortTransaction();
-        session.endSession();
-        console.error("Error cancelling booking:", error);
-
-        return res.status(500).json({
-            success: false,
-            message: "An error occurred while cancelling booking",
-            error: error.message,
-        });
+        console.error("Error creating booking:", error);
+        res.status(500).json({ message: "Server Error", error: error.message });
     }
 };
 
 
-// update booking, AI recommend system, wishlist pending
-exports.updateBooking = async (req, res) => {
-    //also handle pricing and payment
-}
+// Fetch bookings for a tourist
+export const getTouristBookings = async (req, res) => {
+    try {
+        const { touristId } = req.params;
+        const bookings = await Booking.find({ touristId }).populate("guideId");
+        res.status(200).json(bookings);
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+};
+
+// Fetch bookings for a guide
+export const getGuideBookings = async (req, res) => {
+    try {
+        const { guideId } = req.params;
+        const bookings = await Booking.find({ guideId }).populate("touristId");
+        res.status(200).json(bookings);
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+};
