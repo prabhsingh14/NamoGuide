@@ -15,7 +15,7 @@ const Footer = () => {
                         </p>
                         <p className='text-[12px] leading-[19.27px]'>Not just a tour, but a memory!</p>
                     </Link>
-                    <p className="text-gray-500 mt-4">© {new Date().getFullYear()} TourEase. All rights reserved.</p>
+                    <p className="text-gray-500 mt-4">© {new Date().getFullYear()} SmoothTrips. All rights reserved.</p>
                 </div>
 
                 {/* Right Section */}
@@ -24,9 +24,9 @@ const Footer = () => {
                     <div>
                         <h2 className="font-bold text-lg mb-2">Work with Us</h2>
                         <ul className="text-gray-600">
-                            <li className="mb-1 cursor-pointer hover:underline">As a Guide</li>
-                            <li className="mb-1 cursor-pointer hover:underline">As a Tour Agency</li>
-                            <li className="mb-1 cursor-pointer hover:underline">As a Content Creator</li>
+                            <Link to={'/guide-registration'}>
+                                <li className="mb-1 cursor-pointer hover:underline">As a Guide</li>
+                            </Link>
                         </ul>
                     </div>
 
@@ -53,7 +53,9 @@ const Footer = () => {
                             <Link to={'/about-us'}>
                                 <li className="mb-1 cursor-pointer hover:underline">About Us</li>
                             </Link>
-                            <li className="mb-1 cursor-pointer hover:underline">Blogs</li>
+                            <Link to={"/new-launches"}>
+                                <li className="mb-1 cursor-pointer hover:underline">New Launches</li>
+                            </Link>
                         </ul>
                     </div>
 

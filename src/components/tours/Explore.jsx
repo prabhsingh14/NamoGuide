@@ -9,31 +9,31 @@ const Explore = () => {
 
     const images = [
         { 
-            src: "/assets/amritsar.webp", 
+            src: "/assets/amritsar-slider.png", 
             place: "Amritsar",
             description: 
             "Amritsar, the spiritual heart of Punjab, is home to Sri Harmandar Sahib, a symbol of peace and devotion. Explore the historic Jallianwala Bagh, relive history at the Partition Museum, and witness the electrifying Wagah Border ceremony. Don’t miss tasting authentic Punjabi cuisine at local dhabas and the bustling markets of Hall Bazaar. Discover the architectural beauty of Khalsa College and the serene Ram Bagh Gardens. Take a spiritual journey to Durgiana Temple, often referred to as the Silver Temple. Experience the vibrant local culture at Gobindgarh Fort with live performances. Dive into the flavors of Amritsari kulchas and lassi at iconic food joints. Wrap up your visit with a peaceful evening stroll around the illuminated Harmandar Sahib."
         },        
         { 
-            src: "/assets/taj-mahal.webp", 
+            src: "/assets/taj-mahal-slider.png", 
             place: "Agra",
             description: 
             "Agra, home to the iconic Taj Mahal, is a city rich in Mughal history and architectural marvels. Visit the majestic Agra Fort, a UNESCO World Heritage site offering stunning views of the Yamuna River. Explore Fatehpur Sikri, the abandoned Mughal capital with grand palaces and the renowned Buland Darwaza. Witness the beauty of Mehtab Bagh, a serene garden offering a mesmerizing sunset view of the Taj Mahal. Walk through Kinari Bazaar for exquisite marble handicrafts and traditional Mughlai cuisine, including the famous Agra petha and succulent kebabs. A boat ride on the Yamuna at dawn completes the magical experience of Agra."
         },
         { 
-            src: "/assets/vrindavan.webp", 
+            src: "/assets/vrindavan-slider.png", 
             place: "Vrindavan, Mathura",
             description: 
             "Vrindavan, the sacred town associated with Lord Krishna, is a spiritual haven filled with divine energy. Visit the iconic Banke Bihari Temple, where Krishna’s enchanting idol captivates devotees. Explore the ISKCON Temple, a serene space dedicated to Krishna consciousness. Experience the vibrant culture at Prem Mandir, an architectural marvel illuminated beautifully at night. Walk along the ghats of the Yamuna River, taking in the peaceful atmosphere. Participate in the mesmerizing evening aarti at Keshi Ghat. Indulge in local sweets like peda and rabri while exploring bustling markets selling Krishna-themed souvenirs."
         },
         { 
-            src: "/assets/india-gate.webp", 
+            src: "/assets/india-gate-slider.png", 
             place: "New Delhi",
             description: 
             "New Delhi, India's bustling capital, blends history, culture, and modernity. Marvel at the grand India Gate, a war memorial symbolizing national pride. Explore the majestic Red Fort, a UNESCO-listed Mughal fortress, and admire the intricate carvings of Humayun’s Tomb. Pay homage at Raj Ghat, the memorial of Mahatma Gandhi. Wander through the vibrant streets of Chandni Chowk, savoring Delhi’s famous street food like chole bhature and parathas. Experience spirituality at Akshardham Temple and the Lotus Temple’s tranquil ambiance. Shop at Connaught Place or Dilli Haat for handicrafts, and end your day at Hauz Khas Village, known for its cafes and nightlife."
         },
         { 
-            src: "/assets/chandigarh.webp", 
+            src: "/assets/chandigarh-slider.png", 
             place: "Chandigarh",
             description: 
             "Chandigarh, the city beautiful, charms with its modern architecture, natural beauty, and vibrant urban life. Explore the artistic Rock Garden, an extraordinary space crafted from industrial and household waste. Relax at Sukhna Lake with peaceful boat rides and scenic views of the Shivalik Hills. Wander through the fragrant Rose Garden, Asia’s largest, featuring over 1,600 rose species. Discover rich history and art at the Government Museum & Art Gallery. Indulge in street food delights at Sector 17 Plaza, bustling with shops and cafes. Take a stroll along the clean, tree-lined boulevards, and experience Chandigarh’s lively nightlife at cafes, clubs, and rooftop lounges."

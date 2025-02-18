@@ -29,9 +29,9 @@ const Navbar = (props) => {
                 <nav className='hidden md:block'>
                     {/* routes */}
                     <div className="flex gap-x-6">
-                        <Link to='/stories' className="text-gray-700 hover:text-[#F97316] font-medium">Stories</Link>
-                        <Link to="/blogs" className="text-gray-700 hover:text-[#F97316] font-medium">Blogs</Link>
-                        <Link to='/trip-inspiration' className="text-gray-700 hover:text-[#F97316] font-medium">Trip Inspirations</Link>
+                        <Link to='/' className="text-gray-700 hover:text-[#F97316] font-medium">Home</Link>
+                        <Link to="/how-it-works" className="text-gray-700 hover:text-[#F97316] font-medium">How it works</Link>
+                        <Link to='/new-launches' className="text-gray-700 hover:text-[#F97316] font-medium">New Launches</Link>
                         <Link to="/contact" className="text-gray-700 hover:text-[#F97316] font-medium">Contact Us</Link>
                     </div>
                 </nav>

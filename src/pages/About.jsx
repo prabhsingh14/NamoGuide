@@ -1,7 +1,7 @@
 import React from "react";
-import FoundingStory from "../images/founding-story.webp";
+import FoundingStory from "../images/founding-story.png";
 import BannerImage1 from "../images/banner-1.jpg";
-import BannerImage2 from "../images/banner-2.webp";
+import BannerImage2 from "../images/banner-2.png";
 import BannerImage3 from "../images/banner-3.jpg";
 import Footer from "../components/layout/Footer";
 
