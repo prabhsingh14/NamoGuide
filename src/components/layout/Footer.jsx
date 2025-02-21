@@ -11,7 +11,7 @@ const Footer = () => {
                 <div className="flex flex-col">
                     <Link to={'/'} className='flex flex-col' style={{ fontFamily: '"Segoe Script", cursive' }}>
                         <p className='text-[#1D4ED8] text-[32px] leading-[51.39px] font-bold'>
-                            Smooth<span className='text-[#F97316]'>Trips</span>
+                            Namo<span className='text-[#F97316]'>Guide</span>
                         </p>
                         <p className='text-[12px] leading-[19.27px]'>Not just a tour, but a memory!</p>
                     </Link>
