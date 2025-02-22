@@ -15,7 +15,7 @@ const Footer = () => {
                         </p>
                         <p className='text-[12px] leading-[19.27px]'>Not just a tour, but a memory!</p>
                     </Link>
-                    <p className="text-gray-500 mt-4">© {new Date().getFullYear()} SmoothTrips. All rights reserved.</p>
+                    <p className="text-gray-500 mt-4">© {new Date().getFullYear()} NamoGuide. All rights reserved.</p>
                 </div>
 
                 {/* Right Section */}

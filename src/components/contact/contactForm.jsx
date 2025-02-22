@@ -8,7 +8,7 @@ const ContactForm = () => {
                 Got a vision? Let&apos;s revolutionize travel together!
             </h1>
             <p className="text-black text-lg leading-8">
-                Share your ideas or feedback to help us make SmoothTrips the ultimate platform for creating a seamless experience for tourists.
+                Share your ideas or feedback to help us make NamoGuide the ultimate platform for creating a seamless experience for tourists.
             </p>
             <div className="mt-7">
                 <ContactUsForm />

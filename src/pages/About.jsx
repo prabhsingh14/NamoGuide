@@ -14,7 +14,7 @@ const About = () => {
                     <header className="text-4xl font-semibold lg:w-[70%] mx-auto py-20">
                         Revolutionizing Tourism in India: Creating Seamless Travel Experiences
                         <p className="mx-auto mt-3 text-center text-base font-medium text-black lg:w-[95%]">
-                            SmoothTrips is on a mission to transform the tourism experience in India by connecting tourists with verified, authentic guides, 
+                            NamoGuide is on a mission to transform the tourism experience in India by connecting tourists with verified, authentic guides, 
                             ensuring safety, convenience, and a seamless travel experience through cutting-edge technology and personalized services.
                         </p>
                     </header>
@@ -36,7 +36,7 @@ const About = () => {
                                 Our Founding Story
                             </h1>
                             <p className="text-base font-medium text-richblack-300 lg:w-[95%]">
-                                SmoothTrips was born out of a passion to bridge the gap between tourists and local guides, ensuring authentic, trustworthy, and enriching travel experiences in India. 
+                                NamoGuide was born out of a passion to bridge the gap between tourists and local guides, ensuring authentic, trustworthy, and enriching travel experiences in India. 
                                 Our founders, who deeply understand the essence of India's culture and hospitality, envisioned a platform to connect tourists with verified local guides, bringing forth a world of cultural exchange and discovery.
                             </p>
                             <p className="text-base font-medium text-richblack-300 lg:w-[95%]">

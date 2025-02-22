@@ -43,7 +43,7 @@ const VerifyEmail = () => {
     }
 
     return (
-        <div className="min-h-[calc(100vh-3.5rem)] grid place-items-center bg-[#FF6F0026]">
+        <div className="min-h-[calc(100vh-3.5rem)] grid place-items-center bg-[#F7F5F2]">
             {loading ? (
                 <div className="flex flex-col items-center">
                     <div className="spinner"></div>

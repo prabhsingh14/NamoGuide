@@ -16,7 +16,7 @@ const store = configureStore({
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-  <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_AUTH_ID}>;
+  <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_AUTH_ID}>
     <Provider store = {store}>
       <BrowserRouter>
         <App />
