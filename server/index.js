@@ -1,16 +1,19 @@
-const express = require("express");
+import express from "express";
+import userRoutes from "./routes/user.js";
+import profileRoutes from "./routes/profile.js";
+import toursRoutes from "./routes/Tours.js";
+import paymentRoutes from "./routes/Payments.js";
+import contactUsRoute from "./routes/Contact.js";
+import database from "./config/database.js";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import { cloudinaryConnect } from "./config/cloudinary.js";
+import fileUpload from "express-fileupload";
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+import { OAuth2Client } from "google-auth-library";
+
 const app = express();
-const userRoutes = require("./routes/user");
-const profileRoutes = require("./routes/profile");
-const toursRoutes = require("./routes/Tours");
-const paymentRoutes = require("./routes/Payments");
-const contactUsRoute = require("./routes/Contact");
-const database = require("./config/database");
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
-const { cloudinaryConnect } = require("./config/cloudinary");
-const fileUpload = require("express-fileupload");
-const dotenv = require("dotenv");
 const PORT = process.env.PORT || 4000;
 
 dotenv.config();

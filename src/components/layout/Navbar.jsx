@@ -1,16 +1,8 @@
 import React from 'react';
-import { AiOutlineMenu, AiOutlineShoppingCart } from "react-icons/ai";
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
-// import ProfileDropDown from './ProfileDropDown';
 
 const Navbar = (props) => {
-    // const { token } = useSelector((state) => state.auth);
-    // const { user } = useSelector((state) => state.profile);
-    // const { totalItems } = useSelector((state) => state.wishlist); backend se api call karke total items nikalna hai
-
-    // for now, we are using props
     let isLoggedIn = props.isLoggedIn;
     let setIsLoggedIn = props.setIsLoggedIn;
 
@@ -26,7 +18,7 @@ const Navbar = (props) => {
                     <p className='text-[12px] leading-[19.27px]'>Not just a tour, but a memory!</p>
                 </Link>
 
-                <nav className='hidden md:block'>
+                <nav className='hidden md:flex items-center'>
                     {/* routes */}
                     <div className="flex gap-x-6">
                         <Link to='/' className="text-gray-700 hover:text-[#F97316] font-medium">Home</Link>
