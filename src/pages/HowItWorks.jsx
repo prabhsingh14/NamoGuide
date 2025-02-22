@@ -47,7 +47,7 @@ const faqs = [
 const touristSteps = [
     {
         title: "Sign Up",
-        description: "Tourists create an account on NamoGuide.",
+        description: "Tourists create an account on SmoothTrips.",
         icon: <FaUserTie size={40} className="text-blue-500" />,
         link: "/signup",
     },

@@ -40,7 +40,7 @@ const Booking = ({ handleSearch }) => {
     return (
         <>
             <div className="flex items-center bg-white shadow-[0px_24px_20px_-10px_rgba(255,111,0,0.15)] rounded-lg p-4 w-full relative">
-                {/* Destination Input */}
+            {/* Destination Input */}
                 <div className="relative flex-1" ref={dropdownRef}>
                     <input
                         type="text"
@@ -55,18 +55,13 @@ const Booking = ({ handleSearch }) => {
                     {isOpen && (
                         <ul className="absolute left-0 w-full bg-white border border-gray-300 rounded-md shadow-lg mt-1 max-h-40 overflow-y-auto z-10 p-2">
                             {destinations.map((place, index) => (
-                                <li 
-                                    key={index} 
-                                    className="flex items-center gap-2 p-2 hover:bg-gray-100 cursor-pointer"
-                                    onClick={() => handleCheckboxChange(place)} 
-                                >
+                                <li key={index} className="flex items-center gap-2 p-2 hover:bg-gray-100 cursor-pointer">
                                     <input
                                         type="checkbox"
                                         checked={selectedDestinations.includes(place)}
                                         onChange={() => handleCheckboxChange(place)}
-                                        className="cursor-pointer"
                                     />
-                                    <label className="cursor-pointer">{place}</label>
+                                    <label>{place}</label>
                                 </li>
                             ))}
                         </ul>
