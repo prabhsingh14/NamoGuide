@@ -1,14 +1,16 @@
 // Desc: Controller for handling tourist authentication, guide auth will be handled separately as they require verification
 
 import bcrypt from "bcrypt"
-import { Tourist } from "../models/Tourist.js"
-import { OTP } from "../models/OTP.js"
-import { otpGenerator } from "otp-generator"
-import { mailSender } from "../utils/mailSender.js"
-import { passwordUpdated } from "../mail/passwordUpdate.js"
-import { TouristProfile } from "../models/TouristProfile.js"
+import Tourist from "../models/Tourist.js"
+import OTP from "../models/OTP.js"
+import otpGenerator from "otp-generator"
+import mailSender from "../utils/mailSender.js"
+import passwordUpdated from "../mail/passwordUpdate.js"
+import TouristProfile from "../models/TouristProfile.js"
 import jwt from "jsonwebtoken"
-require("dotenv").config()
+import dotenv from "dotenv";
+dotenv.config();
+
 
 const generateAccessAndRefreshTokens = async(userId) => {
     try{
@@ -37,7 +39,7 @@ const generateAccessAndRefreshTokens = async(userId) => {
     }
 }
 
-exports.signup = async (req, res) => {
+export const signup = async (req, res) => {
     try {
         const {
             firstName,
@@ -46,99 +48,95 @@ exports.signup = async (req, res) => {
             password,
             confirmPassword,
             otp,
-        } = req.body
+        } = req.body;
 
-        if (
-        !firstName ||
-        !lastName ||
-        !email ||
-        !password ||
-        !confirmPassword ||
-        !otp
-        ) {
+        if (!firstName || !lastName || !email || !password || !confirmPassword || !otp) {
             return res.status(403).send({
                 success: false,
                 message: "All Fields are required",
-            })
+            });
         }
 
         if (password !== confirmPassword) {
             return res.status(400).json({
                 success: false,
-                message:
-                "Password and Confirm Password do not match. Please try again.",
-            })
+                message: "Password and Confirm Password do not match. Please try again.",
+            });
         }
 
-        const existingUser = await Tourist.findOne({ email })
+        const existingUser = await Tourist.findOne({ email });
         if (existingUser) {
             return res.status(400).json({
                 success: false,
                 message: "User already exists. Please login to continue.",
-            })
+            });
         }
 
-        const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1)
+        // Fetch latest OTP entry for the user
+        const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
         if (response.length === 0) {
             return res.status(400).json({
                 success: false,
                 message: "OTP not found. Please request a new OTP.",
-            })
+            });
         }
 
         const latestOTP = response[0];
-        if(String(otp) !== String(latestOTP.otp)){
+        if (String(otp) !== String(latestOTP.otp)) {
             return res.status(400).json({
                 success: false,
                 message: "Invalid OTP. Please try again.",
-            })
+            });
         }
 
-        if(latestOTP.expiresAt < Date.now()){
+        if (latestOTP.expiresAt < Date.now()) {
             return res.status(400).json({
                 success: false,
                 message: "OTP Expired. Please request a new OTP.",
-            })
+            });
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10)
+        // const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Create the Additional Profile For Tourist
+        // Step 1: Create the Tourist (User)
+        const user = await Tourist.create({
+            firstName,
+            lastName,
+            email,
+            password,
+            additionalDetails: null,  // Set it after profile creation
+        });
+
+        // Step 2: Create Tourist Profile & Link it to the User
         const profileDetails = await TouristProfile.create({
+            tourist: user._id,  // Associate the profile with the user
             gender: null,
             contactNumber: null,
             image: "",
             guidesBooked: [],
             reviewsGiven: [],
-        })
+        });
 
-        const user = await Tourist.create({
-            firstName,
-            lastName,
-            email,
-            contactNumber,
-            password: hashedPassword,
-            additionalDetails: profileDetails._id,
-        })
-
-        profileDetails.tourist = user._id;
-        await profileDetails.save();
+        // Step 3: Update User with Profile ID
+        user.additionalDetails = profileDetails._id;
+        await user.save();
 
         return res.status(200).json({
             success: true,
             user,
             message: "User registered successfully",
-        })
+        });
     } catch (error) {
-        console.error(error)
+        console.error(error);
         return res.status(500).json({
             success: false,
             message: "User cannot be registered. Please try again.",
-        })
+        });
     }
-}
+};
 
-exports.login = async (req, res) => {
+
+export const login = async (req, res) => {
     try {
         const { email, password } = req.body
         if (!email || !password) {
@@ -189,7 +187,7 @@ exports.login = async (req, res) => {
     }
 }
 
-exports.sendotp = async (req, res) => {
+export const sendotp = async (req, res) => {
     try {
         const { email } = req.body
         const checkUserPresent = await Tourist.findOne({ email })
@@ -225,9 +223,16 @@ exports.sendotp = async (req, res) => {
     }
 }
 
-exports.changePassword = async (req, res) => {
+export const changePassword = async (req, res) => {
     try {
-        const userDetails = await Tourist.findById(req.user._id)
+        const userDetails = await Tourist.findById(req.user.id)
+        console.log(req.user.id)
+        if (!userDetails) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+            })
+        }
         const { oldPassword, newPassword } = req.body
         const isPasswordMatch = await bcrypt.compare(
             oldPassword,
@@ -282,7 +287,7 @@ exports.changePassword = async (req, res) => {
     }
 }
 
-exports.logout = async (req, res) => {
+export const logout = async (req, res) => {
     try{
         await Tourist.findByIdAndUpdate(req.user._id, {
             $set: {
@@ -309,7 +314,7 @@ exports.logout = async (req, res) => {
     }
 }
 
-exports.refreshAccessToken = async (req, res) => {
+export const refreshAccessToken = async (req, res) => {
     const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
     if(!incomingRefreshToken){
         return res.status(401).json({ 

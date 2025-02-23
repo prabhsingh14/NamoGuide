@@ -1,9 +1,9 @@
-import { Tourist } from "../models/Tourist";
+import Tourist from "../models/Tourist.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 
-exports.auth = async (req, res, next) => {
+const auth = async (req, res, next) => {
 	try {
 		// Extracting token from cookies, body, or headers
 		const token =
@@ -20,7 +20,7 @@ exports.auth = async (req, res, next) => {
 
 		try {
 			// Verify the token
-			const decode = jwt.verify(token, process.env.JWT_SECRET);
+			const decode = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
 			const user = await Tourist.findById(decode.id);
 			if (!user) {
@@ -54,3 +54,5 @@ exports.auth = async (req, res, next) => {
 		});
 	}
 };
+
+export default auth;

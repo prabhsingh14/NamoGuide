@@ -1,11 +1,9 @@
-// work pending
+import User from "../models/Tourist.js"
+import mailSender from "../utils/mailSender.js"
+import bcrypt from "bcrypt"
+import crypto from "crypto"
 
-const User = require("../models/User")
-const mailSender = require("../utils/mailSender")
-const bcrypt = require("bcrypt")
-const crypto = require("crypto")
-
-exports.resetPasswordToken = async (req, res) => {
+export const resetPasswordToken = async (req, res) => {
     try {
         const email = req.body.email
         const user = await User.findOne({ email: email })
@@ -22,14 +20,16 @@ exports.resetPasswordToken = async (req, res) => {
         const updatedDetails = await User.findOneAndUpdate(
             { email: email },
             {
-                token: token,
-                resetPasswordExpires: Date.now() + 3600000,
+                $set: {
+                    token: token,
+                    resetPasswordExpires: Date.now() + 3600000,
+                }
             },
             { new: true }
         )
 
-        // const url = `http://localhost:3000/update-password/${token}`
-        const url = `https://tourease.vercel.app/update-password/${token}`
+        // console.log("Printing", updatedDetails);
+        const url = `http://localhost:3000/update-password/${token}`
 
         await mailSender(
             email,
@@ -51,7 +51,7 @@ exports.resetPasswordToken = async (req, res) => {
     }
 }
 
-exports.resetPassword = async (req, res) => {
+export const resetPassword = async (req, res) => {
     try {
         const { password, confirmPassword, token } = req.body
         if (confirmPassword !== password) {
@@ -62,8 +62,9 @@ exports.resetPassword = async (req, res) => {
         }
 
         const userDetails = await User.findOne({ token: token })
+        // console.log(token)
         if (!userDetails) {
-            return res.json({
+            return res.status(400).json({
                 success: false,
                 message: "Token is Invalid",
             })

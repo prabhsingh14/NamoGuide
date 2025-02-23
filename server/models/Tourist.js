@@ -27,11 +27,13 @@ const touristSchema = new mongoose.Schema(
         additionalDetails: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "TouristProfile",
-            default: null,
         },
         active: {
             type: Boolean,
             default: true,
+        },
+        token: {
+            type: String,
         },
         resetPasswordExpires: {
             type: Date,
@@ -46,14 +48,19 @@ const touristSchema = new mongoose.Schema(
 // Hash password before saving
 touristSchema.pre("save", async function (next) {
     if (!this.isModified("password")) {
+        console.log("Password not modified, skipping hash.");
         return next();
     }
+    console.log("Hashing password:", this.password);
     this.password = await bcrypt.hash(this.password, 10);
+    console.log("New hashed password:", this.password);
     next();
 });
 
+
 // Check password correctness
 touristSchema.methods.isPasswordCorrect = async function (password) {
+    // console.log("Comparing:", password, "with", this.password);
     return await bcrypt.compare(password, this.password);
 };
 

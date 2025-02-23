@@ -1,7 +1,7 @@
 import { contactUsEmail } from "../mail/contactFormRes.js";
-import { mailSender } from "../utils/mailSender.js";
+import mailSender from "../utils/mailSender.js";
 
-exports.contactUsController = async (req, res) => {
+const contactUsController = async (req, res) => {
     const { email, firstname, lastname, message, phoneNo, countrycode } = req.body;
 
     // Input validation
@@ -36,3 +36,6 @@ exports.contactUsController = async (req, res) => {
         });
     }
 };
+
+// Export using ES module syntax
+export { contactUsController };

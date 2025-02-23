@@ -1,10 +1,10 @@
-exports.contactUsEmail = (
+export function contactUsEmail(
     email,
     firstname,
     lastname,
     message,
     phoneNo
-) => {
+) {
     return `<!DOCTYPE html>
     <html>
     
