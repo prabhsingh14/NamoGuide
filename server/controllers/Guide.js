@@ -1,17 +1,47 @@
-import { Guide } from "../models/GuideProfile.js";
+import GuideProfile from "../models/GuideProfile.js";7
 
-// get available guides for a particular destination and date
-export const getAvailableGuides = async (req, res) => {
+export const searchGuides = async (req, res) => {
     try {
-        const { destination, date } = req.query;
-        if(!destination || !date) return res.status(400).json({ message: "Destination and date are required" });
+        const { destinations, date } = req.body;
 
+        // Validate input
+        if (!destinations || destinations.length === 0 || !date) {
+            return res.status(400).json({ message: "Destination and date are required." });
+        }
+
+        // Convert the date to a Date object
         const selectedDate = new Date(date);
-        const guides = await Guide.find({ location: {$in: destination}, availability: { $in: selectedDate } });
 
-        res.status(200).json(guides);
+        // Step 1: Find guides who are available on the selected date
+        const availableGuides = await GuideProfile.find({
+            availability: { $in: [selectedDate] },
+        }).populate("guideId");
+
+        // Step 2: Filter guides who serve the selected destinations
+        const filteredGuides = availableGuides.filter((guideProfile) => {
+            const guideLocations = guideProfile.location.map((loc) => loc.name);
+            return destinations.some((destination) => guideLocations.includes(destination));
+        });
+
+        // Step 3: Extract guide details and send the response
+        const guides = filteredGuides.map((guideProfile) => {
+            const guide = guideProfile.guideId;
+            return {
+                id: guide._id,
+                fullName: guide.fullName,
+                email: guide.email,
+                phone: guide.phone,
+                about: guideProfile.about,
+                languages: guideProfile.languages,
+                location: guideProfile.location,
+                profilePicture: guideProfile.profilePicture,
+                ratingAndReviews: guideProfile.ratingAndReviews,
+            };
+        });
+
+        res.status(200).json({ success: true, guides });
     } catch (error) {
-        console.error("Error fetching guides: ", error);
-        res.status(500).json({ message: "Server Error" });
+        console.error("Error searching guides:", error);
+        res.status(500).json({ success: false, message: "Internal server error" });
     }
-}
+};

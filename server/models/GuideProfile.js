@@ -18,7 +18,8 @@ const GuideProfileSchema = new mongoose.Schema({
     ],
     location: [
         { 
-            type: [String], 
+            name: String,
+            price: Number,
         }
     ],
     touristsServed: [
@@ -33,9 +34,10 @@ const GuideProfileSchema = new mongoose.Schema({
         }
     ],
     profilePicture: { type: String },  // URL to profile image
-    reviewsTaken: [
+    ratingAndReviews: [
         {
-            reviewId: { type: mongoose.Schema.Types.ObjectId, ref: "RatingAndReview" },
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "RatingAndReview",
         },
     ],
 }, {

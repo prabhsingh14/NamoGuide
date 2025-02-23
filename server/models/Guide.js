@@ -17,12 +17,6 @@ const GuideSchema = new mongoose.Schema({
         type: String, 
         required: true 
     },
-    ratingAndReviews: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "RatingAndReview",
-        },
-    ],
     dateOfBirth: {
         type: Date,
         required: true,
