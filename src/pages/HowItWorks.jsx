@@ -20,26 +20,7 @@ const faqs = [
     },
     {
         question: "What happens if I need to cancel my tour?",
-        answer: (
-            <div>
-                <p>If you wish to cancel your tour, the following cancellation policies apply:</p>
-                <ul>
-                    <li>
-                        <strong>For cancellations made 48 hours or more before the scheduled tour date:</strong> 
-                        <br/>
-                        A cancellation fee of 4% of the total tour price will be applied.
-                    </li>
-                    <li>
-                        <strong>For cancellations made between 24 to 48 hours before the scheduled tour date:</strong> A cancellation fee of 10% of the total tour price will be applied.
-                    </li>
-                    <li>
-                        <strong>For cancellations made 24 hours or less before the scheduled tour date:</strong> Unfortunately, no refund will be provided.
-                    </li>
-                </ul>
-                <p>This policy helps ensure that our guides are fairly compensated for their time and effort.</p>
-                <p>We appreciate your understanding and encourage you to carefully consider your booking before making any cancellations. Thank you for your cooperation.</p>
-            </div>
-        ),
+        answer: "You can cancel your tour anytime, but there is no refund.",
     },
 ];
 
