@@ -1,6 +1,6 @@
 import express from "express";
 import userRoutes from "./routes/User.js";
-import contactUsRoute from "./routes/Contact.js";
+import contactUsRoute from "./routes/Contact.js"
 import database from "./config/database.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
