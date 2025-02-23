@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
-const PaymentSchema = new mongoose.Schema({
-    bookingId: { type: mongoose.Schema.Types.ObjectId, ref: "Booking" },
-    touristId: { type: mongoose.Schema.Types.ObjectId, ref: "Tourist" },
-    amount: Number,
-    status: { type: String, enum: ["Pending", "Successful", "Failed", "Refunded"], default: "Pending" },
-    transactionId: String,
-    createdAt: { type: Date, default: Date.now }
-});  
+const paymentSchema = new mongoose.Schema({
+    paymentId: { type: String, required: true, unique: true },
+    orderId: { type: String, required: true, unique: true },
+    touristId: { type: mongoose.Schema.Types.ObjectId, ref: "Tourist", required: true },
+    amount: { type: Number, required: true },
+    status: { type: String, enum: ["Success", "Failed", "Pending"], default: "Pending" },
+}, { timestamps: true });
 
-module.exports = mongoose.model("Payment", PaymentSchema);
+const Payment = mongoose.model("Payment", paymentSchema);
+export default Payment;

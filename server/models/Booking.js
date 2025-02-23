@@ -69,5 +69,5 @@ bookingSchema.statics.isSlotAvailable = async function (guideId, date, startTime
     return !overlappingBooking;
 };
 
-const Booking = mongoose.model("Booking", OTPSchema);
+const Booking = mongoose.model("Booking", bookingSchema);
 export default Booking;

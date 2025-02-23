@@ -1,10 +1,10 @@
-exports.tourBookedEmail = (tourName, name) => {
+export function guideBookedEmail(guideName, name) {
     return `<!DOCTYPE html>
     <html>
     
     <head>
         <meta charset="UTF-8">
-        <title>Tour Booking Confirmation</title>
+        <title>Guide Booking Confirmation</title>
         <style>
             body {
                 background-color: #ffffff;
@@ -69,10 +69,10 @@ exports.tourBookedEmail = (tourName, name) => {
         <div class="container">
             <a href="https://tourease.vercel.app"><img class="logo" src="https://i.ibb.co/HVTTGwn/logo.png"
                     alt="TOUR-EASE Logo"></a>
-            <div class="message">Tour Booking Confirmation</div>
+            <div class="message">Guide Booking Confirmation</div>
             <div class="body">
                 <p>Dear ${name},</p>
-                <p>You have successfully booked the tour <span class="highlight">"${tourName}"</span>. We
+                <p>You have successfully booked the guide <span class="highlight">"${guideName}"</span>. We
                     are excited to have you as a participant!</p>
             <div class="support">If you have any questions or need assistance, please feel free to reach out to us at <a
                     href="mailto:prabhsingh1407@gmail.com">prabhsingh1407@gmail.com</a>. We are here to help!</div>
@@ -80,4 +80,4 @@ exports.tourBookedEmail = (tourName, name) => {
     </body>
     
     </html>`;
-};
+}
