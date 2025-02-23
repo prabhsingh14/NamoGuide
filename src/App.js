@@ -7,6 +7,7 @@ import RegisterSuccess from "./components/guide-registration/Success";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import PlaceDetail from "./components/tours/PlaceDetail";
 import Contact from "./pages/Contact";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -43,6 +44,7 @@ function App() {
         <Route path="/guide-registration" element={<Guide />} />
         <Route path="/register-success" element={<RegisterSuccess />} />
         <Route path="/hire-guide" element = {<GuidePage />} />
+        <Route path="/place/:id" element={<PlaceDetail />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />

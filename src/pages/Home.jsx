@@ -2,7 +2,7 @@ import React from 'react';
 import "react-datepicker/dist/react-datepicker.css";
 import Booking from "../components/Booking";
 import Explore from "../components/tours/Explore";
-import TourPackages from '../components/tours/TopGuides';
+import TopPlaces from '../components/tours/TopPlaces';
 import ChooseUs from '../components/ChooseUs';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/layout/Footer';
@@ -34,7 +34,7 @@ const Home = () => {
             </div>
 
             <Explore />
-            <TourPackages />
+            <TopPlaces />
             <ChooseUs/>
             <Footer/>
         </div>
