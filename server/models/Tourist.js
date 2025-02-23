@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+function arrayLimit(val) {
+    return val.length <= 10;
+}
+
 const touristSchema = new mongoose.Schema(
     {
         firstName: {
@@ -23,6 +27,17 @@ const touristSchema = new mongoose.Schema(
         password: {
             type: String,
             required: true,
+        },
+        guidesBooked: {
+            type: [
+                {
+                    guideId: { type: mongoose.Schema.Types.ObjectId, ref: "Guide" },
+                    date: { type: Date, required: true },
+                    reviewed: { type: Boolean, default: false },
+                    status: { type: String, enum: ["Upcoming", "Completed", "Canceled"], default: "Upcoming" },
+                },
+            ],
+            validate: [arrayLimit, "Exceeded the limit of 10"],
         },
         additionalDetails: {
             type: mongoose.Schema.Types.ObjectId,

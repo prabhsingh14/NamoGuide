@@ -42,4 +42,4 @@ const GuideProfileSchema = new mongoose.Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model("GuideProfile", GuideProfileSchema);
+export default mongoose.model("GuideProfile", GuideProfileSchema);

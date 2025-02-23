@@ -1,6 +1,7 @@
 import express from "express";
 import userRoutes from "./routes/User.js";
 import contactUsRoute from "./routes/Contact.js"
+import touristProfileRoutes from "./routes/TouristProfile.js";
 import database from "./config/database.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -33,6 +34,7 @@ cloudinaryConnect();
 
 app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1/contact", contactUsRoute);
+app.use("/api/v1/tourist", touristProfileRoutes);
 
 app.get("/", (req, res) => {
 	return res.json({
