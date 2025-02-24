@@ -1,0 +1,1 @@
+// Handle basic authentication of guide along with his verification status

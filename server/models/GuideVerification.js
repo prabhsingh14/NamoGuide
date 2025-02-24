@@ -1,20 +1,30 @@
 import mongoose from "mongoose";
 
-const GuideVerificationSchema = new mongoose.Schema({
-    guideId: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: "Guide", 
-        required: true, 
-        unique: true 
+const GuideVerificationSchema = new mongoose.Schema(
+    {
+        guideId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Guide",
+            required: true,
+            unique: true,
+        },
+        documentURL: {
+            type: String,
+            required: true, // Cloudinary or other storage URL
+        },
+        status: {
+            type: String,
+            enum: ["Pending", "Verified", "Rejected"],
+            default: "Pending",
+        },
+        rejectionReason: {
+            type: String,
+            trim: true,
+            default: null, // Only set if status is "Rejected"
+        },
     },
-    documentURL: { type: String, required: true },  // Cloudinary/other storage URL
-    status: { 
-        type: String, 
-        enum: ["Pending", "Verified", "Rejected"], 
-        default: "Pending" 
-    },
-    rejectionReason: { type: String, trim: true, default: null },  // If rejected
-}, { timestamps: true });
+    { timestamps: true }
+);
 
 // Ensure `rejectionReason` is only set when status is "Rejected"
 GuideVerificationSchema.pre("save", function (next) {
@@ -24,4 +34,7 @@ GuideVerificationSchema.pre("save", function (next) {
     next();
 });
 
-module.exports = mongoose.model("GuideVerification", GuideVerificationSchema);
+// Index for faster lookup
+GuideVerificationSchema.index({ guideId: 1 });
+
+export default mongoose.model("GuideVerification", GuideVerificationSchema);

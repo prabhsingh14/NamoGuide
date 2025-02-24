@@ -11,7 +11,6 @@ import PlaceDetail from "./components/tours/PlaceDetail";
 import Contact from "./pages/Contact";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
-import Dashboard from "./pages/Dashboard";
 import VerifyEmail from "./pages/Verify-Email"
 import ForgotPassword from "./pages/Forgot-Password";
 import UpdatePassword from "./pages/Update-Password";
@@ -19,6 +18,9 @@ import About from "./pages/About";
 import GuidePage from "./pages/GuidePage";
 import HowItWorks from "./pages/HowItWorks";
 import NewLaunches from "./pages/NewLaunches";
+import TouristDashboard from "./components/dashboard/Tourist";
+import GuideDashboard from "./components/dashboard/Guide";
+import VerificationPending from "./components/VerificationPending";
 import "@fontsource/poppins";
 
 function App() {
@@ -40,7 +42,6 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/guide-registration" element={<Guide />} />
         <Route path="/register-success" element={<RegisterSuccess />} />
         <Route path="/hire-guide" element = {<GuidePage />} />
@@ -50,7 +51,11 @@ function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/new-launches" element={<NewLaunches />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/tourist-dashboard" element={<TouristDashboard />} />
+        <Route
+          path="/guide-dashboard"
+          element={user?.verificationStatus === "verified" ? <GuideDashboard /> : <VerificationPending />}
+        />
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/update-password" element={<UpdatePassword />} />
