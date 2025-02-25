@@ -65,7 +65,9 @@ const Footer = () => {
                         <div className="flex flex-row space-x-4 text-[#F97316]">
                             <FaFacebook size={20} className="cursor-pointer hover:text-gray-700" />
                             <FaInstagram size={20} className="cursor-pointer hover:text-gray-700" />
-                            <FaLinkedin size={20} className="cursor-pointer hover:text-gray-700" />
+                            <Link to="https://www.linkedin.com/company/namoguide/">
+                                <FaLinkedin size={20} className="cursor-pointer hover:text-gray-700" />
+                            </Link>
                             <FaXTwitter size={20} className="cursor-pointer hover:text-gray-700" />
                         </div>
                     </div>
