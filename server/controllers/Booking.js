@@ -1,59 +1,70 @@
-// todo: update it in such a way these controllers can be used by both tourists and guides.
 import Booking from "../models/Booking.js";
 import Tourist from "../models/Tourist.js";
+import Guide from "../models/Guide.js";
 
 export const getUpcomingBookings = async (req, res) => {
-    try {
-        const { touristId } = req.params;
-        const upcomingBookings = await Booking.find({
-            touristId,
+    try{
+        const userId = req.user.id;
+        const isTourist = await Tourist.findById({ userId }).lean();
+
+        const query = {
             date: { $gte: new Date() },
             status: { $in: ["Pending", "Confirmed"] }
-        }).populate("guideId");
+        };
 
-        res.status(200).json(upcomingBookings);
-    } catch (error) {
-        res.status(500).json({ message: "Error fetching upcoming bookings", error });
+        if(isTourist){
+            query.touristId = userId;
+        } else{
+            const isGuide = await Guide.findById({ userId }).lean();
+            if(!isGuide){
+                return res.status(404).json({ message: "User not found" });
+            }
+
+            query.guideId = userId;
+        }
+
+        const upcomingBookings = await Booking.find(query).populate("touristId", "firstName lastName email").populate("guideId", "fullName email")
+                                            .sort({ date: 1, startTime: 1 });
+                                            
+        return res.status(200).json({
+            success: true,
+            upcomingBookings,
+        });
+    } catch(error){
+        console.log(error);
+        return res.status(500).json({ message: "Error fetching bookings", error });
     }
 };
-
 
 export const getPastBookings = async (req, res) => {
     try {
-        const { touristId } = req.params;
-        const pastBookings = await Booking.find({
-            touristId,
+        const userId = req.user.id; 
+        const isTourist = await Tourist.findById(userId).lean();
+        const query = {
             date: { $lt: new Date() },
-            status: "Completed"
-        }).populate("guideId");
+            status: { $in: ["Completed", "Cancelled"] } 
+        };
 
-        res.status(200).json(pastBookings);
+        if (isTourist) {
+            query.touristId = userId; 
+        } else {
+            const isGuide = await Guide.findById(userId).lean();
+            if (!isGuide) {
+                return res.status(404).json({ message: "User not found" });
+            }
+            query.guideId = userId; 
+        }
+
+        const pastBookings = await Booking.find(query)
+            .populate("touristId", "firstName lastName email")
+            .populate("guideId", "fullName email")
+            .sort({ date: -1, startTime: -1 }); // Show most recent first
+
+        res.status(200).json({ success: true, bookings: pastBookings });
     } catch (error) {
-        res.status(500).json({ message: "Error fetching past bookings", error });
+        console.error("Error fetching past bookings:", error);
+        res.status(500).json({ success: false, message: "Server error" });
     }
 };
 
-// Cancel a booking with no refund for now
-export const cancelBooking = async (req, res) => {
-    try {
-        const { bookingId } = req.params;
-        const { cancellationReason } = req.body;
-
-        const booking = await Booking.findById(bookingId);
-        if (!booking) {
-            return res.status(404).json({ message: "Booking not found" });
-        }
-
-        if (booking.status !== "Pending" && booking.status !== "Confirmed") {
-            return res.status(400).json({ message: "Only pending or confirmed bookings can be canceled" });
-        }
-
-        booking.status = "Cancelled";
-        booking.cancellationReason = cancellationReason;
-        await booking.save();
-
-        res.status(200).json({ message: "Booking canceled successfully", booking });
-    } catch (error) {
-        res.status(500).json({ message: "Error canceling booking", error });
-    }
-};
+//cancellation and refund system pending
