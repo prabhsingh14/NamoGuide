@@ -1,3 +1,4 @@
+// todo: make it work for both tourists and guides
 import User from "../models/Tourist.js"
 import mailSender from "../utils/mailSender.js"
 import bcrypt from "bcrypt"
