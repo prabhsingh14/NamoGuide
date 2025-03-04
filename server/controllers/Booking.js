@@ -1,7 +1,7 @@
+// todo: update it in such a way these controllers can be used by both tourists and guides.
 import Booking from "../models/Booking.js";
 import Tourist from "../models/Tourist.js";
 
-// Get upcoming bookings for a tourist
 export const getUpcomingBookings = async (req, res) => {
     try {
         const { touristId } = req.params;
@@ -17,7 +17,7 @@ export const getUpcomingBookings = async (req, res) => {
     }
 };
 
-// Get past bookings for a tourist
+
 export const getPastBookings = async (req, res) => {
     try {
         const { touristId } = req.params;
@@ -33,7 +33,7 @@ export const getPastBookings = async (req, res) => {
     }
 };
 
-// Cancel a booking
+// Cancel a booking with no refund for now
 export const cancelBooking = async (req, res) => {
     try {
         const { bookingId } = req.params;

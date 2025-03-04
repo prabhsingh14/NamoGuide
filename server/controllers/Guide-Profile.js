@@ -1,0 +1,1 @@
+// getdetails, delete account, edit profile, update display picture

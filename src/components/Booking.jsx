@@ -6,7 +6,7 @@ const Booking = ({ handleSearch }) => {
     const [selectedDate, setSelectedDate] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const [selectedDestinations, setSelectedDestinations] = useState([]); // Store multiple destinations
-    const destinations = ["Agra", "Amritsar", "Rishikesh", "Patiala", "Vrindavan"];
+    const destinations = ["Agra", "Amritsar", "Rishikesh", "New Delhi", "Vrindavan"];
     const dropdownRef = useRef(null);
 
     // Handle click outside to close dropdown
