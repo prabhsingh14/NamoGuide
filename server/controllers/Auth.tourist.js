@@ -1,5 +1,3 @@
-// Desc: Controller for handling tourist authentication, guide auth will be handled separately as they require verification
-
 import bcrypt from "bcrypt"
 import Tourist from "../models/Tourist.js"
 import OTP from "../models/OTP.js"
