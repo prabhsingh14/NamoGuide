@@ -125,6 +125,8 @@ export const register = async (req, res) => {
         user.verificationStatus == "Pending";
         await user.save();
 
+        // as registered, trigger verification process
+
         return res.status(200).json({
             success: true,
             user,
