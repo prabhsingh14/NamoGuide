@@ -1,6 +1,7 @@
 import RatingAndReview from "../models/RatingAndReview.js";
 import TouristProfile from "../models/TouristProfile.js";
 import GuideProfile from "../models/GuideProfile.js";
+import Booking from "../models/Booking.js";
 import mongoose from "mongoose";
 
 // Create a new rating and review for a guide
@@ -8,6 +9,20 @@ export const createRating = async (req, res) => {
     try {
         const touristId = req.user.id; // Assuming the authenticated user is a tourist
         const { rating, review, guideId } = req.body;
+
+        // check if tourist has ever booked the guide
+        const booking = await Booking.findOne({
+            tourist: touristId,
+            guide: guideId,
+            status: "Completed",
+        });
+
+        if (!booking) {
+            return res.status(403).json({
+                success: false,
+                message: "You have not booked this guide",
+            });
+        }
 
         // Check if the tourist has already reviewed the guide
         const alreadyReviewed = await RatingAndReview.findOne({
