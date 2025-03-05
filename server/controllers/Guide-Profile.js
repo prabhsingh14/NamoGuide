@@ -199,3 +199,5 @@ export const updateDisplayPicture = async (req, res) => {
         });
     }
 };
+
+// availability management

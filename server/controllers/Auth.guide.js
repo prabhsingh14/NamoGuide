@@ -5,6 +5,7 @@ import otpGenerator from "otp-generator"
 import mailSender from "../utils/mailSender.js"
 import passwordUpdated from "../mail/passwordUpdate.js"
 import GuideProfile from "../models/GuideProfile.js"
+import Document from "../models/Document.js"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv";
 dotenv.config();
@@ -48,10 +49,11 @@ export const register = async (req, res) => {
             phone,
             gender,
             address,
-            govtId
+            documents
         } = req.body;
 
-        if (!fullName || !email || !password || !confirmPassword || !otp || !dateOfBirth || !phone || !gender || !address || !govtId) {
+        if (!fullName || !email || !password || !confirmPassword || !otp || !dateOfBirth || !phone || !gender || !address || !documents 
+            || !documents.length) {
             return res.status(403).send({
                 success: false,
                 message: "All Fields are required",
@@ -107,7 +109,6 @@ export const register = async (req, res) => {
             phone,
             gender,
             address,
-            govtId,
             additionalDetails: null,  // Set it after profile creation
         });
 
@@ -122,7 +123,18 @@ export const register = async (req, res) => {
         });
         
         user.additionalDetails = profileDetails._id;
-        user.verificationStatus == "Pending";
+
+        const uploadedDocuments = await Promise.all(
+            documents.map(async (doc) => {
+                return await Document.create({
+                    guide: user._id,
+                    type: doc.type,
+                    fileURL: doc.fileURL,
+                });
+            })
+        )
+
+        user.documents = uploadedDocuments.map((doc) => doc._id);
         await user.save();
 
         // as registered, trigger verification process

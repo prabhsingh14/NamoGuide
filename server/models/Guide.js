@@ -40,20 +40,28 @@ const GuideSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        govtId: {
-            type: String,
-            required: true,
-        },
         verificationStatus: {
             type: String,
             enum: ["Pending", "Approved", "Rejected"],
             default: "Pending",
+        },
+        rejectionReason: {
+            type: String,
+            default: null,
+        },
+        verifiedAt: {
+            type: Date,
+            default: null,
         },
         additionalDetails: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "GuideProfile",
             default: null,
         },
+        documents: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Document",
+        }]
     },
     { timestamps: true }
 );

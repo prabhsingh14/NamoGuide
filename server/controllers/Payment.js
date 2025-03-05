@@ -88,7 +88,9 @@ const bookTourist = async (guides, userId, date, numberOfPeople, res) => {
 
         await guideBookedEmail(tourist.email, bookedGuide.name);
 
-        res.status(200).json({ success: true, message: "Tour booked successfully", booking: newBooking });
+        res.status(200).json({ success: true, message: "Guide booked successfully", booking: newBooking });
+
+        // Send email to guide
     } catch (error) {
         res.status(500).json({ success: false, message: "Booking failed", error });
     }
