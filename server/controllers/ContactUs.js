@@ -6,6 +6,7 @@ dotenv.config(); // Load environment variables
 
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL; // Get admin email from .env
 
+// pending to be work with just phone number
 const contactUsController = async (req, res) => {
     const { email, firstname, lastname, message, phoneNo, countrycode } = req.body;
 

@@ -62,6 +62,7 @@ export const verifyPayment = async (req, res) => {
     }
 };
 
+//pending
 const bookTourist = async (guides, userId, date, numberOfPeople, res) => {
     try {
         const bookedGuide = await GuideProfile.findById(guides);

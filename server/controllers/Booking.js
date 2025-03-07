@@ -23,7 +23,7 @@ export const getUpcomingBookings = async (req, res) => {
             query.guideId = userId;
         }
 
-        const upcomingBookings = await Booking.find(query).populate("touristId", "firstName lastName email").populate("guideId", "fullName email")
+        const upcomingBookings = await Booking.find(query).populate("touristId", "firstName lastName email").populate("guideId", "fullName phone")
                                             .sort({ date: 1, startTime: 1 });
                                             
         return res.status(200).json({
@@ -57,7 +57,7 @@ export const getPastBookings = async (req, res) => {
 
         const pastBookings = await Booking.find(query)
             .populate("touristId", "firstName lastName email")
-            .populate("guideId", "fullName email")
+            .populate("guideId", "fullName phone")
             .sort({ date: -1, startTime: -1 }); // Show most recent first
 
         res.status(200).json({ success: true, bookings: pastBookings });

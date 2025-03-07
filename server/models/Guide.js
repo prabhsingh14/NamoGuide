@@ -9,9 +9,8 @@ const GuideSchema = new mongoose.Schema(
             required: true,
             trim: true,
         },
-        email: {
+        email: { //not required as many guides in India, may not have email
             type: String,
-            required: true,
             unique: true,
             lowercase: true,
         },

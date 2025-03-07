@@ -52,7 +52,8 @@ export const register = async (req, res) => {
             documents
         } = req.body;
 
-        if (!fullName || !email || !password || !confirmPassword || !otp || !dateOfBirth || !phone || !gender || !address || !documents 
+        // as many guides in India, might not have/know their mail, we are not making email compulsory
+        if (!fullName || !password || !confirmPassword || !otp || !dateOfBirth || !phone || !gender || !address || !documents 
             || !documents.length) {
             return res.status(403).send({
                 success: false,
@@ -67,7 +68,19 @@ export const register = async (req, res) => {
             });
         }
 
-        const existingUser = await Guide.findOne({ email });
+        let existingUser;
+        
+        if(email){
+            existingUser = await Guide.findOne({ email });
+        } else if(phone){
+            existingUser = await Guide.findOne({ phone });
+        } else{
+            return res.status(400).json({
+                success: false,
+                message: "Please provide either email or phone number",
+            });
+        }
+
         if (existingUser) {
             return res.status(400).json({
                 success: false,
@@ -76,7 +89,19 @@ export const register = async (req, res) => {
         }
 
         // Fetch latest OTP entry for the user
-        const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
+        let response;
+        
+        if(email){
+            response = await OTP.find({ email }).sort({ createdAt: -1 });
+        } else if(phone){
+            response = await OTP.find({ phone }).sort({ createdAt: -1 });
+        } else{
+            return res.status(400).json({
+                success: false,
+                message: "Please provide either email or phone number",
+            });
+        }
+        
         if (response.length === 0) {
             return res.status(400).json({
                 success: false,
@@ -103,7 +128,7 @@ export const register = async (req, res) => {
 
         const user = await Guide.create({
             fullName,
-            email,
+            email: email || null,
             password,
             dateOfBirth,
             phone,
@@ -155,15 +180,23 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
     try {
-        const { email, password } = req.body
-        if (!email || !password) {
+        const { email, phone, password } = req.body
+        
+        if ((!email && !phone) || !password) {
             return res.status(400).json({
                 success: false,
-                message: `Please Fill up all the fields`,
+                message: `Please provide either email or phone, and password`,
             })
         }
 
-        const user = await Guide.findOne({ email }).populate("additionalDetails")
+        let user;
+        
+        if(email){
+            user = await Guide.findOne({ email }).populate("additionalDetails")
+        } else{
+            user = await Guide.findOne({ phone }).populate("additionalDetails")
+        }
+        
         if (!user) {
             return res.status(401).json({
                 success: false,
@@ -204,6 +237,7 @@ export const login = async (req, res) => {
     }
 }
 
+// pending for SMS
 export const sendotp = async (req, res) => {
     try {
         const { email } = req.body
@@ -240,6 +274,7 @@ export const sendotp = async (req, res) => {
     }
 }
 
+// pending for SMS
 export const changePassword = async (req, res) => {
     try {
         const userDetails = await Guide.findById(req.user.id)
