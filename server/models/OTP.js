@@ -5,7 +5,11 @@ import emailTemplate from "../mail/emailVerificationTemplate.js";
 const OTPSchema = new mongoose.Schema({
 	email: {
 		type: String,
-		required: true,
+		required: false,
+	},
+	phoneNumber: {
+		type: String,
+		required: false,
 	},
 	otp: {
 		type: String,
@@ -17,6 +21,14 @@ const OTPSchema = new mongoose.Schema({
 		expires: 60 * 5, // The document will be automatically deleted after 5 minutes of its creation time
 	},
 });
+
+OTPSchema.pre("validate", function(next) {
+	if(!this.email && !this.phoneNumber){
+		next(new Error('Either email or phone number is required'));
+	} else{
+		next();
+	}
+})
 
 async function sendVerificationEmail(email, otp) {
 	try {
@@ -32,15 +44,22 @@ async function sendVerificationEmail(email, otp) {
 	}
 }
 
+//sendVerificationWhatsApp
+
 // post-save hook to send email after the document has been saved
 OTPSchema.pre("save", async function (next) {
-	console.log("New document saved to database");
+    console.log("New document saved to database");
 
-	// Only send an email when a new document is created
-	if (this.isNew) {
-		await sendVerificationEmail(this.email, this.otp);
-	}
-	next();
+    // Only send a verification message when a new document is created
+    if (this.isNew) {
+        if (this.email) {
+            await sendVerificationEmail(this.email, this.otp);
+        }
+        if (this.phoneNumber) {
+            // sendVerificationWhatsApp(this.phoneNumber, this.otp);
+        }
+    }
+    next();
 });
 
 const OTP = mongoose.model("OTP", OTPSchema);

@@ -237,11 +237,23 @@ export const login = async (req, res) => {
     }
 }
 
-// pending for SMS
 export const sendotp = async (req, res) => {
     try {
-        const { email } = req.body
-        const checkUserPresent = await Guide.findOne({ email })
+        const { email, phoneNumber } = req.body
+        if((!email && !phoneNumber)){
+            return res.status(400).json({
+                success: false,
+                message: `Please provide either email or phone number`,
+            })
+        }
+        
+        let checkUserPresent;
+        if(email){
+            checkUserPresent = await Guide.findOne({ email })
+        } else if(phoneNumber){
+            checkUserPresent = await Guide.findOne({ phoneNumber })
+        }
+
         if (checkUserPresent) {
             return res.status(401).json({
                 success: false,
@@ -258,10 +270,18 @@ export const sendotp = async (req, res) => {
         while (result) {
             otp = otpGenerator.generate(6, {
                 upperCaseAlphabets: false,
+                lowerCaseAlphabets: false,
+                specialChars: false,
             })
         }
 
-        const otpPayload = { email, otp }
+        const otpPayload = { otp }
+        if(email){
+            otpPayload.email = email
+        } 
+        if(phoneNumber){
+            otpPayload.phoneNumber = phoneNumber
+        }
         const otpBody = await OTP.create(otpPayload)
         res.status(200).json({
             success: true,
@@ -274,7 +294,6 @@ export const sendotp = async (req, res) => {
     }
 }
 
-// pending for SMS
 export const changePassword = async (req, res) => {
     try {
         const userDetails = await Guide.findById(req.user.id)
@@ -299,19 +318,20 @@ export const changePassword = async (req, res) => {
         }
 
         const encryptedPassword = await bcrypt.hash(newPassword, 10)
-        const updatedUserDetails = await Guide.findByIdAndUpdate(
+        const updatedUserDetails = await GuideProfile.findByIdAndUpdate(
             req.user.id,
             { password: encryptedPassword },
             { new: true }
         )
 
+        // manychat integration for integrating whatsapp pending
         try {
             const emailResponse = await mailSender(
                 updatedUserDetails.email,
                 "Password for your account has been updated",
                 passwordUpdated(
                     updatedUserDetails.email,
-                    `Password updated successfully for ${updatedUserDetails.fullName}`
+                    `Password updated successfully for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
                 )
             )
 

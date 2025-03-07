@@ -1,3 +1,5 @@
+// inform guide via mail and whatsapp about verification
+
 import nodemailer from "nodemailer";
 
 const sendVerificationEmail = async (email, title, body) => {

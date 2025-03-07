@@ -6,6 +6,7 @@ import GuideProfile from "../models/GuideProfile.js";
 import crypto from "crypto";
 import Razorpay from "razorpay";
 import { guideBookedEmail } from "../mail/guideBookedEmail.js";
+import { notifyGuideAboutBooking } from "../mail/guides/Booking.js";
 
 const razorpay = new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
@@ -62,14 +63,13 @@ export const verifyPayment = async (req, res) => {
     }
 };
 
-//pending
-const bookTourist = async (guides, userId, date, numberOfPeople, res) => {
+const bookTourist = async (guides, userId, date, numberOfPeople, razorpay_payment_id, res) => {
     try {
         const bookedGuide = await GuideProfile.findById(guides);
         const tourist = await Tourist.findById(userId);
 
         if (!bookedGuide || !tourist) {
-        return res.status(404).json({ success: false, message: "Tourist or Guide not found" });
+            return res.status(404).json({ success: false, message: "Tourist or Guide not found" });
         }
 
         const newBooking = new Booking({
@@ -87,11 +87,13 @@ const bookTourist = async (guides, userId, date, numberOfPeople, res) => {
         bookedGuide.guidesBooked.push(userId);
         await bookedGuide.save();
 
+        // Send email to tourist
         await guideBookedEmail(tourist.email, bookedGuide.name);
+        
+        // Send email to guide
+        await notifyGuideAboutBooking(bookedGuide.email, tourist.name, date, numberOfPeople);
 
         res.status(200).json({ success: true, message: "Guide booked successfully", booking: newBooking });
-
-        // Send email to guide
     } catch (error) {
         res.status(500).json({ success: false, message: "Booking failed", error });
     }

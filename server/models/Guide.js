@@ -11,6 +11,7 @@ const GuideSchema = new mongoose.Schema(
         },
         email: { //not required as many guides in India, may not have email
             type: String,
+            required: false,
             unique: true,
             lowercase: true,
         },
