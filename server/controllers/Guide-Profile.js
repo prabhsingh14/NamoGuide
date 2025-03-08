@@ -16,13 +16,6 @@ export const editProfile = async (req, res) => {
             });
         }
 
-        if(guide.verificationStatus !== "verified"){
-            return res.status(403).json({
-                success: false,
-                message: "Only verified guides can edit their profile",
-            });
-        }
-
         const restrictedFields = ["fullName", "email", "dateOfBirth", "gender"];
         for(let field of restrictedFields){
             if(guideUpdates?.[field]){
@@ -36,8 +29,7 @@ export const editProfile = async (req, res) => {
         if(guideUpdates && Object.keys(guideUpdates).length > 0){
             Object.assign(guide, guideUpdates);
         }
-
-        guide.VerificationStatus = "Pending"
+        
         await guide.save();
         // trigger verification process
 
