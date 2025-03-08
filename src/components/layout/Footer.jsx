@@ -53,9 +53,6 @@ const Footer = () => {
                             <Link to={'/about-us'}>
                                 <li className="mb-1 cursor-pointer hover:underline">About Us</li>
                             </Link>
-                            <Link to={"/new-launches"}>
-                                <li className="mb-1 cursor-pointer hover:underline">New Launches</li>
-                            </Link>
                         </ul>
                     </div>
 

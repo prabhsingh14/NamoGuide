@@ -162,8 +162,6 @@ export const register = async (req, res) => {
         user.documents = uploadedDocuments.map((doc) => doc._id);
         await user.save();
 
-        // as registered, trigger verification process
-
         return res.status(200).json({
             success: true,
             user,

@@ -50,6 +50,7 @@ export const getGuideProfileForTour = async(req, res) => {
     }
 }
 
+// set if guide is not verified, he can't create tours
 export const createTour = async(req, res) => {
     try {
         const { description, startingPrice, maxAvailability, location } = req.body;

@@ -72,12 +72,7 @@ const Guide = () => {
 
     const handleSubmit = () => {
         if (isFormComplete) {
-            navigate('/register-success', { 
-                state: { 
-                    type: "Guide", 
-                    description: "Are you passionate about sharing the stories, culture, and hidden gems of your destination? Join us and turn your knowledge into unforgettable experiences for travelers from around the world" 
-                } 
-            });
+            navigate('/guide-dashboard');
         }
     };
     
@@ -118,7 +113,7 @@ const Guide = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#FF6F0026] flex flex-col">
+        <div className="min-h-screen bg-[#F7F5F2] flex flex-col">
             <div className="flex-grow flex items-center justify-center">
                 <div className="bg-white p-8 shadow-lg rounded-2xl max-w-2xl w-full mx-auto mt-8">
                     {/* Header */}
@@ -221,7 +216,7 @@ const Guide = () => {
 
                     {/* Address & ID Proof Section */}
                     <h3 className="text-xl font-semibold mt-6 text-gray-700">Address & ID Proof</h3>
-                    <div className="mt-4 flex flex-row items-center gap-4">
+                    <div className="mt-4 flex flex-col gap-4">
                         <div className="flex items-center border rounded-lg px-4 py-3 flex-1 bg-white">
                             <IoHome className="text-gray-500 mr-3" />
                             <input 
@@ -235,7 +230,7 @@ const Guide = () => {
                         <div className="flex items-center border rounded-lg px-4 py-3 flex-1 relative bg-white">
                             <IoCloudUpload className="text-gray-500 mr-3" />
                             <label className="w-full cursor-pointer text-gray-500">
-                                <span className="text-gray-700">{fileName || "Upload ID Proof"}</span>
+                                <span className="text-gray-700">{fileName || "Upload Ministry Issued ID Card"}</span>
                                 <input type="file" className="hidden" onChange={handleFileChange} />
                             </label>
                         </div>
@@ -251,7 +246,7 @@ const Guide = () => {
                         }`}
                         disabled={!isFormComplete}
                     >
-                        Register
+                        Get Started
                     </button>
                 </div>
             </div>

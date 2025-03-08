@@ -63,7 +63,7 @@ export const verifyPayment = async (req, res) => {
     }
 };
 
-const bookTourist = async (guides, userId, date, numberOfPeople, razorpay_payment_id, res) => {
+const bookGuide = async (guides, userId, date, numberOfPeople, razorpay_payment_id, res) => {
     try {
         const bookedGuide = await GuideProfile.findById(guides);
         const tourist = await Tourist.findById(userId);

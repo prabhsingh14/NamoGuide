@@ -3,6 +3,7 @@ import Guide from "../models/Tourist.js"
 import GuideProfile from "../models/GuideProfile.js"
 import {uploadImageToCloudinary} from "../utils/imageUploader.js"
 
+// editProfile - requires changes as per verification process
 export const editProfile = async (req, res) => {
     try{
         const guideId = req.user.id;

@@ -30,8 +30,8 @@ const Navbar = (props) => {
                     {/* routes */}
                     <div className="flex gap-x-6">
                         <Link to='/' className="text-gray-700 hover:text-[#F97316] font-medium">Home</Link>
-                        <Link to="/how-it-works" className="text-gray-700 hover:text-[#F97316] font-medium">How it works</Link>
-                        <Link to='/new-launches' className="text-gray-700 hover:text-[#F97316] font-medium">New Launches</Link>
+                        <Link to="/special" className="text-gray-700 hover:text-[#F97316] font-medium">Holi Special</Link>
+                        <Link to='/guide-registration' className="text-gray-700 hover:text-[#F97316] font-medium">Join as a Guide</Link>
                         <Link to="/contact" className="text-gray-700 hover:text-[#F97316] font-medium">Contact Us</Link>
                     </div>
                 </nav>
