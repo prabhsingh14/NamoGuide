@@ -7,39 +7,25 @@ const GuideProfileSchema = new mongoose.Schema({
         required: true,
         unique: true 
     },
-    about: { 
-        type: String, 
-        trim: true 
-    },
-    languages: [
-        { 
-            type: [String] 
-        }
-    ],
-    location: [
-        { 
-            name: String,
-            price: Number,
-        }
-    ],
-    touristsServed: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Tourist",
-        },
-    ],
-    avilability: [
-        { 
-            type: [Date] 
-        }
-    ],
+    about: { type: String, trim: true },
+    languages: [{ type: String }],
+    location: [{ name: String, price: Number }],
+    touristsServed: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tourist" }],
     profilePicture: { type: String },  // URL to profile image
-    ratingAndReviews: [
+    ratingAndReviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "RatingAndReview" }],
+
+    availability: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "RatingAndReview",
-        },
-    ],
+            date: { type: Date, required: true },  // Only store date, not time
+            slots: [
+                {
+                    startTime: { type: String, required: true }, // Example: "10:00 AM"
+                    endTime: { type: String, required: true },   // Example: "12:00 PM"
+                    isBooked: { type: Boolean, default: false } // Track booked status
+                }
+            ]
+        }
+    ]
 }, {
     timestamps: true
 });

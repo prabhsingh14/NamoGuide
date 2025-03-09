@@ -1,70 +1,66 @@
 import mongoose from "mongoose"
-import Guide from "../models/Tourist.js"
+import Guide from "../models/Guide.js"
 import GuideProfile from "../models/GuideProfile.js"
-import {uploadImageToCloudinary} from "../utils/imageUploader.js"
+import { verifyGuide } from "./GuideVerification.js"
+import { uploadImageToCloudinary } from "../utils/imageUploader.js"
 
-// editProfile - requires changes as per verification process
 export const editProfile = async (req, res) => {
-    try{
-        const guideId = req.user.id;
-        const { guideProfileUpdates, guideUpdates } = req.body;
+    // on hold
+}
 
-        const guide = await Guide.findById(guideId);
-        if(!guide){
+// to automatically add the details from registration to the profile
+export const getGuideProfile = async (req, res) => {
+    try {
+        const guideId = req.user._id; 
+
+        // Find guide and populate the additionalDetails
+        const guide = await Guide.findById(guideId)
+            .populate("additionalDetails")
+            .populate("documents");
+
+        if (!guide) {
             return res.status(404).json({
                 success: false,
-                message: "Guide not found",
+                message: "Guide not found"
             });
         }
 
-        const restrictedFields = ["fullName", "email", "dateOfBirth", "gender"];
-        for(let field of restrictedFields){
-            if(guideUpdates?.[field]){
-                return res.status(403).json({
-                    success: false,
-                    message: `Field '${field}' cannot be updated`,
-                });
-            }
-        }
+        const guideProfile = await GuideProfile.findOne({ guideId });
 
-        if(guideUpdates && Object.keys(guideUpdates).length > 0){
-            Object.assign(guide, guideUpdates);
-        }
-        
-        await guide.save();
-        // trigger verification process
-
-        let guideProfile = await GuideProfile.findOne({ guide: guideId });
-        if(!guideProfile){
-            return res.status(404).json({
-                success: false,
-                message: "Guide profile not found",
-            });
-        }
-
-        if(guideProfileUpdates?.location){
-            return res.status(403).json({
-                success: false,
-                message: "Location cannot be updated. For updation, contact our team directly.",
-            });
-        }
-
-        Object.assign(guideProfile, guideProfileUpdates);
-        await guideProfile.save();
+        // Prepare response data
+        const profileData = {
+            guide: {
+                fullName: guide.fullName,
+                email: guide.email,
+                dateOfBirth: guide.dateOfBirth,
+                phone: guide.phone,
+                gender: guide.gender,
+                address: guide.address,
+                verificationStatus: guide.verificationStatus
+            },
+            profile: guideProfile ? {
+                about: guideProfile.about || "",
+                languages: guideProfile.languages || [],
+                location: guideProfile.location || [],
+                availability: guideProfile.avilability || [],
+                profilePicture: guideProfile.profilePicture || ""
+            } : {},
+            documents: guide.documents || []
+        };
 
         return res.status(200).json({
             success: true,
-            message: "Profile updated successfully",
-            data: guideProfile,
+            data: profileData
         });
+
     } catch (error) {
+        console.log(error);
         return res.status(500).json({
             success: false,
-            message: "Failed to update profile",
-            error: error.message,
+            error: error.message
         });
     }
-}
+};
 
 export const deleteAccount = async (req, res) => {
     try {
