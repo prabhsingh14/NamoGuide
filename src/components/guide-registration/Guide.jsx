@@ -1,4 +1,3 @@
-// todo: after the form filled, send the data to: "prabhsingh1407@gmail.com" for verification.
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 import Footer from "../layout/Footer";
@@ -18,6 +17,7 @@ const Guide = () => {
 
     const [fileName, setFileName] = useState("");
     const [fileError, setFileError] = useState("");
+    const [ageError, setAgeError] = useState("");
     const [isCalendarOpen, setCalendarOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
@@ -25,7 +25,7 @@ const Guide = () => {
     const calendarRef = useRef(null);
     const dobInputRef = useRef(null);
 
-    const isFormComplete = Object.values(formData).every(value => value !== "" && value !== null);
+    const isFormComplete = Object.values(formData).every(value => value !== "" && value !== null) && !ageError;
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -49,6 +49,20 @@ const Guide = () => {
     const handleDateClick = (day) => {
         setSelectedDate(new Date(selectedYear, selectedMonth, day));
         setFormData({ ...formData, dob: new Date(selectedYear, selectedMonth, day) });
+        const selectedDate = new Date(selectedYear, selectedMonth, day);
+        const today = new Date();
+        const age = today.getFullYear() - selectedDate.getFullYear();
+
+        // Check if the user is at least 18 years old
+        if (age < 18 || (age === 18 && today < new Date(today.getFullYear(), selectedDate.getMonth(), selectedDate.getDate()))) {
+            setAgeError("You must be at least 18 years old to register.");
+            setSelectedDate(null);
+            setFormData({ ...formData, dob: null });
+        } else {
+            setAgeError("");
+            setSelectedDate(selectedDate);
+            setFormData({ ...formData, dob: selectedDate });
+        }
         setCalendarOpen(false);
     };
 
@@ -196,6 +210,7 @@ const Guide = () => {
                                         <div className="grid grid-cols-7 gap-1">{renderCalendarDays()}</div>
                                     </div>
                                 )}
+                                {ageError && <p className="text-[#F97316] text-sm mt-2">{ageError}</p>}
                             </div>
                         </div>
                         
