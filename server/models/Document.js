@@ -23,6 +23,10 @@ const DocumentSchema = new mongoose.Schema({
         type: String,
         default: "",
     },
+    licenseDetails: {
+        type: mongoose.Schema.Types.Mixed, // Allows storing various data types (object, array, etc.)
+        default: null,
+    },
 }, { timestamps: true });
 
 const Document = mongoose.model("Document", DocumentSchema);

@@ -8,6 +8,7 @@ import GuideProfile from "../models/GuideProfile.js"
 import Document from "../models/Document.js"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv";
+import { verifyLicenseWithDigiLockerXML, verifyLicenseWithDigiLockerFile } from "../utils/digiLocker.js"
 dotenv.config();
 
 const generateAccessAndRefreshTokens = async(userId) => {
@@ -37,6 +38,7 @@ const generateAccessAndRefreshTokens = async(userId) => {
     }
 }
 
+// OCR Pending, token ni liya abhi digilocker website se pehle
 export const register = async (req, res) => {
     try {
         const {
@@ -159,7 +161,39 @@ export const register = async (req, res) => {
 
                 // license verification starts here
                 try{
-                    // will add API call to verify the license
+                    const digiLockerAccessToken = process.env.DIGILOCKER_ACCESS_TOKEN;
+
+                    let xmlVerificationResult = null;
+                    if(doc.fileURL){
+                        xmlVerificationResult = await verifyLicenseWithDigiLockerXML(doc.fileURL, digiLockerAccessToken);
+                    }
+
+                    if(xmlVerificationResult && xmlVerificationResult.success){
+                        createdDoc.verificationStatus = "Approved";
+                        createdDoc.licenseDetails = xmlVerificationResult.licenseDetails;
+                        await createdDoc.save();
+                    } else{
+                        if(doc.fileURL){
+                            const fileVerificationResult = await verifyLicenseWithDigiLockerFile(doc.fileURL, digiLockerAccessToken);
+
+                            if(fileVerificationResult && fileVerificationResult.success){
+                                createdDoc.verificationStatus = "Approved";
+                                // need to use OCR library here to extract license details from the file, and then store it.
+
+                                await createdDoc.save();
+                            } else{
+                                console.error("License verification failed!", fileVerificationResult);
+                                createdDoc.verificationStatus = "Rejected";
+                                createdDoc.rejectionReason = "License verification failed";
+                                await createdDoc.save();
+                            }
+                        } else{
+                            createdDoc.verificationStatus = "Rejected";
+                            createdDoc.rejectionReason = "License verification failed";
+                            await createdDoc.save();
+                        }
+                    }
+
                 } catch(verificationError){
                     console.error("License verification failed!", verificationError);
                     createdDoc.verificationStatus = "Rejected";
