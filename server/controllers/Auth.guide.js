@@ -151,11 +151,23 @@ export const register = async (req, res) => {
 
         const uploadedDocuments = await Promise.all(
             documents.map(async (doc) => {
-                return await Document.create({
+                const createdDoc = await Document.create({
                     guide: user._id,
                     type: doc.type,
                     fileURL: doc.fileURL,
                 });
+
+                // license verification starts here
+                try{
+                    // will add API call to verify the license
+                } catch(verificationError){
+                    console.error("License verification failed!", verificationError);
+                    createdDoc.verificationStatus = "Rejected";
+                    createdDoc.rejectionReason = "License verification failed";
+                    await createdDoc.save();
+                }
+
+                return createdDoc;
             })
         )
 
