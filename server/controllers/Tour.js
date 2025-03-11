@@ -1,4 +1,3 @@
-// todo: view all tours with filtering options
 import Tour from "../models/Tour.js";
 import GuideProfile from "../models/GuideProfile.js";
 import Guide from "../models/Guide.js";
@@ -50,7 +49,6 @@ export const getGuideProfileForTour = async(req, res) => {
     }
 }
 
-// set if guide is not verified, he can't create tours
 export const createTour = async(req, res) => {
     try {
         const { description, startingPrice, maxAvailability, location } = req.body;
@@ -102,6 +100,37 @@ export const createTour = async(req, res) => {
         return res.status(500).json({
             success: false,
             message: "Error creating tour",
+            error: error.message,
+        });
+    }
+}
+
+export const getAllTours = async(req, res) => {
+    try {
+        const guideId = req.user.id;
+        const tours = await Tour.find({ guideId })
+            .sort({ createdAt: -1 }) 
+            .select("-__v"); // Exclude version field
+        
+        if (!tours || tours.length === 0) {
+            return res.status(200).json({
+                success: true,
+                message: "No tours found for this guide",
+                data: []
+            });
+        }
+        
+        return res.status(200).json({
+            success: true,
+            message: "Tours fetched successfully",
+            count: tours.length,
+            data: tours
+        });
+    } catch (error) {
+        console.error("Error fetching all tours:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Error fetching all tours",
             error: error.message,
         });
     }
