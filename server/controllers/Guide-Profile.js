@@ -1,11 +1,18 @@
 import mongoose from "mongoose"
 import Guide from "../models/Guide.js"
 import GuideProfile from "../models/GuideProfile.js"
-import { verifyGuide } from "./GuideVerification.js"
 import { uploadImageToCloudinary } from "../utils/imageUploader.js"
 
 export const editProfile = async (req, res) => {
-    // on hold
+    try {
+        // details will be added concurrently with verification
+    } catch (error) {
+        console.error("Error updating guide profile:", error);
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        })
+    }
 }
 
 // to automatically add the details from registration to the profile
@@ -25,7 +32,29 @@ export const getGuideProfile = async (req, res) => {
             });
         }
 
-        const guideProfile = await GuideProfile.findOne({ guideId });
+        let guideProfile = await GuideProfile.findOne({ guideId });
+        if(!guideProfile){
+            guideProfile = await GuideProfile.create({
+                guideId: guideId,
+                about: "",
+                languages: [],
+                location: [],
+                availability: [],
+                profilePicture: ""
+            });
+            guide.additionalDetails = guideProfile._id;
+            await guideProfile.save();
+        }
+
+        if(!guideProfile.about && guide.fullName){
+            guideProfile.about = `Hello, I am ${guide.fullName}`;
+        }
+
+        if(!guideProfile.location.length && guide.address){
+            guideProfile.location.push(guide.address);
+        }
+
+        await guideProfile.save();
 
         // Prepare response data
         const profileData = {
