@@ -3,9 +3,9 @@ import { contactUsEmail } from "../mail/contactFormRes.js";
 import mailSender from "../utils/mailSender.js";
 import dotenv from "dotenv";
 
-dotenv.config(); // Load environment variables
+dotenv.config(); 
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL; // Get admin email from .env
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL; 
 
 const contactUsController = async (req, res) => {
     const { email, firstname, lastname, message, phoneNo, countrycode } = req.body;

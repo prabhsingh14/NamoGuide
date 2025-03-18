@@ -1,6 +1,8 @@
 import React, { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import CountryCode from "../../data/countrycode.json"
+import { apiConnector } from "../../services/apiConnector.js"
+import { contactusEndpoint } from "../../services/apis.js"
 
 const ContactUsForm = () => {
     const {
@@ -9,6 +11,19 @@ const ContactUsForm = () => {
         reset,
         formState: { errors, isSubmitSuccessful },
     } = useForm()
+
+    const submitContactForm = async (data) => {
+        try {
+            const res = await apiConnector("POST", contactusEndpoint.CONTACT_US_API, data);
+            if (res?.data?.success) {
+                console.log("Message sent successfully!");
+            } else {
+                console.error("Error:", res?.data?.message || "Unknown error");
+            }
+        } catch (error) {
+            console.error("API Error:", error.response?.data || error.message);
+        }
+    };    
 
     useEffect(() => {
         if (isSubmitSuccessful) {
@@ -22,14 +37,10 @@ const ContactUsForm = () => {
         }
     }, [reset, isSubmitSuccessful])
 
-    const onSubmit = (data) => {
-        console.log(data)
-    }
-
     return (
         <form
             className="flex flex-col gap-7"
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(submitContactForm)}
         >
             <div className="flex flex-col gap-5 lg:flex-row">
                 <div className="flex flex-col gap-2 lg:w-[48%]">
@@ -45,7 +56,7 @@ const ContactUsForm = () => {
                     />
                     {errors.firstname && (
                         <span className="-mt-1 text-[12px] text-yellow-100">
-                            Please enter your name.
+                            Please Enter Your First Name.
                         </span>
                     )}
                 </div>
@@ -60,6 +71,11 @@ const ContactUsForm = () => {
                         className="w-full rounded-md border border-gray-400 bg-white p-2 text-black"
                         {...register("lastname")}
                     />
+                    {errors.lastname && (
+                        <span className="-mt-1 text-[12px] text-yellow-100">
+                            Please Enter Your Last Name.
+                        </span>
+                    )}
                 </div>
             </div>
 
@@ -98,6 +114,11 @@ const ContactUsForm = () => {
                                 </option>
                             ))}
                         </select>
+                        {errors.countrycode && (
+                            <span className="-mt-1 text-[12px] text-yellow-100">
+                                Please select your Country Code.
+                            </span>
+                        )}
                     </div>
                     <div className="flex w-[calc(100%-90px)] flex-col gap-2">
                         <input
@@ -111,9 +132,9 @@ const ContactUsForm = () => {
                                     message: "Please enter your Phone Number.",
                                 },
                                 pattern: {
-                                    value: /^\d{10}$/, // Regular expression for exactly 10 digits
-                                    message: "Phone Number must be exactly 10 digits.",
-                                },
+                                    value: /^\d{7,15}$/,
+                                    message: "Phone Number must be between 7 and 15 digits.",
+                                }
                             })}
                         />
                         {errors.phoneNo && (

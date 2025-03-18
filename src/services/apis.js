@@ -23,5 +23,5 @@ export const ratingsEndpoints = {
 
 // CONTACT-US API
 export const contactusEndpoint = {
-    CONTACT_US_API: BASE_URL + "/reach/contact",
+    CONTACT_US_API: BASE_URL + "/api/v1/contact",
 }

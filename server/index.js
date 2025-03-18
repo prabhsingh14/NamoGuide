@@ -11,12 +11,12 @@ import { OAuth2Client } from "google-auth-library";
 import fileUpload from "express-fileupload";
 import dotenv from "dotenv";
 
+dotenv.config();
+database.connect();
+
 const app = express();
 const PORT = process.env.PORT || 4000;
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-
-dotenv.config();
-database.connect();
 
 app.use(express.json());
 app.use(cookieParser());
