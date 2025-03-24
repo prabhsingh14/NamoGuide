@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import CountryCode from "../../data/countrycode.json"
+import axios from "axios";
 
 const ContactUsForm = () => {
     const {
@@ -22,9 +23,19 @@ const ContactUsForm = () => {
         }
     }, [reset, isSubmitSuccessful])
 
-    const onSubmit = (data) => {
-        console.log(data)
-    }
+    const onSubmit = async (data) => {
+        try {
+            const response = await axios.post("/api/contact", data);
+            if (response.data.success) {
+                alert("Message sent successfully!");
+            } else {
+                alert("Failed to send message. Please try again.");
+            }
+        } catch (error) {
+            console.error("Error sending message:", error);
+            alert("Something went wrong. Please try again later.");
+        }
+    };
 
     return (
         <form

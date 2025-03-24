@@ -31,18 +31,23 @@ OTPSchema.pre("validate", function(next) {
 })
 
 async function sendVerificationEmail(email, otp) {
-	try {
-		const mailResponse = await mailSender(
-			email,
-			"Verification Email",
-			emailTemplate(otp)
-		);
-		console.log("Email sent successfully: ", mailResponse.response);
-	} catch (error) {
-		console.log("Error occurred while sending email: ", error);
-		throw error;
-	}
+    try {
+        console.log("Attempting to send email to:", email);
+        console.log("Generated OTP:", otp);
+
+        const mailResponse = await mailSender(
+            email,
+            "Verification Email",
+            emailTemplate(otp)
+        );
+
+        console.log("Email sent successfully: ", mailResponse.response);
+    } catch (error) {
+        console.error("Error occurred while sending email: ", error);
+        throw error;
+    }
 }
+
 
 //sendVerificationWhatsApp
 

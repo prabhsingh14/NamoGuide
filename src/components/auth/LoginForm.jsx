@@ -25,25 +25,39 @@ function LoginForm({setIsLoggedIn}) {
         [e.target.name]: e.target.value,
         }));
     };
-
     // Handle form submission
-    const handleOnSubmit = (e) => {
+    const handleOnSubmit = async (e) => {
         e.preventDefault();
-        setIsLoggedIn(true);
-        toast.success("Account logged in successfully!");
-        
-        const loginData = { ...formData };
-        dispatch({ type: "SET_LOGIN_DATA", payload: loginData });
-
-        navigate("/dashboard");
-
-        // Reset form
-        setFormData({
-            email: "",
-            password: "",
-        });
+    
+        try {
+            const response = await fetch("http://localhost:3000/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+                credentials: "include", // Important for handling cookies (tokens)
+            });
+    
+            const data = await response.json();
+    
+            if (data.success) {
+                toast.success("Login successful!");
+    
+                // Save access token in localStorage or use cookies
+                localStorage.setItem("accessToken", data.accessToken);
+                localStorage.setItem("refreshToken", data.refreshToken);
+    
+                setIsLoggedIn(true);
+                navigate("/dashboard");
+            } else {
+                toast.error(data.message);
+            }
+        } catch (error) {
+            toast.error("Login failed. Please try again.");
+            console.error("Error during login:", error);
+        }
     };
-
     return (
         <div className="login-form-container">
             <form onSubmit={handleOnSubmit} className="flex flex-col gap-4">

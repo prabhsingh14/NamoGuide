@@ -32,31 +32,35 @@ function SignupForm({setIsLoggedIn}) {
     };
 
     // Handle form submission
-    const handleOnSubmit = (e) => {
+    const handleOnSubmit = async (e) => {
         e.preventDefault();
+    
         if (password !== confirmPassword) {
             toast.error("Passwords do not match");
             return;
         }
-
-        setIsLoggedIn(true);
-        toast.success("Account created successfully!");
-        
-        const signupData = { ...formData };
-        // Simulating dispatch actions for signup
-        dispatch({ type: "SET_SIGNUP_DATA", payload: signupData });
-
-        // Navigate to OTP verification or login
-        navigate("/verify-email");
-
-        // Reset form
-        setFormData({
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            confirmPassword: "",
-        });
+    
+        try {
+            const response = await fetch("http://localhost:3000/api/auth/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+    
+            const data = await response.json();
+    
+            if (data.success) {
+                toast.success("Signup successful! Please verify your email.");
+                navigate("/verify-email");
+            } else {
+                toast.error(data.message);
+            }
+        } catch (error) {
+            toast.error("Signup failed. Please try again.");
+            console.error("Error during signup:", error);
+        }
     };
 
     return (
