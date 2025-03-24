@@ -2,7 +2,6 @@ import { useState } from "react"
 import { BiArrowBack } from "react-icons/bi"
 import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
-import { Helmet } from "react-helmet";
 function ForgotPassword() {
     const [email, setEmail] = useState("")
     const [emailSent, setEmailSent] = useState(false)
@@ -12,13 +11,6 @@ function ForgotPassword() {
     return (
         <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center bg-[#F7F5F2] 
             [@media(max-width:425px)]:px-4 [@media(max-width:320px)]:px-2">
-            <Helmet>
-                <meta
-                    name="description"
-                    content="The Forgot Password Page has been designed to direct tourists to forgot password page in case they do not remember their passwords  "
-                />
-                <title>Forgot Password- NamoGuide</title> {/* Optional: Add a title for the page */}
-            </Helmet>
             {loading ? (
                 <div className="flex flex-col items-center">
                     <div className="spinner"></div>
