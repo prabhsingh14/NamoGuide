@@ -1,3 +1,4 @@
+// only for tourists
 import Tourist from "../models/Tourist.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
